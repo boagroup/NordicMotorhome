@@ -1,7 +1,7 @@
 # NORDIC MOTORHOME
 
 ## Working Artifact:
-<a href="https://github.com/boagroup/NordicMotorhome/blob/bin/motorhome.jar?raw=true">Motorhome Direct Download</a>
+<a href="https://github.com/boagroup/NordicMotorhome/blob/main/bin/motorhome.jar?raw=true">Motorhome Direct Download</a>
 
 `java -jar motorhome.jar`
 
