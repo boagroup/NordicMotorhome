@@ -1,0 +1,36 @@
+# made by boagroup
+# IGNORE whole directory (not the same as plain old '*')
+/*
+
+# EXCEPT meta directory
+!/meta
+
+# EXCEPT bin directory
+!/bin
+
+# EXCEPT database directory
+!/database
+
+# EXCEPT src directory
+!/src
+# IGNORE everything inside src
+/src/*
+# EXCEPT src/main directory
+!src/main
+
+# EXCEPT these files:
+!README.*
+!pom.xml
+!.gitignore
+!LICENSE
+
+# EXCEPT vpp files
+!*.vpp
+# IGNORE all the useless backup files etc.
+*.vpp.*
+
+# IGNORE compiled files
+*.class
+
+# EXCEPT TEST FOLDER
+!src/test
