@@ -7,6 +7,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Called by the entry point
+ * Initializes the first view of the application (Authentication)
+ * Author(s): Octavian Roman
+ */
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
