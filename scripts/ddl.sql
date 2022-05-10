@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     staff_id INT NOT NULL,
     username VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    password BLOB NOT NULL,
     admin BOOLEAN NOT NULL,
     FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
 );
