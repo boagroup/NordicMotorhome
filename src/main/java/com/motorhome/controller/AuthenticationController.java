@@ -1,13 +1,15 @@
 package com.motorhome.controller;
 
 import com.motorhome.database.Database;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -23,6 +25,7 @@ import java.util.ResourceBundle;
  */
 public class AuthenticationController implements Initializable {
 
+    @FXML private AnchorPane rootPane;
     @FXML private TextField userField;
     @FXML private PasswordField passwordField;
     @FXML private Button signInButton;
@@ -31,7 +34,7 @@ public class AuthenticationController implements Initializable {
     private static PreparedStatement preparedStatement = null;
     private static Connection connection = null;
 
-    private void login(ActionEvent event, String username, String password) {
+    private void login(Event event, String username, String password) {
         // If both fields are not empty
         if (!username.equals("") && !password.equals("")) {
             try {
@@ -85,6 +88,19 @@ public class AuthenticationController implements Initializable {
             userField.setText("");
             passwordField.setText("");
         });
+
+        // ====REMOVE THIS BEFORE DEPLOYMENT==== //
+
+        // This is a shortcut to login as "admin" by pressing "Enter" for development purposes
+        rootPane.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                login(keyEvent, "admin", "admin");
+                userField.setText("");
+                passwordField.setText("");
+
+            }
+        });
+        // ====REMOVE THIS BEFORE DEPLOYMENT==== //
 
         // Make error label invisible if any field is being modified
         userField.setOnKeyTyped(event -> {
