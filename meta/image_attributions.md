@@ -1,15 +1,17 @@
 # Image Attributions
 
-##Some images used in this project have been retrieved from: 
+Some images used in this project have been retrieved from:
 ### https://www.iconfinder.com/ 
 ### https://unsplash.com/
 
 ## Individual images:
-1. ["user_placeholder.png"](/src/main/resources/com.motorhome/assets/user_placeholder.png) by "[Becris .](https://www.iconfinder.com/becris)" from [iconfinder](https://www.iconfinder.com/icons/3209201/account_ciecle_placeholder_round_user_icon)
+1. ["user_placeholder.png"](/src/main/resources/assets/user_placeholder.png) by "[Becris .](https://www.iconfinder.com/becris)" from [iconfinder](https://www.iconfinder.com/icons/3209201/account_ciecle_placeholder_round_user_icon)
+2. ["icon.png"](/src/main/resources/assets/icon.png) by "[iconshock](https://www.iconfinder.com/icons/49722/car_motorhome_vehicle_icon)" from [iconfinder](https://www.iconfinder.com/icons/49722/car_motorhome_vehicle_icon)
+3. ["camper.png"](/src/main/resources/assets/camper.png) by "[Florent B](https://www.iconfinder.com/Florent72)" from [iconfinder](https://www.iconfinder.com/icons/3155817/camper_jeep_motorhome_truck_van_vehicle_icon)
+4. ["authentication.jpg"](/src/main/resources/assets/camper.png) by "[Rota Alternativa](https://unsplash.com/@rotaalternativa)" from [unsplash](https://unsplash.com/photos/rFaFpWJLLPs)
 
 
 The aforementioned images are marked as "free" and/or "For commercial use"; nonetheless the usage herein is purely educational, as they have been used for an educational project, with no monetary profit whatsoever to be obtained by "boagroup".
-
 
 All images belong to their respective owners.
 

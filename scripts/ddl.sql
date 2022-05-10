@@ -6,7 +6,7 @@ USE heroku_e8f7f82549e360a;
 
 CREATE TABLE IF NOT EXISTS staff (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    firstName VARCHAR(20),
+    firstName VARCHAR(20) NOT NULL,
     lastName VARCHAR(20),
     image VARCHAR(255) DEFAULT '/assets/user_placeholder.png',
     telephone VARCHAR(16),
@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXISTS staff (
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    staff_id INT,
-    username VARCHAR(16) UNIQUE,
-    password VARCHAR(32),
+    staff_id INT NOT NULL,
+    username VARCHAR(16) UNIQUE NOT NULL,
+    password VARCHAR(32) NOT NULL,
     admin BOOLEAN NOT NULL,
     FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
 );
@@ -33,8 +33,7 @@ CREATE TABLE IF NOT EXISTS motorhomes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     image VARCHAR(255) DEFAULT '/assets/motorhome_placeholder.png',
     type VARCHAR(30),
-    beds INT(2),
-    price FLOAT(10)
+    beds INT(2)
 );
 
 CREATE TABLE IF NOT EXISTS brands (
@@ -55,9 +54,13 @@ CREATE TABLE IF NOT EXISTS models (
 
 CREATE TABLE IF NOT EXISTS rentals (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    new BOOLEAN NOT NULL,
-    ongoing BOOLEAN NOT NULL,
-    completed BOOLEAN NOT NULL,
+    motorhome_id INT,
+    state ENUM('N','O','C') NOT NULL,
+    /*
+    N = New
+    M = Ongoing
+    P = Completed
+    */
     distance INT,
     season ENUM('L','M','P') NOT NULL,
     /*
@@ -65,8 +68,10 @@ CREATE TABLE IF NOT EXISTS rentals (
     M = Middle Season
     P = Peak Season
     */
-    price FLOAT(10),
-    notes TEXT
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    notes TEXT,
+    FOREIGN KEY (motorhome_id) REFERENCES motorhomes(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS extras (
@@ -86,7 +91,7 @@ CREATE TABLE IF NOT EXISTS rentalExtras (
 CREATE TABLE IF NOT EXISTS clients (
     id INT AUTO_INCREMENT PRIMARY KEY,
     rental_id INT,
-    firstName VARCHAR(20),
+    firstName VARCHAR(20) NOT NULL,
     lastName VARCHAR(20),
     telephone VARCHAR(16),
     FOREIGN KEY (rental_id) REFERENCES rentals(id) ON DELETE CASCADE

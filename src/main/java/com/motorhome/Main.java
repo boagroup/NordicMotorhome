@@ -3,9 +3,11 @@ package com.motorhome;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Called by the entry point
@@ -15,9 +17,19 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com.motorhome/view/view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        // Create the scene and link it with it's corresponding controller
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/authentication.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 400, 500);
+        // Link scene to compartmentalized stylesheet
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/stylesheets/authentication.css")).toExternalForm());
+        // Set window icon; This actually works in JAR, as opposed to dealing with plain files
+        Image icon = new Image(Objects.requireNonNull(getClass().getResource("/assets/icon.png")).toExternalForm());
+        stage.getIcons().add(icon);
+        // Make window not resizable
+        stage.setResizable(false);
+        // Set window title
+        stage.setTitle("NMH Authentication");
+        // Show the scene
         stage.setScene(scene);
         stage.show();
     }

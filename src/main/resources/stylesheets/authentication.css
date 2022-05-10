@@ -1,0 +1,38 @@
+/* Stylesheet dedicated to the "authentication" view */
+@import url('https://fonts.googleapis.com/css2?family=Laila&display=swap');
+
+.label {
+    -fx-font-family: "Laila", Arial;
+    -fx-font-size: 16px;
+}
+
+#errorLabel {
+    -fx-font-size: 14px;
+    -fx-text-fill: red;
+    -fx-stroke-width: 1px;
+    -fx-background-color: rgba(148, 148, 148, 0.6);
+    -fx-background-radius: 6px;
+}
+
+#signInButton {
+    -fx-pref-width: 100px;
+    -fx-pref-height: 35px;
+    -fx-background-color: transparent;
+    -fx-border-width: 1px;
+    -fx-border-color: lightgray;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 16px;
+    -fx-font-family: "Laila", Arial;
+}
+
+#signInButton:hover {
+    -fx-background-color: #ffe3b1;
+    -fx-text-fill: #000;
+}
+
+#signInButton:pressed {
+    -fx-background-color: #f8cb6d;
+    -fx-text-fill: #000;
+}
