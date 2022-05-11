@@ -3,6 +3,7 @@ package com.motorhome;
 import com.motorhome.persistence.Session;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -41,6 +43,10 @@ public class FXUtils {
         stage.setScene(new Scene(Objects.requireNonNull(root)));
         stage.getScene().getStylesheets().add(Objects.requireNonNull(FXUtils.class.getResource("/stylesheets/" + stylesheet + ".css")).toExternalForm());
         stage.setMaximized(true);
+        Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+        stage.setWidth(screenSize.getWidth());
+        stage.setHeight(screenSize.getHeight());
+        stage.centerOnScreen();
         stage.show();
     }
 

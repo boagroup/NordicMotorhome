@@ -1,8 +1,3 @@
-/* Stylesheet dedicated to the "main_menu" view
-   Author(s): Octavian Roman */
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
-
 .menuContainer {
     -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #9a9a9a, #e0e0e0);
 }
@@ -17,7 +12,7 @@
     -fx-font-size: 20px;
 }
 
-#logoutButton {
+#backButton {
     -fx-pref-width: 100px;
     -fx-background-color: transparent;
     -fx-border-width: 1px;
@@ -29,27 +24,12 @@
     -fx-font-family: Arial;
 }
 
-#logoutButton:hover {
+#backButton:hover {
     -fx-background-color: #228bb6;
     -fx-text-fill: #fff;
 }
 
-#logoutButton:pressed {
+#backButton:pressed {
     -fx-background-color: #146785;
     -fx-text-fill: #fff;
-}
-
-#rentalsMenu, #motorhomesMenu, #staffMenu {
-    -fx-border-width: 3px;
-    -fx-border-color: #000;
-    -fx-background-color: #fff;
-}
-
-#rentalsMenu:hover, #motorhomesMenu:hover, #staffMenu:hover {
-    -fx-background-color: #e0e0e0;
-}
-
-.menuItemLabel {
-    -fx-font-family: "Montserrat", Arial;
-    -fx-font-size: 30px;
 }

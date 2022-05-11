@@ -20,15 +20,29 @@ import java.util.ResourceBundle;
  */
 public class MainMenuController implements Initializable {
 
-    @FXML HBox header;
     @FXML Label usernameLabel;
     @FXML ImageView userImage;
     @FXML Button logoutButton;
+    @FXML HBox rentalsMenu;
+    @FXML HBox motorhomesMenu;
+    @FXML HBox staffMenu;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Bridge.setMainMenuController(this);
         FXUtils.setUserDetailsInHeader(usernameLabel, userImage);
+
+        rentalsMenu.setOnMouseClicked(mouseEvent -> {
+            FXUtils.changeScene(mouseEvent, "rental_menu", "NMH Rentals Menu","rental_menu");
+        });
+
+        motorhomesMenu.setOnMouseClicked(mouseEvent -> {
+            FXUtils.changeScene(mouseEvent, "motorhome_menu", "NMH Motorhomes Menu","motorhome_menu");
+        });
+
+        staffMenu.setOnMouseClicked(mouseEvent -> {
+            FXUtils.changeScene(mouseEvent, "staff_menu", "NMH Staff Menu","staff_menu");
+        });
 
         logoutButton.setOnAction(actionEvent -> {
             FXUtils.changeScene(actionEvent, "authentication", "NMH Authentication", false, false, "authentication", 400, 500);

@@ -9,14 +9,14 @@
    <top>
       <HBox fx:id="header" prefHeight="40.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="300.0" spacing="20.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="20.0">
                <children>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/icon40.png" />
                      </image>
                   </ImageView>
-                  <Label text="NORDIC MOTORHOMES" />
+                  <Label prefHeight="17.0" styleClass="headerTitle" text="NORDIC MOTORHOMES" HBox.hgrow="ALWAYS" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
@@ -33,4 +33,61 @@
                </padding></HBox>
          </children></HBox>
    </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="300.0" styleClass="menuContainer" BorderPane.alignment="CENTER_LEFT">
+         <children>
+            <HBox fx:id="rentalsMenu" alignment="CENTER_LEFT" prefHeight="150.0">
+               <VBox.margin>
+                  <Insets bottom="50.0" left="150.0" right="150.0" top="35.0" />
+               </VBox.margin>
+               <children>
+                  <ImageView fx:id="rentalsMenuImage" fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
+                     <image>
+                        <Image url="@../assets/rentals.jpg" />
+                     </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport></ImageView>
+                  <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="menuItemLabel" text="RENTALS" underline="true" />
+                     </children>
+                  </HBox>
+               </children></HBox>
+            <HBox fx:id="motorhomesMenu" alignment="CENTER_LEFT" layoutX="160.0" layoutY="110.0" prefHeight="150.0">
+               <VBox.margin>
+                  <Insets bottom="50.0" left="150.0" right="150.0" />
+               </VBox.margin>
+               <children>
+                  <ImageView fx:id="rentalsMenuImage1" fitHeight="150.0" fitWidth="300.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../assets/motorhome.jpg" />
+                     </image>
+                  </ImageView>
+                  <HBox alignment="CENTER" prefHeight="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="menuItemLabel" text="MOTORHOMES" underline="true" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox fx:id="staffMenu" alignment="CENTER_LEFT" layoutX="160.0" layoutY="110.0" prefHeight="150.0">
+               <VBox.margin>
+                  <Insets bottom="50.0" left="150.0" right="150.0" />
+               </VBox.margin>
+               <children>
+                  <ImageView fx:id="rentalsMenuImage11" fitHeight="150.0" fitWidth="300.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../assets/staff.jpg" />
+                     </image>
+                  </ImageView>
+                  <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="menuItemLabel" text="STAFF" underline="true" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </children></VBox>
+   </center>
 </BorderPane>
