@@ -89,7 +89,7 @@ public final class Database {
      * Establish a connection to our Heroku ClearDB remote database
      * @return the connection
      */
-    public static Connection getConnection() {
+    public Connection getConnection() {
         try {
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
@@ -102,7 +102,7 @@ public final class Database {
      * Closes the connection the remote database
      * @param connection the connection to be closed
      */
-    public static void closeConnection(Connection connection) {
+    public void closeConnection(Connection connection) {
         if (connection != null) {
             try {
                 connection.close();

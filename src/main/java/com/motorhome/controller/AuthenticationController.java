@@ -41,7 +41,7 @@ public class AuthenticationController implements Initializable {
         if (!username.equals("") && !password.equals("")) {
             try {
                 // Connect to the database
-                connection = Database.getConnection();
+                connection = Database.getInstance().getConnection();
                 if (connection != null) {
                     // Prepare statement which selects password associated with unique username
                     preparedStatement = connection.prepareStatement("SELECT AES_DECRYPT(password, ?) AS password FROM users WHERE username = ?");
@@ -72,7 +72,7 @@ public class AuthenticationController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
-                Database.closeConnection(connection);
+                Database.getInstance().closeConnection(connection);
             }
             // If either of the two fields, or both, are empty
         } else {
