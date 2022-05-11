@@ -22,6 +22,7 @@ class DatabaseTest {
 	void executeQueryNotEmpty() {
 		db = Database.getInstance();
 		DataResult dR = db.executeQuery("SELECT * FROM users");
+		System.out.println(dR.getMap().toString());
 		assertFalse(dR.isEmpty());
 	}
 

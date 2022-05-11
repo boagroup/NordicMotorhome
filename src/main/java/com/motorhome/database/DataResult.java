@@ -6,13 +6,12 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class DataResult {
-
     // A map that retains its insertion order
     private final LinkedHashMap<String, List<Object>> data;
 
     public DataResult(ResultSet rs) {
-
         data = new LinkedHashMap<>();
+
         try {
             ResultSetMetaData rsmd = rs.getMetaData();
             // get column names
@@ -80,5 +79,9 @@ public class DataResult {
 
     public List<Object> getColumn(String columnName) {
         return data.get(columnName);
+    }
+
+    public Map<String, List<Object>> getMap() {
+        return data;
     }
 }
