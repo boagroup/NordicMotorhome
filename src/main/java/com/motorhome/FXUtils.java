@@ -1,10 +1,14 @@
 package com.motorhome;
 
+import com.motorhome.persistence.Session;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -95,5 +99,17 @@ public class FXUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Set the currently logged user details in the header of a given view.
+     * Should be used in the "initialize" function of all views with a header that displays the user.
+     * @param usernameLabel Label where the user (staff) firstname and lastname will be inserted
+     * @param userImage ImageView where the user (staff) image will be inserted
+     */
+    public static void setUserDetailsInHeader(Label usernameLabel, ImageView userImage) {
+        usernameLabel.setText(Session.CurrentUser.getCurrentUser().getFirstname().concat(" ").concat(Session.CurrentUser.getCurrentUser().getLastname()));
+        Image i = new Image(Session.CurrentUser.getCurrentUser().getImage());
+        userImage.setImage(i);
     }
 }

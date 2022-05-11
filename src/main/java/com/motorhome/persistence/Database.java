@@ -1,4 +1,4 @@
-package com.motorhome.database;
+package com.motorhome.persistence;
 
 import java.sql.*;
 

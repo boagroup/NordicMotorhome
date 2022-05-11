@@ -21,6 +21,10 @@ public class User {
         this.admin = admin;
     }
 
+    public User() {
+
+    }
+
     // Getters
     public int getId() {
         return id;

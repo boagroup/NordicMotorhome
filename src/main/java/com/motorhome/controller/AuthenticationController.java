@@ -2,7 +2,8 @@ package com.motorhome.controller;
 
 import com.motorhome.Bridge;
 import com.motorhome.FXUtils;
-import com.motorhome.database.Database;
+import com.motorhome.persistence.Database;
+import com.motorhome.persistence.Session;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -62,6 +63,7 @@ public class AuthenticationController implements Initializable {
                         // Check if passwords match
                         if (resultSet.getString("password").equals(password)) {
                             // Success scenario, log user in
+                            Session.CurrentUser.loadUserDetails(username);
                             FXUtils.changeScene(event, "main_menu", "NMH Main Menu", true, true, "main_menu",  -1, -1);
                         } else {
                             // Display password incorrect error
