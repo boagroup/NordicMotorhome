@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -19,13 +20,15 @@ import java.util.Objects;
  */
 public class Utilities {
 
+    public static ArrayList<Scene> sceneList = new ArrayList<>();
+
     /**
      * Method that changes current scene to another one.
      * @param event Event that triggers the change of scene (e.g. actionEvent)
      * @param FXMLView View that should be changed to
      * @param title Title of the new scene
      */
-    public static void changeScene(Event event, String FXMLView, String title) {
+    public static void changeScene(Event event, String FXMLView, String title, String stylesheet) {
         Parent root = null;
         try {
             root = FXMLLoader.load(Objects.requireNonNull(Utilities.class.getResource("/view/" + FXMLView + ".fxml")));
@@ -35,12 +38,13 @@ public class Utilities {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
         stage.setScene(new Scene(Objects.requireNonNull(root)));
+        stage.getScene().getStylesheets().add(Objects.requireNonNull(Utilities.class.getResource("/stylesheets/" + stylesheet + ".css")).toExternalForm());
         stage.setMaximized(true);
         stage.show();
     }
 
     /**
-     * Method that changes the scene to another one.
+     * Overloaded method that changes the scene to another one.
      * A more complete version of the previous method.
      * Not needed in most cases, but useful if switching from a maximized window to one that is not.
      * @param event Event that triggers the change of scene (e.g. actionEvent)
@@ -51,7 +55,7 @@ public class Utilities {
      * @param width Width of the scene. Has no effect if maximized
      * @param height Height of the scene. Has no effect if maximized
      */
-    public static void changeScene(Event event, String FXMLView, String title, boolean resizable, boolean maximized, int width, int height) {
+    public static void changeScene(Event event, String FXMLView, String title, boolean resizable, boolean maximized, String stylesheet, int width, int height) {
         Parent root = null;
         try {
             root = FXMLLoader.load(Objects.requireNonNull(Utilities.class.getResource("/view/" + FXMLView + ".fxml")));
@@ -59,15 +63,16 @@ public class Utilities {
             e.printStackTrace();
         }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setResizable(resizable);
+        stage.setTitle(title);
+        stage.setScene(new Scene(Objects.requireNonNull(root)));
+        stage.getScene().getStylesheets().add(Objects.requireNonNull(Utilities.class.getResource("/stylesheets/" + stylesheet + ".css")).toExternalForm());
         stage.setMaximized(maximized);
         if (!maximized) {
             stage.setWidth(width);
             stage.setHeight(height);
             stage.centerOnScreen();
         }
-        stage.setTitle(title);
-        stage.setResizable(resizable);
-        stage.setScene(new Scene(Objects.requireNonNull(root)));
         stage.show();
     }
 

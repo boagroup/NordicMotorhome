@@ -1,5 +1,6 @@
 package com.motorhome.controller;
 
+import com.motorhome.Bridge;
 import com.motorhome.Utilities;
 import com.motorhome.database.Database;
 import javafx.event.Event;
@@ -61,7 +62,7 @@ public class AuthenticationController implements Initializable {
                         // Check if passwords match
                         if (resultSet.getString("password").equals(password)) {
                             // Success scenario, log user in
-                            Utilities.changeScene(event, "main_menu", "NMH Main Menu");
+                            Utilities.changeScene(event, "main_menu", "NMH Main Menu", true, true, "main_menu",  -1, -1);
                         } else {
                             // Display password incorrect error
                             errorLabel.setText("Password does not match");
@@ -83,6 +84,8 @@ public class AuthenticationController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Bridge.setAuthenticationController(this);
+
         signInButton.setOnAction(event -> {
             login(event, userField.getText(), passwordField.getText());
             // Reset fields after button press; otherwise entries will persist even on logout
