@@ -1,7 +1,7 @@
 package com.motorhome.controller;
 
 import com.motorhome.Bridge;
-import com.motorhome.Utilities;
+import com.motorhome.FXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -18,7 +18,7 @@ public class MainMenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Bridge.setMainMenuController(this);
         tempButton.setOnAction(event -> {
-            Utilities.changeScene(event, "authentication", "NMH Authentication", false, false, "authentication", 400, 500);
+            FXUtils.changeScene(event, "authentication", "NMH Authentication", false, false, "authentication", 400, 500);
         });
     }
 }

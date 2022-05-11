@@ -8,9 +8,11 @@ import com.motorhome.controller.MainMenuController;
  * As JavaFX nodes are dynamic private attributes, they cannot be directly accessed outside their class.
  * Using Getters directly cannot be done either.
  */
-public class Bridge {
+public final class Bridge {
     private static AuthenticationController authenticationController = null;
     private static MainMenuController mainMenuController = null;
+
+    private Bridge() {}
 
     // Getters
     public static AuthenticationController getAuthenticationController() {

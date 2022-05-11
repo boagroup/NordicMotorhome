@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -18,9 +17,7 @@ import java.util.Objects;
  * Mostly related to JavaFX
  * Author(s): Octavian Roman
  */
-public class Utilities {
-
-    public static ArrayList<Scene> sceneList = new ArrayList<>();
+public class FXUtils {
 
     /**
      * Method that changes current scene to another one.
@@ -31,14 +28,14 @@ public class Utilities {
     public static void changeScene(Event event, String FXMLView, String title, String stylesheet) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(Objects.requireNonNull(Utilities.class.getResource("/view/" + FXMLView + ".fxml")));
+            root = FXMLLoader.load(Objects.requireNonNull(FXUtils.class.getResource("/view/" + FXMLView + ".fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
         stage.setScene(new Scene(Objects.requireNonNull(root)));
-        stage.getScene().getStylesheets().add(Objects.requireNonNull(Utilities.class.getResource("/stylesheets/" + stylesheet + ".css")).toExternalForm());
+        stage.getScene().getStylesheets().add(Objects.requireNonNull(FXUtils.class.getResource("/stylesheets/" + stylesheet + ".css")).toExternalForm());
         stage.setMaximized(true);
         stage.show();
     }
@@ -58,7 +55,7 @@ public class Utilities {
     public static void changeScene(Event event, String FXMLView, String title, boolean resizable, boolean maximized, String stylesheet, int width, int height) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(Objects.requireNonNull(Utilities.class.getResource("/view/" + FXMLView + ".fxml")));
+            root = FXMLLoader.load(Objects.requireNonNull(FXUtils.class.getResource("/view/" + FXMLView + ".fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -66,7 +63,7 @@ public class Utilities {
         stage.setResizable(resizable);
         stage.setTitle(title);
         stage.setScene(new Scene(Objects.requireNonNull(root)));
-        stage.getScene().getStylesheets().add(Objects.requireNonNull(Utilities.class.getResource("/stylesheets/" + stylesheet + ".css")).toExternalForm());
+        stage.getScene().getStylesheets().add(Objects.requireNonNull(FXUtils.class.getResource("/stylesheets/" + stylesheet + ".css")).toExternalForm());
         stage.setMaximized(maximized);
         if (!maximized) {
             stage.setWidth(width);
@@ -86,7 +83,7 @@ public class Utilities {
      */
     public static void popUp(String fxmlFile, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(Utilities.class.getResource(fxmlFile));
+            FXMLLoader loader = new FXMLLoader(FXUtils.class.getResource(fxmlFile));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = new Stage();

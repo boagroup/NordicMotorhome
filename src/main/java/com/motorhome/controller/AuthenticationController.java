@@ -1,7 +1,7 @@
 package com.motorhome.controller;
 
 import com.motorhome.Bridge;
-import com.motorhome.Utilities;
+import com.motorhome.FXUtils;
 import com.motorhome.database.Database;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -62,7 +62,7 @@ public class AuthenticationController implements Initializable {
                         // Check if passwords match
                         if (resultSet.getString("password").equals(password)) {
                             // Success scenario, log user in
-                            Utilities.changeScene(event, "main_menu", "NMH Main Menu", true, true, "main_menu",  -1, -1);
+                            FXUtils.changeScene(event, "main_menu", "NMH Main Menu", true, true, "main_menu",  -1, -1);
                         } else {
                             // Display password incorrect error
                             errorLabel.setText("Password does not match");
