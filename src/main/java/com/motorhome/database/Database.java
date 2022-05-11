@@ -84,4 +84,31 @@ public final class Database {
         }
         return null;
     }
+
+    /**
+     * Establish a connection to our Heroku ClearDB remote database
+     * @return the connection
+     */
+    public static Connection getConnection() {
+        try {
+            return DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Closes the connection the remote database
+     * @param connection the connection to be closed
+     */
+    public static void closeConnection(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
