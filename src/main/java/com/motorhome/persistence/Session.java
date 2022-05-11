@@ -3,7 +3,7 @@ package com.motorhome.persistence;
 import java.sql.*;
 
 /**
- * Class that takes care of session data.
+ * Class that can take care of session data.
  * Here, the currently logged-in user is stored.
  * Likewise, entity data can be stored here to reflect changes to data during the session.
  * Author(s): Octavian Roman
@@ -19,7 +19,7 @@ public class Session {
      * Can be used anywhere to dynamically update the UI, restrict access to functionality, etc.
      * Cannot use inheritance because it contains attributes from two entities (User & Staff).
      * Interfaces would work, but then the solution would be worse because it requires two interfaces,
-     * which won't even be used to their full potential because CurrentUser only requires specific attributes, not all.
+     * which won't even be used to their full potential as CurrentUser only requires specific attributes, not all.
      */
     public static class CurrentUser {
 
@@ -93,7 +93,7 @@ public class Session {
          */
         public static void loadUserDetails(String username) {
             currentUser = CurrentUser.getCurrentUser();
-            connection = Database.getConnection();
+            connection = SimpleDatabase.getConnection();
             if (connection != null) {
                 try {
                     preparedStatement = connection.prepareStatement("SELECT firstName, lastName, image, admin, staff_ID FROM staff INNER JOIN users ON staff.id = users.staff_id WHERE username = ?");
@@ -113,7 +113,7 @@ public class Session {
                     e.printStackTrace();
                 }
                 finally {
-                    Database.closeConnection(connection);
+                    SimpleDatabase.closeConnection(connection);
                 }
             }
         }

@@ -2,8 +2,8 @@ package com.motorhome.controller;
 
 import com.motorhome.Bridge;
 import com.motorhome.FXUtils;
-import com.motorhome.persistence.Database;
 import com.motorhome.persistence.Session;
+import com.motorhome.persistence.SimpleDatabase;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,11 +38,16 @@ public class AuthenticationController implements Initializable {
     private static Connection connection = null;
 
     private void login(Event event, String username, String password) {
-        // If both fields are not empty
-        if (!username.equals("") && !password.equals("")) {
+        // If either of the two fields, or both, are empty
+        if (username.equals("") || password.equals("")) {
+            // Display fields empty error
+            errorLabel.setText("All fields are mandatory");
+            errorLabel.setVisible(true);
+        } else {
+            // If both fields are not empty
             try {
                 // Connect to the database
-                connection = Database.getConnection();
+                connection = SimpleDatabase.getConnection();
                 if (connection != null) {
                     // Prepare statement which selects password associated with unique username
                     preparedStatement = connection.prepareStatement("SELECT AES_DECRYPT(password, ?) AS password FROM users WHERE username = ?");
@@ -74,13 +79,8 @@ public class AuthenticationController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
-                Database.closeConnection(connection);
+                SimpleDatabase.closeConnection(connection);
             }
-            // If either of the two fields, or both, are empty
-        } else {
-            // Display fields empty error
-            errorLabel.setText("All fields are mandatory");
-            errorLabel.setVisible(true);
         }
     }
 

@@ -13,6 +13,11 @@ import javafx.scene.layout.HBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Main Menu Controller
+ * Handles logic of Main Menu
+ * Author(s): Octavian Roman
+ */
 public class MainMenuController implements Initializable {
 
     @FXML HBox header;
