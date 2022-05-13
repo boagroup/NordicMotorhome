@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -59,17 +58,11 @@ public class StaffAddController implements Initializable {
      * Can't find how to point to directory inside JAR, only files.
      */
     private void pickImage() {
-        // Prepare file chooser
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("PNG images","*.png"),
-            new FileChooser.ExtensionFilter("JPG images", "*.jpg"),
-            new FileChooser.ExtensionFilter("GIF images", "*.gif")
-        );
-        // Show file chooser
-        Stage stage = (Stage) previewImage.getScene().getWindow();
-        // Pick file
-        File selectedFile = fileChooser.showOpenDialog(stage);
+        File selectedFile = FXUtils.imagePicker(previewImage);
+        // Stop execution if no file is selected
+        if (!selectedFile.exists()) {
+            return;
+        }
         // Generate random file name with date-timestamp + file extension and assign it to imageName
         imageName = FXUtils.generateRandomImageName(selectedFile);
 

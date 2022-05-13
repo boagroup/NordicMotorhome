@@ -11,16 +11,12 @@ import com.motorhome.controller.StaffMenuController;
  * Author(s): Octavian Roman
  */
 public final class Bridge {
-    private static AuthenticationController authenticationController = null;
     private static MainMenuController mainMenuController = null;
     private static StaffMenuController staffMenuController = null;
 
     private Bridge() {}
 
     // Getters
-    public static AuthenticationController getAuthenticationController() {
-        return authenticationController;
-    }
 
     public static MainMenuController getMainMenuController() {
         return mainMenuController;
@@ -31,9 +27,6 @@ public final class Bridge {
     }
 
     // Setters
-    public static void setAuthenticationController(AuthenticationController authenticationController) {
-        Bridge.authenticationController = authenticationController;
-    }
 
     public static void setMainMenuController(MainMenuController mainMenuController) {
         Bridge.mainMenuController = mainMenuController;

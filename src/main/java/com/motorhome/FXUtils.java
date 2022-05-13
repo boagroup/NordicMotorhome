@@ -12,10 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -203,5 +200,24 @@ public class FXUtils {
         if (getExtension(image.getName()).isPresent()) {
             return formatter.format(LocalDateTime.now()) + "." + getExtension(image.getName()).get();
         } else return null;
+    }
+
+    /**
+     * Opens a window that allows the user to select an image.
+     * @param nodeToGetScene Node whose parent Scene will define on top of where the window will appear
+     * @return the picked file
+     */
+    public static File imagePicker(Node nodeToGetScene) {
+        // Prepare file chooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("PNG images","*.png"),
+                new FileChooser.ExtensionFilter("JPG images", "*.jpg"),
+                new FileChooser.ExtensionFilter("GIF images", "*.gif")
+        );
+        // Show file chooser
+        Stage stage = (Stage) nodeToGetScene.getScene().getWindow();
+        // Pick file
+        return fileChooser.showOpenDialog(stage);
     }
 }

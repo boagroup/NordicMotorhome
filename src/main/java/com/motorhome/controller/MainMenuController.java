@@ -5,6 +5,7 @@ import com.motorhome.FXUtils;
 import com.motorhome.persistence.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -38,8 +39,13 @@ public class MainMenuController implements Initializable {
         motorhomesMenu.setOnMouseClicked(mouseEvent ->
                 FXUtils.changeScene(mouseEvent, "motorhome_menu", "NMH Motorhomes Menu","motorhome_menu"));
 
-        staffMenu.setOnMouseClicked(mouseEvent ->
-                FXUtils.changeScene(mouseEvent, "staff_menu", "NMH Staff Menu","staff_menu"));
+        staffMenu.setOnMouseClicked(mouseEvent -> {
+            if (Session.CurrentUser.getCurrentUser().getAdmin()) {
+                FXUtils.changeScene(mouseEvent, "staff_menu", "NMH Staff Menu","staff_menu");
+            } else {
+                FXUtils.alert(Alert.AlertType.ERROR, "You do not have permission to access this menu.", "Staff Menu", "Unauthorized Access", true);
+            }
+        });
 
         logoutButton.setOnAction(actionEvent -> {
             FXUtils.changeScene(actionEvent, "authentication", "NMH Authentication", false, false, "authentication", 400, 500);

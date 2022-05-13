@@ -7,7 +7,7 @@
 
 <!-- Author(s) Octavian Roman -->
 
-<AnchorPane prefHeight="340.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.StaffAddController">
+<AnchorPane prefHeight="340.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.StaffEditController">
    <children>
       <ImageView fx:id="previewImage" fitHeight="180.0" fitWidth="180.0" layoutX="28.0" layoutY="84.0" pickOnBounds="true">
          <image>
@@ -17,7 +17,7 @@
       <Label layoutX="239.0" layoutY="83.0" text="First Name" />
       <TextField fx:id="lastName" layoutX="302.0" layoutY="123.0" prefHeight="25.0" prefWidth="105.0" />
       <Label layoutX="240.0" layoutY="127.0" text="Last Name" />
-      <Label layoutX="48.0" layoutY="20.0" text="New Staff" textFill="#228bb6">
+      <Label layoutX="48.0" layoutY="20.0" text="Edit Staff" textFill="#228bb6">
          <font>
             <Font name="Calibri Light" size="36.0" />
          </font>

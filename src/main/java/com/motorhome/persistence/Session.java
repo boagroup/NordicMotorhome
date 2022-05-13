@@ -14,10 +14,6 @@ import java.util.ArrayList;
  */
 public class Session {
 
-    private static PreparedStatement preparedStatement = null;
-    private static ResultSet resultSet = null;
-    private static Connection connection = null;
-
     /**
      * Inner Singleton storing currently logged-in User.
      * Can be used anywhere to dynamically update the UI, restrict access to functionality, etc.
@@ -97,12 +93,12 @@ public class Session {
          */
         public static void loadUserDetails(String username) {
             currentUser = CurrentUser.getCurrentUser();
-            connection = SimpleDatabase.getConnection();
+            Connection connection = SimpleDatabase.getConnection();
             if (connection != null) {
                 try {
-                    preparedStatement = connection.prepareStatement("SELECT firstName, lastName, image, admin, staff_ID FROM staff INNER JOIN users ON staff.id = users.staff_id WHERE username = ?");
+                    PreparedStatement preparedStatement = connection.prepareStatement("SELECT firstName, lastName, image, admin, staff_ID FROM staff INNER JOIN users ON staff.id = users.staff_id WHERE username = ?");
                     preparedStatement.setString(1, username);
-                    resultSet = preparedStatement.executeQuery();
+                    ResultSet resultSet = preparedStatement.executeQuery();
                     resultSet.next();
                     currentUser.setUsername(username);
                     currentUser.setFirstname(resultSet.getString("firstName"));

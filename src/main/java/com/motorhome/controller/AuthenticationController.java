@@ -1,6 +1,5 @@
 package com.motorhome.controller;
 
-import com.motorhome.Bridge;
 import com.motorhome.FXUtils;
 import com.motorhome.persistence.Session;
 import com.motorhome.persistence.SimpleDatabase;
@@ -86,8 +85,6 @@ public class AuthenticationController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Bridge.setAuthenticationController(this);
-
         signInButton.setOnAction(event -> {
             login(event, userField.getText(), passwordField.getText());
             // Reset fields after button press; otherwise entries will persist even on logout
