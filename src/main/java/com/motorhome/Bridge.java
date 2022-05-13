@@ -2,6 +2,7 @@ package com.motorhome;
 
 import com.motorhome.controller.AuthenticationController;
 import com.motorhome.controller.MainMenuController;
+import com.motorhome.controller.StaffMenuController;
 
 /**
  * "Bridges" the gap between Controllers and other classes.
@@ -12,6 +13,7 @@ import com.motorhome.controller.MainMenuController;
 public final class Bridge {
     private static AuthenticationController authenticationController = null;
     private static MainMenuController mainMenuController = null;
+    private static StaffMenuController staffMenuController = null;
 
     private Bridge() {}
 
@@ -24,6 +26,10 @@ public final class Bridge {
         return mainMenuController;
     }
 
+    public static StaffMenuController getStaffMenuController() {
+        return staffMenuController;
+    }
+
     // Setters
     public static void setAuthenticationController(AuthenticationController authenticationController) {
         Bridge.authenticationController = authenticationController;
@@ -31,5 +37,9 @@ public final class Bridge {
 
     public static void setMainMenuController(MainMenuController mainMenuController) {
         Bridge.mainMenuController = mainMenuController;
+    }
+
+    public static void setStaffMenuController(StaffMenuController staffMenuController) {
+        Bridge.staffMenuController = staffMenuController;
     }
 }

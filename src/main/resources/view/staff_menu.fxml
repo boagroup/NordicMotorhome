@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -40,6 +41,108 @@
          </children></HBox>
    </top>
    <center>
-      <VBox prefHeight="200.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="1090.0" styleClass="toolbar">
+               <children>
+                  <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="50.0" styleClass="toolbar" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="80.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label fx:id="entityCountLabel" styleClass="entity-label-text" text="# Items" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="137.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox fx:id="nameToolFlipper" alignment="CENTER" prefHeight="50.0" styleClass="toolFlipper" HBox.hgrow="NEVER">
+                                 <children>
+                                    <Label fx:id="nameLabel" styleClass="entity-label-text" text="A-Z" />
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/up_down_arrow.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox fx:id="roleToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
+                                 <children>
+                                    <Label fx:id="roleLabel" styleClass="entity-label-text" text="Role" />
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/up_down_arrow.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="210.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox fx:id="phoneToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
+                                 <children>
+                                    <Label fx:id="phoneLabel" styleClass="entity-label-text" text="Phone" />
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/up_down_arrow.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="210.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox fx:id="genderToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
+                                 <children>
+                                    <Label fx:id="genderLabel" styleClass="entity-label-text" text="Gender" />
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/up_down_arrow.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox fx:id="add" alignment="CENTER">
+                                 <children>
+                                    <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../assets/add.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <ScrollPane fx:id="containerParent" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="entityContainer" alignment="CENTER" spacing="10.0" styleClass="scroll-container">
+                     <padding>
+                        <Insets left="100.0" right="100.0" />
+                     </padding></VBox>
+               </content>
+               <styleClass>
+                  <String fx:value="edge-to-edge" />
+                  <String fx:value="scrollpane" />
+               </styleClass>
+            </ScrollPane>
+         </children></VBox>
    </center>
 </BorderPane>

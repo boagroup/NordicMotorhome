@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="340.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.StaffAddController">
+   <children>
+      <ImageView fx:id="previewImage" fitHeight="180.0" fitWidth="180.0" layoutX="28.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/users/user_placeholder.png" />
+         </image></ImageView>
+      <TextField fx:id="firstName" layoutX="301.0" layoutY="79.0" prefHeight="25.0" prefWidth="105.0" />
+      <Label layoutX="239.0" layoutY="83.0" text="First Name" />
+      <TextField fx:id="lastName" layoutX="302.0" layoutY="123.0" prefHeight="25.0" prefWidth="105.0" />
+      <Label layoutX="240.0" layoutY="127.0" text="Last Name" />
+      <Label layoutX="48.0" layoutY="20.0" text="New Staff" textFill="#228bb6">
+         <font>
+            <Font name="Calibri Light" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="265.0" text="Select" />
+      <Button fx:id="submit" layoutX="496.0" layoutY="261.0" mnemonicParsing="false" text="Submit" />
+      <TextField fx:id="username" layoutX="506.0" layoutY="79.0" prefHeight="25.0" prefWidth="105.0" />
+      <Label layoutX="447.0" layoutY="83.0" text="Username" />
+      <Label layoutX="446.0" layoutY="126.0" text="Password" />
+      <PasswordField fx:id="password" layoutX="506.0" layoutY="122.0" prefHeight="25.0" prefWidth="105.0" />
+      <CheckBox fx:id="admin" layoutX="531.0" layoutY="166.0" mnemonicParsing="false" text="Admin" />
+      <TextField fx:id="telephone" layoutX="302.0" layoutY="215.0" prefHeight="25.0" prefWidth="105.0" />
+      <Label layoutX="242.0" layoutY="219.0" text="Telephone" />
+      <Label layoutX="271.0" layoutY="173.0" text="Role" />
+      <TextField fx:id="role" layoutX="301.0" layoutY="169.0" prefHeight="25.0" prefWidth="105.0" />
+      <Label layoutX="229.0" layoutY="85.0" text="*" textFill="RED" />
+      <ChoiceBox fx:id="gender" layoutX="301.0" layoutY="261.0" prefHeight="25.0" prefWidth="105.0" />
+   </children>
+</AnchorPane>

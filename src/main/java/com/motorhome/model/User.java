@@ -21,6 +21,16 @@ public class User {
         this.admin = admin;
     }
 
+    public User(String username, String password, boolean admin) {
+        this.username = username;
+        this.password = password;
+        this.admin = admin;
+    }
+
+    public User(String username) {
+        this.username = username;
+    }
+
     public User() {
 
     }

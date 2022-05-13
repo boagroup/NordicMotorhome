@@ -1,6 +1,10 @@
 package com.motorhome.persistence;
 
+import com.motorhome.model.Staff;
+import com.motorhome.model.User;
+
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Class that can take care of session data.
@@ -132,4 +136,6 @@ public class Session {
         }
 
     }
+
+    public static ArrayList<Staff> StaffEntityList = new ArrayList<>();
 }

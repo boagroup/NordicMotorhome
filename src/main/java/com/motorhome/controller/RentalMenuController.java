@@ -12,9 +12,9 @@ import java.util.ResourceBundle;
 
 public class RentalMenuController implements Initializable {
 
-    @FXML Label usernameLabel;
-    @FXML ImageView userImage;
-    @FXML Button backButton;
+    @FXML private Label usernameLabel;
+    @FXML private ImageView userImage;
+    @FXML private Button backButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -33,3 +33,36 @@
     -fx-background-color: #146785;
     -fx-text-fill: #fff;
 }
+
+.toolbar {
+    -fx-background-color: #c9c9c9;
+}
+
+#containerParent {
+    -fx-background-color: #c9c9c9;
+}
+
+.toolFlipper:hover, #add:hover {
+    -fx-border-width: 1px;
+    -fx-border-color: #000;
+}
+
+.toolFlipper:pressed, #add:pressed {
+    -fx-border-width: 1px;
+    -fx-border-color: #000;
+    -fx-background-color: #a9a9a9;
+}
+
+.entity-container {
+    -fx-border-width: 2px;
+    -fx-border-color: #000;
+}
+
+.entity-container:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.entity-label-text {
+    -fx-font-family: "Laila", Arial;
+    -fx-font-size: 16px;
+}

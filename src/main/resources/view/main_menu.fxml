@@ -9,7 +9,7 @@
    <top>
       <HBox fx:id="header" prefHeight="40.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="20.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="20.0" HBox.hgrow="ALWAYS">
                <children>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -41,7 +41,7 @@
                   <Insets bottom="50.0" left="150.0" right="150.0" top="35.0" />
                </VBox.margin>
                <children>
-                  <ImageView fx:id="rentalsMenuImage" fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
+                  <ImageView fitHeight="150.0" fitWidth="300.0" pickOnBounds="true">
                      <image>
                         <Image url="@../assets/rentals.jpg" />
                      </image>
@@ -59,7 +59,7 @@
                   <Insets bottom="50.0" left="150.0" right="150.0" />
                </VBox.margin>
                <children>
-                  <ImageView fx:id="rentalsMenuImage1" fitHeight="150.0" fitWidth="300.0" pickOnBounds="true">
+                  <ImageView fitHeight="150.0" fitWidth="300.0" pickOnBounds="true">
                      <image>
                         <Image url="@../assets/motorhome.jpg" />
                      </image>
@@ -76,7 +76,7 @@
                   <Insets bottom="50.0" left="150.0" right="150.0" />
                </VBox.margin>
                <children>
-                  <ImageView fx:id="rentalsMenuImage11" fitHeight="150.0" fitWidth="300.0" pickOnBounds="true">
+                  <ImageView fitHeight="150.0" fitWidth="300.0" pickOnBounds="true">
                      <image>
                         <Image url="@../assets/staff.jpg" />
                      </image>

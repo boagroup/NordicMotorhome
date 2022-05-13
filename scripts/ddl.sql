@@ -8,12 +8,12 @@ USE heroku_e8f7f82549e360a;
 
 CREATE TABLE IF NOT EXISTS staff (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
-    firstName VARCHAR(20) NOT NULL,
-    lastName VARCHAR(20),
-    image VARCHAR(255) DEFAULT '/assets/user_placeholder.png',
-    telephone VARCHAR(16),
-    role VARCHAR(25),
-    gender ENUM('M', 'F', 'N', 'D') NOT NULL
+    firstName VARCHAR(20) NOT NULL DEFAULT '',
+    lastName VARCHAR(20) DEFAULT '',
+    image VARCHAR(255) DEFAULT '/assets/users/user_placeholder.png',
+    telephone VARCHAR(16) DEFAULT '',
+    role VARCHAR(25) DEFAULT '',
+    gender ENUM('M', 'F', 'N', 'D') NOT NULL DEFAULT 'D'
     /*
     M = Male
     F = Female
@@ -25,9 +25,9 @@ CREATE TABLE IF NOT EXISTS staff (
 CREATE TABLE IF NOT EXISTS users (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
     staff_id INT(10) NOT NULL,
-    username VARCHAR(25) UNIQUE NOT NULL,
+    username VARCHAR(25) UNIQUE NOT NULL DEFAULT '',
     password BLOB NOT NULL,
-    admin BOOLEAN NOT NULL,
+    admin BOOLEAN NOT NULL DEFAULT 0,
     FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
 );
 
@@ -35,25 +35,24 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS brands (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(25),
-    price DOUBLE(10,2)
+    name VARCHAR(25) DEFAULT '',
+    price DOUBLE(10,2) DEFAULT 0.00
 );
-
 
 CREATE TABLE IF NOT EXISTS models (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
     brand_id INT,
-    name VARCHAR(35),
-    price DOUBLE(10,2),
+    name VARCHAR(35) DEFAULT '',
+    price DOUBLE(10,2) DEFAULT 0.00,
     FOREIGN KEY (brand_id) REFERENCES brands(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS motorhomes (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
-    image VARCHAR(255) DEFAULT '/assets/motorhome_placeholder.png',
     model_id INT,
-    type VARCHAR(35) NOT NULL,
-    beds INT(2),
+    image VARCHAR(255) DEFAULT '/assets/motorhomes/motorhome_placeholder.png',
+    type VARCHAR(35) NOT NULL DEFAULT '',
+    beds INT(2) DEFAULT 0,
     FOREIGN KEY (model_id) REFERENCES models(id) ON DELETE SET NULL
 );
 
@@ -62,14 +61,14 @@ CREATE TABLE IF NOT EXISTS motorhomes (
 CREATE TABLE IF NOT EXISTS rentals (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
     motorhome_id INT(10),
-    state ENUM('N','O','C') NOT NULL,
+    state ENUM('N','O','C') NOT NULL DEFAULT 'N',
     /*
     N = New
     M = Ongoing
     P = Completed
     */
     distance INT,
-    season ENUM('L','M','P') NOT NULL,
+    season ENUM('L','M','P') NOT NULL DEFAULT 'L',
     /*
     L = Low Season
     M = Middle Season
@@ -83,8 +82,8 @@ CREATE TABLE IF NOT EXISTS rentals (
 
 CREATE TABLE IF NOT EXISTS extras (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(25),
-    price DOUBLE(10,2)
+    name VARCHAR(25) DEFAULT '',
+    price DOUBLE(10,2) DEFAULT 0.00
 );
 
 CREATE TABLE IF NOT EXISTS rentalExtras (
@@ -99,8 +98,8 @@ CREATE TABLE IF NOT EXISTS rentalExtras (
 CREATE TABLE IF NOT EXISTS clients (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
     rental_id INT(10),
-    firstName VARCHAR(20) NOT NULL,
-    lastName VARCHAR(20),
-    telephone VARCHAR(16),
+    firstName VARCHAR(20) NOT NULL DEFAULT '',
+    lastName VARCHAR(20) DEFAULT '',
+    telephone VARCHAR(16) DEFAULT '',
     FOREIGN KEY (rental_id) REFERENCES rentals(id) ON DELETE CASCADE
 );
