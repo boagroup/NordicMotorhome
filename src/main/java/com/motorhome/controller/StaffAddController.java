@@ -21,23 +21,30 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+
+/**
+ * Handles creation of Staff and User entities.
+ * Author(s): Octavian Roman
+ */
 public class StaffAddController implements Initializable {
 
+    // Variable gets changed if the user selects an image, defaults to placeholder.
     String imageName = "user_placeholder.png";
 
-    @FXML ImageView previewImage;
-    @FXML TextField firstName;
-    @FXML TextField lastName;
-    @FXML TextField role;
-    @FXML TextField telephone;
-    @FXML ChoiceBox<String> gender;
-    @FXML TextField username;
-    @FXML PasswordField password;
-    @FXML CheckBox admin;
-    @FXML Button submit;
+    @FXML private ImageView previewImage;
+    @FXML private TextField firstName;
+    @FXML private TextField lastName;
+    @FXML private TextField role;
+    @FXML private TextField telephone;
+    @FXML private ChoiceBox<String> gender;
+    @FXML private TextField username;
+    @FXML private PasswordField password;
+    @FXML private CheckBox admin;
+    @FXML private Button submit;
 
     /**
-     * Gender ChoiceBox cannot be filled in SceneBuilder, hence why we run this on initialization
+     * Adds options to Gender ChoiceBox.
+     * ChoiceBox cannot be filled in SceneBuilder, hence why we run this on initialization.
      */
     private void setGenderActions() {
         gender.getItems().addAll("Male", "Female", "Non-Binary", "Decline to State");
@@ -48,7 +55,7 @@ public class StaffAddController implements Initializable {
      * Image picker.
      * Picks an image, generates random name for it, and puts it in assets/users/ both in compiled and source directories.
      * BROKEN IN JAR (STILL)
-     * Last error to fix is being able to point to assets/users both in main and target in JAR files.
+     * Last error to fix is being able to point to assets/users both in src/main and target in JAR files.
      * Can't find how to point to directory inside JAR, only files.
      */
     private void pickImage() {
@@ -104,25 +111,22 @@ public class StaffAddController implements Initializable {
             preparedStatement.setString(6, staff.getGender());
             preparedStatement.execute();
 
-            // If username and password are provided
-            if (!user.getUsername().equals("") && !user.getPassword().equals("")) {
-                // Save staff entity ID into local variable
-                preparedStatement = connection.prepareStatement("SELECT LAST_INSERT_ID()");
-                ResultSet resultSet = preparedStatement.executeQuery();
-                resultSet.next();
-                int id = resultSet.getInt(1);
-                // Insert user table entity
-                preparedStatement = connection.prepareStatement(
-                        "INSERT INTO users (username, password, admin, staff_id) " +
-                                "VALUES (?,AES_ENCRYPT(?,?),?,?);"
-                );
-                preparedStatement.setString(1, user.getUsername());
-                preparedStatement.setString(2, user.getPassword());
-                preparedStatement.setString(3, System.getProperty("key"));
-                preparedStatement.setBoolean(4, user.isAdmin());
-                preparedStatement.setInt(5, id);
-                preparedStatement.execute();
-            }
+            // Save staff entity ID into local variable
+            preparedStatement = connection.prepareStatement("SELECT LAST_INSERT_ID()");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            int id = resultSet.getInt(1);
+            // Insert user table entity
+            preparedStatement = connection.prepareStatement(
+                    "INSERT INTO users (username, password, admin, staff_id) " +
+                            "VALUES (?,AES_ENCRYPT(?,?),?,?);"
+            );
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, System.getProperty("key"));
+            preparedStatement.setBoolean(4, user.isAdmin());
+            preparedStatement.setInt(5, id);
+            preparedStatement.execute();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -161,17 +165,18 @@ public class StaffAddController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Set image picker
         previewImage.setOnMouseClicked(mouseEvent -> pickImage());
-
+        // Set gender actions
         setGenderActions();
-
+        // Define submit functionality
         submit.setOnAction(actionEvent -> {
             // Generate entities in accordance with what has been inserted in the fields and store it in array.
             Object[] entityArray = generateEntities();
             Staff staff = (Staff) entityArray[0];
             User user = (User) entityArray[1];
 
-            // Try to add staff, store whether successful in boolean
+            // Try to add staff, store whether successful or not in boolean
             boolean success = addStaff(staff, user);
 
             // Close Staff Add pop-up
@@ -183,8 +188,7 @@ public class StaffAddController implements Initializable {
                 FXUtils.alert(Alert.AlertType.ERROR,
                         "Check for errors in your fields and try again",
                         "Staff not added",
-                        "Something went wrong!",
-                        "", true);
+                        "Something went wrong!", true);
             }
         });
     }

@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -123,18 +122,15 @@ public class FXUtils {
      * @param contextText Text that will be displayed in the context area of the alert
      * @param title Title of the alert window
      * @param header Text that will be displayed in the header of the alert
-     * @param imagePath Path to the image of the alert; pass empty string for default
      * @param show if true, alert will just show, if false, alert will showAndWait which freezes the application until dealt with
      */
-    public static void alert(Alert.AlertType type, String contextText, String title, String header, String imagePath, boolean show) {
+    public static void alert(Alert.AlertType type, String contextText, String title, String header, boolean show) {
         Alert alert = new Alert(type);
         alert.setContentText(contextText);
         alert.setTitle(title);
         alert.setHeaderText(header);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        if (!imagePath.equals("")) {
-            stage.getIcons().add(new Image(Objects.requireNonNull(FXUtils.class.getResource(imagePath)).toExternalForm()));
-        }
+        stage.getIcons().add(new Image(Objects.requireNonNull(FXUtils.class.getResource("/assets/alt_icon.png")).toExternalForm()));
         if (show) {
             alert.show();
         } else alert.showAndWait();

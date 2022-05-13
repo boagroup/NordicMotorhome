@@ -12,7 +12,7 @@ public class User {
     private String password;
     private boolean admin;
 
-    // Constructor
+    // Constructors
     public User(int id, int staff_id, String username, String password, boolean admin) {
         this.id = id;
         this.staff_id = staff_id;
@@ -21,18 +21,11 @@ public class User {
         this.admin = admin;
     }
 
+    // ID-less for entity generation (we don't know the ID until we actually insert into database)
     public User(String username, String password, boolean admin) {
         this.username = username;
         this.password = password;
         this.admin = admin;
-    }
-
-    public User(String username) {
-        this.username = username;
-    }
-
-    public User() {
-
     }
 
     // Getters

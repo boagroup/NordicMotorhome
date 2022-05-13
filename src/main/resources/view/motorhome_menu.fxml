@@ -24,7 +24,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="50.0" spacing="20.0" HBox.hgrow="ALWAYS">
                <children>
-                  <ImageView fx:id="userImage" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="userImage" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" />
                   <Label fx:id="usernameLabel" text="Username" />
                   <Button fx:id="backButton" mnemonicParsing="false" prefWidth="69.0">
                      <graphic>

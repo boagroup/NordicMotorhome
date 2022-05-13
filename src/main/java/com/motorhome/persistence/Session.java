@@ -137,5 +137,6 @@ public class Session {
 
     }
 
-    public static ArrayList<Staff> StaffEntityList = new ArrayList<>();
+    public static ArrayList<Staff> staffEntityList = new ArrayList<>();
+    public static ArrayList<User> userEntityList = new ArrayList<>();
 }

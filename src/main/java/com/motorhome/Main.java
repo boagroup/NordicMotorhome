@@ -23,7 +23,7 @@ public class Main extends Application {
         // Link scene to compartmentalized stylesheet
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/stylesheets/authentication.css")).toExternalForm());
         // Set window icon; This actually works in JAR, as opposed to dealing with plain files
-        Image icon = new Image(Objects.requireNonNull(getClass().getResource("/assets/icon.png")).toExternalForm());
+        Image icon = new Image(Objects.requireNonNull(getClass().getResource("/assets/icon128.png")).toExternalForm());
         stage.getIcons().add(icon);
         // Make window not resizable
         stage.setResizable(false);

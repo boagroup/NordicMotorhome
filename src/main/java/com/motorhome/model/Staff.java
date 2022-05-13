@@ -11,6 +11,7 @@ public class Staff {
     private String role;
     private String gender;
 
+    // Constructors
     public Staff(int id, String firstName, String lastName, String image, String telephone, String role, String gender) {
         this.id = id;
         this.firstName = firstName;
@@ -21,6 +22,7 @@ public class Staff {
         this.gender = gender;
     }
 
+    // ID-less for entity generation (we don't know the ID until we actually insert into database)
     public Staff(String firstName, String lastName, String image, String telephone, String role, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;

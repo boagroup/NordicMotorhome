@@ -5,9 +5,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" styleClass="entity-container" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.StaffEntityController">
+<HBox fx:id="entityContainer" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" styleClass="entity-container" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.StaffEntityController">
    <children>
-      <ImageView fx:id="image" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
          <children>
             <Label fx:id="nameLabel" styleClass="entity-label-text" text="Staff Name" />
@@ -30,10 +30,19 @@
       </HBox>
       <HBox alignment="CENTER" layoutX="690.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
          <children>
-            <ImageView fx:id="options" fitHeight="33.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assets/options.png" />
-               </image></ImageView>
+            <MenuButton fx:id="options" mnemonicParsing="false" textAlignment="CENTER" textFill="TRANSPARENT">
+              <items>
+                <MenuItem fx:id="edit" mnemonicParsing="false" text="Edit" />
+                <MenuItem fx:id="delete" mnemonicParsing="false" text="Delete" />
+              </items>
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/options.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuButton>
          </children>
       </HBox>
    </children>

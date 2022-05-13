@@ -42,15 +42,30 @@
     -fx-background-color: #c9c9c9;
 }
 
-.toolFlipper:hover, #add:hover {
+.toolFlipper:hover, #add:hover, #options:hover {
     -fx-border-width: 1px;
     -fx-border-color: #000;
 }
 
-.toolFlipper:pressed, #add:pressed {
+.toolFlipper:pressed, #add:pressed, #options:pressed {
     -fx-border-width: 1px;
     -fx-border-color: #000;
     -fx-background-color: #a9a9a9;
+}
+
+#options {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+#options > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+#options > .arrow-button > .arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
 }
 
 .entity-container {
@@ -61,6 +76,7 @@
 .entity-container:hover {
     -fx-background-color: #e0e0e0;
 }
+
 
 .entity-label-text {
     -fx-font-family: "Laila", Arial;
