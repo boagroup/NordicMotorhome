@@ -13,6 +13,7 @@ import java.util.*;
 public class DataResult {
     // A map that retains its insertion order
     private final LinkedHashMap<String, List<Object>> data;
+    private int iterCount = 0;
 
     /**
      * Constructor
@@ -66,9 +67,9 @@ public class DataResult {
      * @return {@code String} - name of column
      */
     public String getColumnName(int index) {
-        int count = 0;
         Set<String> keySet = data.keySet();
-        if (index > keySet.size()) {
+        if (index < keySet.size()) {
+            int count = 0;
             for (String column: keySet) {
                 if (count == index) {
                     return column;
@@ -84,9 +85,9 @@ public class DataResult {
      * @return {@code int} column index if found, else {@code -1}
      */
     public int getColumnIndex(String name) {
-        int count = 0;
         Set<String> keySet = data.keySet();
         if (data.containsKey(name)) {
+            int count = 0;
             for (String column: keySet) {
                 if (name.equals(column)) {
                     return count;
@@ -103,7 +104,8 @@ public class DataResult {
      * @return {@code Object} - data at this index
      */
     public Object getData(int column, int row) {
-        return data.get(getColumnName(column)).get(row);
+        List<Object> columnL = data.get(getColumnName(column));
+        return columnL != null? columnL.get(row): null;
     }
 
     /**
@@ -113,7 +115,8 @@ public class DataResult {
      * @return {@code Object} - data at this name and index
      */
     public Object getData(String columnName, int row) {
-        return data.get(columnName).get(row);
+        List<Object> column = data.get(columnName);
+        return column != null? column.get(row): null;
     }
 
     /**
@@ -140,5 +143,26 @@ public class DataResult {
      */
     public Map<String, List<Object>> getMap() {
         return data;
+    }
+
+    public Map<String, Object> getRow(int index) {
+        Map<String, Object> row = new LinkedHashMap<>();
+        if (index > data.size()) {return null;}
+        for (var key: data.keySet()) {
+            row.put(key, getData(key, index));
+        }
+        return row;
+    }
+
+    public boolean next() {
+        return iterCount++ < data.size();
+    }
+
+    public Map<String, Object> getCurrentRow() {
+        return getRow(iterCount);
+    }
+
+    public void resetIter() {
+        iterCount = 0;
     }
 }
