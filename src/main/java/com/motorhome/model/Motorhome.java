@@ -1,10 +1,8 @@
 package com.motorhome.model;
 
-import com.motorhome.persistence.DataResult;
-
 import java.util.Map;
 
-public class Motorhome implements BaseModel {
+public class Motorhome implements ModelInterface {
 	private int id;
 	private String image;
 	private String type;
