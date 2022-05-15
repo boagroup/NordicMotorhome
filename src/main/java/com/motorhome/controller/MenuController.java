@@ -1,6 +1,7 @@
 package com.motorhome.controller;
 
 import com.motorhome.FXTools.FXUtils;
+import com.motorhome.controller.Menu.MenuInterface;
 import com.motorhome.model.ModelInterface;
 import com.motorhome.persistence.DataResult;
 import com.motorhome.persistence.Database;
@@ -31,16 +32,14 @@ public class MenuController implements Initializable {
     public static void setMenu(MenuInterface<ModelInterface> menu) {
         MenuController.menu = menu;
     }
-    public static MenuInterface<ModelInterface> getMenu() {
-        return MenuController.menu;
-    }
 
     // Util methods
     private void createMainContainer(DataResult dataResult) {
         if (menu != null) {
             while (dataResult.next()) {
-                AnchorPane inner = menu.getInnerContainer(menu.getModel(dataResult.getCurrentRow()));
-                entityContainer.getChildren().add(inner);
+                System.out.println(dataResult.getCurrentRow());
+//                var inner = menu.getEntity(menu.getModel(dataResult.getCurrentRow()));
+//                entityContainer.getChildren().add(inner);
             }
         }
     }
@@ -62,17 +61,6 @@ public class MenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXUtils.setUserDetailsInHeader(usernameLabel, userImage);
         createMainContainer(fetchData());
-//        String title = menu.getTitle();
         FXUtils.addBackFunctionality(backButton);
-
-//        back.setOnAction( ae -> FXUtils.changeScene(ae, "main_menu", title,
-//                        true, true, "main_menu",  -1, -1));
-
-//        FXBuilder.addToButton(back,
-//                en -> back.setStyle("-fx-background-color: red;"),
-//                ex -> back.setStyle("-fx-background-color: #4bc190;"),
-//                ae -> FXUtils.changeScene(ae, "main_menu", "NMH Main Menu",
-//                        true, true, "main_menu",  -1, -1)
-//        );
     }
 }

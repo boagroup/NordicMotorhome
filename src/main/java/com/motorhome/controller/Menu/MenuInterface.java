@@ -1,9 +1,12 @@
-package com.motorhome.controller;
+package com.motorhome.controller.Menu;
 
+import com.motorhome.controller.Entity.EntityInterface;
+import com.motorhome.controller.EntityController;
 import com.motorhome.model.ModelInterface;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.Map;
@@ -19,15 +22,10 @@ public interface MenuInterface<T extends ModelInterface> {
 	// used to create ModelInterface instances
 	T getModel(Map<String, Object> row);
 
-	// Creates an inner AnchorPane that will be inserted into Vbox container
-	AnchorPane getInnerContainer(T entity);
+	// Creates an inner entity that will be inserted into Vbox container
+	Node getEntity(T model);
 
 	// get event of what will happen on Add
 	EventHandler<ActionEvent> getAddEvent();
 
-	// get event of what will happen on edit
-	EventHandler<ActionEvent> getEditEvent();
-
-	// get event of what will happen on remove
-	EventHandler<ActionEvent> getRemoveEvent();
 }

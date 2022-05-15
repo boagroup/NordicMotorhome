@@ -2,6 +2,9 @@ package com.motorhome.controller;
 
 import com.motorhome.Bridge;
 import com.motorhome.FXTools.FXUtils;
+import com.motorhome.controller.Menu.MenuInterface;
+import com.motorhome.controller.Menu.MotorhomeMenu;
+import com.motorhome.model.ModelInterface;
 import com.motorhome.persistence.Session;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,7 +32,8 @@ public class MainMenuController implements Initializable {
     @FXML private HBox motorhomesMenu;
     @FXML private HBox staffMenu;
 
-    private EventHandler changeToMenu() {
+    private EventHandler changeToMenu(MenuInterface menu) {
+        MenuController.setMenu(menu);
         return event -> FXUtils.changeScene(event, "base_menu", "base menu","base_menu");
     }
 
@@ -43,7 +47,7 @@ public class MainMenuController implements Initializable {
 
 //        motorhomesMenu.setOnMouseClicked(mouseEvent ->
 //                FXUtils.changeScene(mouseEvent, "motorhome_menu", "NMH Motorhomes Menu","motorhome_menu"));
-        motorhomesMenu.setOnMouseClicked(changeToMenu());
+        motorhomesMenu.setOnMouseClicked(changeToMenu(new MotorhomeMenu()));
 
         staffMenu.setOnMouseClicked(mouseEvent -> {
             if (Session.CurrentUser.getCurrentUser().getAdmin()) {
