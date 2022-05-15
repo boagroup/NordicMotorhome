@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -219,5 +220,12 @@ public class FXUtils {
         Stage stage = (Stage) nodeToGetScene.getScene().getWindow();
         // Pick file
         return fileChooser.showOpenDialog(stage);
+    }
+
+    // makes the button return to main menu
+    public static Button addBackFunctionality(Button button) {
+        button.setOnAction( ae -> FXUtils.changeScene(ae, "main_menu", "NRM Main Menu",
+                true, true, "main_menu",  -1, -1));
+        return button;
     }
 }
