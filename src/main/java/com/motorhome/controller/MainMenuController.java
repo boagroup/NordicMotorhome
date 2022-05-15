@@ -3,6 +3,8 @@ package com.motorhome.controller;
 import com.motorhome.Bridge;
 import com.motorhome.FXUtils;
 import com.motorhome.persistence.Session;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -11,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,6 +31,10 @@ public class MainMenuController implements Initializable {
     @FXML private HBox motorhomesMenu;
     @FXML private HBox staffMenu;
 
+    private EventHandler changeToMenu() {
+        return event -> FXUtils.changeScene(event, "base_menu", "base menu","base_menu");
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Bridge.setMainMenuController(this);
@@ -36,8 +43,9 @@ public class MainMenuController implements Initializable {
         rentalsMenu.setOnMouseClicked(mouseEvent ->
                 FXUtils.changeScene(mouseEvent, "rental_menu", "NMH Rentals Menu","rental_menu"));
 
-        motorhomesMenu.setOnMouseClicked(mouseEvent ->
-                FXUtils.changeScene(mouseEvent, "motorhome_menu", "NMH Motorhomes Menu","motorhome_menu"));
+//        motorhomesMenu.setOnMouseClicked(mouseEvent ->
+//                FXUtils.changeScene(mouseEvent, "motorhome_menu", "NMH Motorhomes Menu","motorhome_menu"));
+        motorhomesMenu.setOnMouseClicked(changeToMenu());
 
         staffMenu.setOnMouseClicked(mouseEvent -> {
             if (Session.CurrentUser.getCurrentUser().getAdmin()) {
