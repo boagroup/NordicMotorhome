@@ -1,6 +1,6 @@
 package com.motorhome.controller;
 
-import com.motorhome.FXUtils;
+import com.motorhome.FXTools.FXUtils;
 import com.motorhome.model.ModelInterface;
 import com.motorhome.persistence.DataResult;
 import com.motorhome.persistence.Database;

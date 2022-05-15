@@ -1,6 +1,6 @@
 package com.motorhome.controller.Menu;
 
-import com.motorhome.FXUtils;
+import com.motorhome.FXTools.FXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

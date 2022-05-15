@@ -1,7 +1,7 @@
 package com.motorhome.controller.Entity;
 
 import com.motorhome.Bridge;
-import com.motorhome.FXUtils;
+import com.motorhome.FXTools.FXUtils;
 import com.motorhome.controller.PopUp.StaffEditController;
 import com.motorhome.model.Staff;
 import com.motorhome.persistence.Session;

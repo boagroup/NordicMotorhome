@@ -1,4 +1,4 @@
-package com.motorhome;
+package com.motorhome.FXTools;
 
 import com.motorhome.persistence.Session;
 import javafx.event.Event;
