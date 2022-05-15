@@ -1,4 +1,4 @@
-package com.motorhome.controller;
+package com.motorhome.controller.Menu;
 
 import com.motorhome.FXUtils;
 import javafx.fxml.FXML;
@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MotorhomeMenuController implements Initializable {
+public class RentalMenuController implements Initializable {
 
     @FXML private Label usernameLabel;
     @FXML private ImageView userImage;
