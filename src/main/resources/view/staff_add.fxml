@@ -7,7 +7,7 @@
 
 <!-- Author(s) Octavian Roman -->
 
-<AnchorPane prefHeight="340.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.StaffAddController">
+<AnchorPane prefHeight="340.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.PopUp.StaffAddController">
    <children>
       <ImageView fx:id="previewImage" fitHeight="180.0" fitWidth="180.0" layoutX="28.0" layoutY="84.0" pickOnBounds="true">
          <image>

@@ -1,4 +1,4 @@
-package com.motorhome.controller;
+package com.motorhome.controller.PopUp;
 
 import com.motorhome.FXUtils;
 import com.motorhome.model.Staff;

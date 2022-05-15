@@ -1,8 +1,7 @@
 package com.motorhome;
 
-import com.motorhome.controller.AuthenticationController;
 import com.motorhome.controller.MainMenuController;
-import com.motorhome.controller.StaffMenuController;
+import com.motorhome.controller.Menu.StaffMenuController;
 
 /**
  * "Bridges" the gap between Controllers and other classes.
