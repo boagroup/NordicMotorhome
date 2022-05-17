@@ -89,7 +89,8 @@ public class StaffEntityController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Staff staff = Session.staffEntityList.get(entityIndex);
-        Image i = new Image(Objects.requireNonNull(getClass().getResource(staff.getImage())).toExternalForm());
+        Image i = new Image(Objects.requireNonNullElse(getClass().getResource(staff.getImage()),
+                getClass().getResource("/assets/users/user_placeholder.png")).toExternalForm());
         image.setImage(i);
         nameLabel.setText(staff.getFirstName() + " " + staff.getLastName());
         roleLabel.setText(staff.getRole());

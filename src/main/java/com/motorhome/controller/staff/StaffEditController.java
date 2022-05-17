@@ -92,7 +92,7 @@ public class StaffEditController implements Initializable {
     private void loadDataIntoFields(Staff staff, User user) {
         firstName.setText(staff.getFirstName());
         lastName.setText(staff.getLastName());
-        Image image = new Image(Objects.requireNonNull(getClass().getResource(staff.getImage())).toExternalForm());
+        Image image = new Image(Objects.requireNonNullElse(getClass().getResource(staff.getImage()), getClass().getResource("/assets/users/user_placeholder.png")).toExternalForm());
         previewImage.setImage(image);
         role.setText(staff.getRole());
         telephone.setText(staff.getTelephone());
@@ -157,8 +157,8 @@ public class StaffEditController implements Initializable {
             preparedStatement.setString(4, staff.getTelephone());
             preparedStatement.setString(5, staff.getRole());
             preparedStatement.setString(6, staff.getGender());
-            preparedStatement.setString(7, user.getUsername().equals("") ? null : user.getUsername());
-            preparedStatement.setString(8, user.getPassword().equals("") ? null : user.getPassword());
+            preparedStatement.setString(7, user.getUsername());
+            preparedStatement.setString(8, user.getPassword());
             preparedStatement.setString(9, System.getProperty("key"));
             preparedStatement.setBoolean(10, user.isAdmin());
             preparedStatement.setInt(11, staff.getId());

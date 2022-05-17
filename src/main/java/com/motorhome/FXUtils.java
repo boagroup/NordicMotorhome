@@ -3,7 +3,6 @@ package com.motorhome;
 import com.motorhome.persistence.Session;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -134,7 +133,8 @@ public class FXUtils {
      */
     public static void setUserDetailsInHeader(Label usernameLabel, ImageView userImage) {
         usernameLabel.setText(Session.CurrentUser.getCurrentUser().getFirstname().concat(" ").concat(Session.CurrentUser.getCurrentUser().getLastname()));
-        Image i = new Image(Session.CurrentUser.getCurrentUser().getImage());
+        Image i = new Image(Objects.requireNonNullElse(FXUtils.class.getResource(Session.CurrentUser.getCurrentUser().getImage()),
+                FXUtils.class.getResource("/assets/users/user_placeholder.png")).toExternalForm());
         userImage.setImage(i);
     }
 
@@ -189,7 +189,7 @@ public class FXUtils {
      * @return the random name + appropriate extension
      */
     public static String generateRandomImageName(File image) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         if (getExtension(image.getName()).isPresent()) {
             return formatter.format(LocalDateTime.now()) + "." + getExtension(image.getName()).get();
         } else return null;
