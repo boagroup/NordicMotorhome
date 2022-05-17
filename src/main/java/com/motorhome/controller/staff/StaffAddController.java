@@ -114,8 +114,8 @@ public class StaffAddController implements Initializable {
                     "INSERT INTO users (username, password, admin, staff_id) " +
                             "VALUES (?,AES_ENCRYPT(?,?),?,?);"
             );
-            preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(1, (user.getUsername().equals("") ? null : user.getUsername()));
+            preparedStatement.setString(2, (user.getPassword().equals("") ? null : user.getPassword()));
             preparedStatement.setString(3, System.getProperty("key"));
             preparedStatement.setBoolean(4, user.isAdmin());
             preparedStatement.setInt(5, id);
