@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 
 .menuContainer {
-    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #9a9a9a, #e0e0e0);
+    -fx-background-color: #dddddd;
 }
 
 .headerTitle {
@@ -30,12 +30,12 @@
 }
 
 #logoutButton:hover {
-    -fx-background-color: #228bb6;
+    -fx-background-color: #92b5be;
     -fx-text-fill: #fff;
 }
 
 #logoutButton:pressed {
-    -fx-background-color: #146785;
+    -fx-background-color: #228bb6;
     -fx-text-fill: #fff;
 }
 
@@ -46,7 +46,7 @@
 }
 
 #rentalsMenu:hover, #motorhomesMenu:hover, #staffMenu:hover {
-    -fx-background-color: #e0e0e0;
+    -fx-background-color: #92b5be;
 }
 
 .menuItemLabel {

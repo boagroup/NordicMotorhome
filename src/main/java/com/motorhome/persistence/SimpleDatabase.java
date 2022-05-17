@@ -11,8 +11,8 @@ import java.sql.SQLException;
 public class SimpleDatabase {
     private static final String user = System.getProperty("user");
     private static final String password = System.getProperty("password");
-    private static final String url = "jdbc:mysql://localhost:3306/motorhome";
-    // private static final String url = "jdbc:mysql://eu-cdbr-west-02.cleardb.net:3306/heroku_e8f7f82549e360a?reconnect=true";
+    // private static final String url = "jdbc:mysql://localhost:3306/motorhome";
+    private static final String url = "jdbc:mysql://eu-cdbr-west-02.cleardb.net:3306/heroku_e8f7f82549e360a?reconnect=true";
 
     /**
      * Establish a connection to our Heroku ClearDB remote database

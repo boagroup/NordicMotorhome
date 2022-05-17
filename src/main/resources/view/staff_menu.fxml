@@ -10,7 +10,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.staff.StaffMenuController">
    <top>
-      <HBox fx:id="header" prefHeight="40.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="40.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="20.0">
                <children>
@@ -45,16 +45,16 @@
    <center>
       <VBox prefHeight="200.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="1090.0" styleClass="toolbar">
+            <HBox alignment="CENTER" prefHeight="50.0" styleClass="toolbar">
                <children>
                   <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="50.0" styleClass="toolbar" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="80.0" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER" prefHeight="50.0" HBox.hgrow="ALWAYS">
                            <children>
                               <Label fx:id="entityCountLabel" styleClass="entity-label-text" text="# Items" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="137.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <children>
                               <HBox fx:id="nameToolFlipper" alignment="CENTER" prefHeight="50.0" styleClass="toolFlipper" HBox.hgrow="NEVER">
                                  <children>
@@ -82,7 +82,7 @@
                               </HBox>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="210.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <children>
                               <HBox fx:id="phoneToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
                                  <children>
@@ -96,7 +96,7 @@
                               </HBox>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="210.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <children>
                               <HBox fx:id="genderToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
                                  <children>
@@ -135,9 +135,9 @@
             </HBox>
             <ScrollPane fx:id="containerParent" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" VBox.vgrow="ALWAYS">
                <content>
-                  <VBox fx:id="entityContainer" alignment="CENTER" spacing="10.0" styleClass="scroll-container">
+                  <VBox fx:id="entityContainer" alignment="CENTER" spacing="5.0" styleClass="scroll-container">
                      <padding>
-                        <Insets left="100.0" right="100.0" />
+                        <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </padding></VBox>
                </content>
                <styleClass>
