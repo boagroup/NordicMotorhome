@@ -3,6 +3,7 @@
   Author(s): Octavian Roman, Bartosz Birylo
  */
 USE heroku_e8f7f82549e360a;
+-- USE motorhome;
 
 /* staff and users */
 

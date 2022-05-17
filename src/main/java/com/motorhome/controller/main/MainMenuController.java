@@ -1,4 +1,4 @@
-package com.motorhome.controller;
+package com.motorhome.controller.main;
 
 import com.motorhome.Bridge;
 import com.motorhome.FXUtils;

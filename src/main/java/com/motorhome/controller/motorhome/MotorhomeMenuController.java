@@ -1,4 +1,4 @@
-package com.motorhome.controller;
+package com.motorhome.controller.motorhome;
 
 import com.motorhome.FXUtils;
 import javafx.fxml.FXML;

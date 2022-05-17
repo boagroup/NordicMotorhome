@@ -1,4 +1,4 @@
-package com.motorhome.controller;
+package com.motorhome.controller.main;
 
 import com.motorhome.FXUtils;
 import com.motorhome.persistence.Session;
@@ -79,7 +79,7 @@ public class AuthenticationController implements Initializable {
                 e.printStackTrace();
             } finally {
                 SimpleDatabase.closeConnection(connection);
-            }
+             }
         }
     }
 
