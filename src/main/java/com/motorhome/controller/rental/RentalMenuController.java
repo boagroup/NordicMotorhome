@@ -21,6 +21,6 @@ public class RentalMenuController implements Initializable {
 
         FXUtils.setUserDetailsInHeader(usernameLabel, userImage);
 
-        backButton.setOnAction(actionEvent -> FXUtils.changeScene(actionEvent, "main_menu", "NMH Main Menu", "main_menu"));
+        backButton.setOnAction(actionEvent -> FXUtils.changeRoot("main_menu","main_menu", backButton));
     }
 }

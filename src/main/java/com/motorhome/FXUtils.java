@@ -31,35 +31,8 @@ import java.util.Optional;
 public class FXUtils {
 
     /**
-     * Method that changes current scene to another one.
-     * @param event Event that triggers the change of scene (e.g. actionEvent)
-     * @param FXMLView View that should be changed to
-     * @param title Title of the new scene
-     */
-    public static void changeScene(Event event, String FXMLView, String title, String stylesheet) {
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(Objects.requireNonNull(FXUtils.class.getResource("/view/" + FXMLView + ".fxml")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
-        stage.setWidth(screenSize.getWidth());
-        stage.setHeight(screenSize.getHeight());
-        stage.setMaximized(false);
-        stage.setTitle(title);
-        stage.setScene(new Scene(Objects.requireNonNull(root)));
-        stage.getScene().getStylesheets().add(Objects.requireNonNull(FXUtils.class.getResource("/stylesheets/" + stylesheet + ".css")).toExternalForm());
-        stage.setMaximized(true);
-        stage.centerOnScreen();
-        stage.show();
-    }
-
-    /**
-     * Overloaded method that changes the scene to another one.
-     * A more complete version of the previous method.
-     * Not needed in most cases, but useful if switching from a maximized window to one that is not.
+     * Method that changes the scene to another one.
+     * Only needed if changing from maximized to minimized views and vice-versa. (e.g. log out)
      * @param event Event that triggers the change of scene (e.g. actionEvent)
      * @param FXMLView View that should be changed to
      * @param title Title of the new scene
@@ -87,6 +60,26 @@ public class FXUtils {
             stage.centerOnScreen();
         }
         stage.show();
+    }
+
+    /**
+     * Method that switched from one view to another.
+     * Changes the content (scene) of a window (stage).
+     * No more weird transitions.
+     * @param FXMLView FXML file which represents the view to which we are switching.
+     * @param stylesheet Stylesheet associated with the view.
+     * @param node Node to retrieve the scene that needs to be switched. Normally you just want to pass the Node (e.g. button) triggering scene change here.
+     */
+    public static void changeRoot(String FXMLView, String stylesheet, Node node) {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(FXUtils.class.getResource("/view/" + FXMLView + ".fxml")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = node.getScene();
+        scene.getStylesheets().add(Objects.requireNonNull(FXUtils.class.getResource("/stylesheets/" + stylesheet + ".css")).toExternalForm());
+        scene.setRoot(root);
     }
 
     /**

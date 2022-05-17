@@ -34,14 +34,14 @@ public class MainMenuController implements Initializable {
         FXUtils.setUserDetailsInHeader(usernameLabel, userImage);
 
         rentalsMenu.setOnMouseClicked(mouseEvent ->
-                FXUtils.changeScene(mouseEvent, "rental_menu", "NMH Rentals Menu","rental_menu"));
+                FXUtils.changeRoot("rental_menu", "rental_menu", rentalsMenu));
 
         motorhomesMenu.setOnMouseClicked(mouseEvent ->
-                FXUtils.changeScene(mouseEvent, "motorhome_menu", "NMH Motorhomes Menu","motorhome_menu"));
+                FXUtils.changeRoot("motorhome_menu", "motorhome_menu", motorhomesMenu));
 
         staffMenu.setOnMouseClicked(mouseEvent -> {
             if (Session.CurrentUser.getCurrentUser().getAdmin()) {
-                FXUtils.changeScene(mouseEvent, "staff_menu", "NMH Staff Menu","staff_menu");
+                FXUtils.changeRoot("staff_menu", "staff_menu", staffMenu);
             } else {
                 FXUtils.alert(Alert.AlertType.ERROR, "You do not have permission to access this menu.", "Staff Menu", "Unauthorized Access", true);
             }

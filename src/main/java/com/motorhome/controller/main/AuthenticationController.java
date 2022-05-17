@@ -68,7 +68,7 @@ public class AuthenticationController implements Initializable {
                         if (resultSet.getString("password").equals(password)) {
                             // Success scenario, log user in
                             Session.CurrentUser.loadUserDetails(username);
-                            FXUtils.changeScene(event, "main_menu", "NMH Main Menu", true, true, "main_menu",  -1, -1);
+                            FXUtils.changeScene(event, "main_menu", "Nordic Motorhomes", true, true, "main_menu",  -1, -1);
                         } else {
                             // Display password incorrect error
                             errorLabel.setText("Password does not match");
