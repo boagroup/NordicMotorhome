@@ -1,5 +1,7 @@
 package com.motorhome.persistence;
 
+import com.motorhome.model.Brand;
+import com.motorhome.model.Model;
 import com.motorhome.model.Staff;
 import com.motorhome.model.User;
 
@@ -135,4 +137,7 @@ public class Session {
 
     public static ArrayList<Staff> staffEntityList = new ArrayList<>();
     public static ArrayList<User> userEntityList = new ArrayList<>();
+
+    public static ArrayList<Brand> brandEntityList = new ArrayList<>();
+    public static ArrayList<Model> modelEntityList = new ArrayList<>();
 }

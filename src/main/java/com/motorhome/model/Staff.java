@@ -1,5 +1,9 @@
 package com.motorhome.model;
 
+/**
+ * Model class of Staff entity
+ * Author(s): Octavian Roman
+ */
 public class Staff {
 
     // Attributes

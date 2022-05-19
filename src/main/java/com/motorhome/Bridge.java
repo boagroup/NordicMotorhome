@@ -1,6 +1,7 @@
 package com.motorhome;
 
 import com.motorhome.controller.main.MainMenuController;
+import com.motorhome.controller.motorhome.MotorhomeSettingsController;
 import com.motorhome.controller.staff.StaffMenuController;
 
 /**
@@ -12,6 +13,7 @@ import com.motorhome.controller.staff.StaffMenuController;
 public final class Bridge {
     private static MainMenuController mainMenuController = null;
     private static StaffMenuController staffMenuController = null;
+    private static MotorhomeSettingsController motorhomeSettingsController = null;
 
     private Bridge() {}
 
@@ -25,6 +27,10 @@ public final class Bridge {
         return staffMenuController;
     }
 
+    public static MotorhomeSettingsController getMotorhomeSettingsController() {
+        return motorhomeSettingsController;
+    }
+
     // Setters
 
     public static void setMainMenuController(MainMenuController mainMenuController) {
@@ -33,5 +39,9 @@ public final class Bridge {
 
     public static void setStaffMenuController(StaffMenuController staffMenuController) {
         Bridge.staffMenuController = staffMenuController;
+    }
+
+    public static void setMotorhomeSettingsController(MotorhomeSettingsController motorhomeSettingsController) {
+        Bridge.motorhomeSettingsController = motorhomeSettingsController;
     }
 }

@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -99,6 +101,34 @@ public class FXUtils {
             stage.setTitle(title);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UTILITY);
+            stage.setResizable(false);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Generates a new pop-up window when called.
+     * Rest of the program is not usable until the pop-up is dealt with
+     * Not to be confused with Alert
+     * Used mainly for add and edit entity functionality
+     * Overloaded to add stylesheet if needed
+     * @param fxmlFile View of the pop-up
+     * @param title Title of the pop-up
+     */
+    public static void popUp(String fxmlFile, String stylesheet, String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(FXUtils.class.getResource("/view/" + fxmlFile + ".fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(FXUtils.class.getResource("/stylesheets/" + stylesheet + ".css")).toExternalForm());
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle(title);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UTILITY);
+            stage.setResizable(false);
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -181,10 +211,10 @@ public class FXUtils {
     }
 
     /**
-     * Generates a unique name for a given file, in our case images
+     * Generates a unique name for a given file, in our case images.
      * Needed because if files were to preserve their name when copied to our directories, then there is a chance
      * that the name could already exist, which would force us to either replace the existing image with the new one,
-     * or not to copy it at all and throw an error
+     * or not to copy it at all and throw an error.
      * @param image file for which the random name will be generated
      * @return the random name + appropriate extension
      */
@@ -212,5 +242,29 @@ public class FXUtils {
         Stage stage = (Stage) nodeToGetScene.getScene().getWindow();
         // Pick file
         return fileChooser.showOpenDialog(stage);
+    }
+
+    /**
+     * Restricts the text of a certain field to be appropriate for currencies only using regex.
+     * There is room for improvement, but not all regex seem to work here.
+     * @param field TextField node to restrict using regex
+     */
+    public static void formatCurrencyFields(TextField field) {
+        field.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (!newValue.matches("\\d.\\d*")) {
+                field.setText(newValue.replaceAll("[^\\d.]", ""));
+            }
+        });
+    }
+
+    /**
+     * Takes a double and transforms it into a string that will always have two decimal places,
+     * as it is appropriate for currencies.
+     * @param value double to be formatted
+     * @return String containing the double formatted as currency
+     */
+    public static String formatCurrencyValues(double value) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+        return decimalFormat.format(value);
     }
 }

@@ -18,6 +18,9 @@ Some images used in this project have been retrieved from:
 10. "[backarrow.png](/src/main/resources/assets/backarrow.png)" by "[kavithaharish](https://www.iconfinder.com/kavithaharish)" from [iconfinder](https://www.iconfinder.com/icons/8111421/leftarrowcurved_curve_back_previous_arrow_left_arrows_icon)
 11. "[options.png](/src/main/resources/assets/options.png)" by "[Steve Schoger](https://www.iconfinder.com/icons/3671684/three_dots_icon)" from [iconfinder](https://www.iconfinder.com/icons/3671684/three_dots_icon)
 12. "[up_down_arrow.png](/src/main/resources/assets/up_down_arrow.png)" by "[IcoLabs](https://www.iconfinder.com/rodrigoeidam)" from [iconfinder](https://www.iconfinder.com/icons/7225811/arrow_down_up_icon)
+13. "[minus.png](/src/main/resources/assets/minus.png)" by "[Ionicons](https://www.iconfinder.com/iconsets/ionicons)" from [iconfinder](https://www.iconfinder.com/icons/211774/minus_icon)
+14. "[plus.png](/src/main/resources/assets/plus.png)" by "[Ionicons](https://www.iconfinder.com/iconsets/ionicons)" from [iconfinder](https://www.iconfinder.com/icons/211802/plus_icon)
+15. "[settings.png](/src/main/resources/assets/settings.png)" by "[Nack Thanakorn](https://www.iconfinder.com/nackthanakorn)" from [iconfinder](https://www.iconfinder.com/icons/8324265/ui_essential_app_filter_options_preferences_settings_icon)
 
 
 The aforementioned images are marked as "free" and/or "For commercial use"; nonetheless the usage herein is purely educational, as they have been used for an educational project, with no monetary profit whatsoever to be obtained by "boagroup".

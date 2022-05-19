@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- Author(s) Octavian Roman -->
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.motorhome.ModelEntityController">
+   <children>
+      <HBox alignment="CENTER" layoutX="210.0" layoutY="10.0" prefHeight="100.0" prefWidth="133.0">
+         <children>
+            <Label fx:id="brandLabel" styleClass="normal-text" text="Brand" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="133.0">
+         <children>
+            <Label fx:id="nameLabel" styleClass="normal-text" text="Model Name" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="133.0">
+         <children>
+            <Label fx:id="priceLabel" styleClass="price" text="Model Price" />
+         </children>
+      </HBox>
+      <HBox fx:id="removeBrandButton" alignment="CENTER" prefHeight="35.0" prefWidth="100.0" styleClass="circleButton">
+         <children>
+            <VBox fx:id="remove" alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/minus.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</HBox>

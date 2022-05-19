@@ -1,5 +1,5 @@
-.menuContainer {
-    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #9a9a9a, #e0e0e0);
+#containerParent > .viewport {
+    -fx-background-color: #dddddd;
 }
 
 .headerTitle {
@@ -24,12 +24,23 @@
     -fx-font-family: Arial;
 }
 
-#backButton:hover {
+.toolFlipper:hover, #add:hover, #settings:hover, .entityOptionsButton:hover {
+    -fx-border-width: 1px;
+    -fx-border-color: #000;
+}
+
+.toolFlipper:pressed, #add:pressed, #settings:pressed, .entityOptionsButton:pressed {
+    -fx-border-width: 1px;
+    -fx-border-color: #000;
     -fx-background-color: #228bb6;
+}
+
+#backButton:hover {
+    -fx-background-color: #92b5be;
     -fx-text-fill: #fff;
 }
 
 #backButton:pressed {
-    -fx-background-color: #146785;
+    -fx-background-color: #228bb6;
     -fx-text-fill: #fff;
 }
