@@ -1,6 +1,10 @@
 package com.motorhome.controller.motorhome;
 
 import com.motorhome.FXUtils;
+import com.motorhome.model.Brand;
+import com.motorhome.model.Model;
+import com.motorhome.model.Motorhome;
+import com.motorhome.persistence.Session;
 import com.motorhome.persistence.SimpleDatabase;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +17,7 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -24,10 +29,10 @@ public class MotorhomeMenuController implements Initializable {
     @FXML private Button backButton;
     @FXML private VBox entityContainer;
     @FXML private Label entityCountLabel;
-    @FXML private HBox nameToolFlipper;
-    @FXML private HBox roleToolFlipper;
-    @FXML private HBox phoneToolFlipper;
-    @FXML private HBox genderToolFlipper;
+    @FXML private HBox brandToolFlipper;
+    @FXML private HBox modelToolFlipper;
+    @FXML private HBox typeToolFlipper;
+    @FXML private HBox availabilityToolFlipper;
     @FXML private HBox settings;
     @FXML private HBox add;
 
@@ -38,7 +43,40 @@ public class MotorhomeMenuController implements Initializable {
     private void fetchMotorhomes(String column, String order) {
         Connection connection = SimpleDatabase.getConnection();
         try {
-            PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement("");
+            Session.motorhomeEntityList.clear();
+            Session.brandEntityList.clear();
+            Session.modelEntityList.clear();
+            PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
+                    "SELECT * FROM motorhomes " +
+                        "JOIN models ON motorhomes.model_id = models.id " +
+                        "JOIN brands ON models.brand_id = brands.id " +
+                        "ORDER BY " + column + " " + order + ";");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Motorhome motorhome = new Motorhome(
+                        resultSet.getInt("motorhomes.id"),
+                        resultSet.getInt("model_id"),
+                        resultSet.getString("image"),
+                        resultSet.getBoolean("rented"),
+                        resultSet.getString("type"),
+                        resultSet.getInt("beds")
+                );
+                Brand brand = new Brand(
+                        resultSet.getInt("brands.id"),
+                        resultSet.getString("brands.name"),
+                        resultSet.getDouble("brands.price")
+                );
+                Model model = new Model(
+                        resultSet.getInt("models.id"),
+                        resultSet.getInt("brand_id"),
+                        resultSet.getString("models.name"),
+                        resultSet.getDouble("models.price")
+                );
+                Session.motorhomeEntityList.add(motorhome);
+                Session.brandEntityList.add(brand);
+                Session.modelEntityList.add(model);
+                FXUtils.injectEntity("motorhome_entity", entityContainer);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -47,12 +85,49 @@ public class MotorhomeMenuController implements Initializable {
         }
     }
 
+    /**
+     * Flips the order of the entities in the Scene.
+     * @param field Field that is selected to flip the order (e.g. "brands.name")
+     */
+    private void flipOrder(String field) {
+        entityContainer.getChildren().clear();
+        if (currentOrder.equals("ASC")) {
+            fetchMotorhomes(field, "DESC");
+        } else fetchMotorhomes(field, "ASC");
+    }
+
+    /**
+     * Load flipping functions into toolbar at the top of the entity container to allow order inversion
+     */
+    private void prepareStaffToolbar() {
+        entityCountLabel.setText(Session.motorhomeEntityList.size() + " Items");
+        brandToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("brands.name"));
+        modelToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("models.name"));
+        typeToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("type"));
+        availabilityToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("rented"));
+    }
+
+    /**
+     * Unload and load the entities to refresh them
+     */
+    public void refresh() {
+        entityContainer.getChildren().clear();
+        fetchMotorhomes("brands.name", "ASC");
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         FXUtils.setUserDetailsInHeader(usernameLabel, userImage);
 
-        settings.setOnMouseClicked(mouseEvent -> FXUtils.popUp("motorhome_settings", "motorhome_settings", "Motorhome Options"));
+        fetchMotorhomes("brands.name", "ASC");
+
+        prepareStaffToolbar();
+
+        settings.setOnMouseClicked(mouseEvent -> {
+            FXUtils.popUp("motorhome_settings", "motorhome_settings", "Motorhome Options");
+            refresh();
+        });
 
         backButton.setOnAction(actionEvent -> FXUtils.changeRoot( "main_menu", "main_menu", backButton));
     }

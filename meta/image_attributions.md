@@ -9,7 +9,7 @@ Some images used in this project have been retrieved from:
 1. "[user_placeholder.png](/src/main/resources/assets/user_placeholder.png)" by "[Becris .](https://www.iconfinder.com/becris)" from [iconfinder](https://www.iconfinder.com/icons/3209201/account_ciecle_placeholder_round_user_icon)
 2. "[icon.png](/src/main/resources/assets/icon.png)" by "[iconshock](https://www.iconfinder.com/icons/49722/car_motorhome_vehicle_icon)" from [iconfinder](https://www.iconfinder.com/icons/49722/car_motorhome_vehicle_icon)
 3. "[camper.png](/src/main/resources/assets/camper.png)" by "[Florent B](https://www.iconfinder.com/Florent72)" from [iconfinder](https://www.iconfinder.com/icons/3155817/camper_jeep_motorhome_truck_van_vehicle_icon)
-4. "[authentication.jpg](/src/main/resources/assets/camper.png)" by "[Rota Alternativa](https://unsplash.com/@rotaalternativa)" from [unsplash](https://unsplash.com/photos/rFaFpWJLLPs)
+4. "[authentication.jpg](/src/main/resources/assets/authentication.jpg)" by "[Rota Alternativa](https://unsplash.com/@rotaalternativa)" from [unsplash](https://unsplash.com/photos/rFaFpWJLLPs)
 5. "[icon40.png](/src/main/resources/assets/icon40.png)" by "[Unknown]" from [pngwing](https://www.pngwing.com/en/free-png-yhujr)
 6. "[icon128.png](/src/main/resources/assets/icon128.png)" by "[Unknown]" from [pngwing](https://www.pngwing.com/en/free-png-yhujr)
 7. "[motorhome.jpg](/src/main/resources/assets/motorhome.jpg)" by "[lucas Favre](https://unsplash.com/@we_are_rising)" from [unsplash](https://unsplash.com/photos/AGmN0ROeu6g)

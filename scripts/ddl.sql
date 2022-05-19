@@ -52,9 +52,10 @@ CREATE TABLE IF NOT EXISTS motorhomes (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
     model_id INT,
     image VARCHAR(255) DEFAULT '/assets/motorhomes/motorhome_placeholder.png',
+    rented BOOLEAN DEFAULT 0,
     type VARCHAR(35) NOT NULL DEFAULT '',
     beds INT(2) DEFAULT 0,
-    FOREIGN KEY (model_id) REFERENCES models(id) ON DELETE SET NULL
+    FOREIGN KEY (model_id) REFERENCES models(id) ON DELETE CASCADE
 );
 
 /* rentals and its attributes */

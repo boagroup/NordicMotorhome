@@ -10,14 +10,16 @@ public class Motorhome {
     private int id;
     private int model_id;
     private String image;
+    private boolean rented;
     private String type;
     private int beds;
 
     // Constructors
-    public Motorhome(int id, int model_id, String image, String type, int beds) {
+    public Motorhome(int id, int model_id, String image, boolean rented, String type, int beds) {
         this.id = id;
         this.model_id = model_id;
         this.image = image;
+        this.rented = rented;
         this.type = type;
         this.beds = beds;
     }
@@ -42,6 +44,10 @@ public class Motorhome {
         return image;
     }
 
+    public boolean isRented() {
+        return rented;
+    }
+
     public String getType() {
         return type;
     }
@@ -61,6 +67,10 @@ public class Motorhome {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setRented(boolean rented) {
+        this.rented = rented;
     }
 
     public void setType(String type) {

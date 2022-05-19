@@ -44,3 +44,38 @@
     -fx-background-color: #228bb6;
     -fx-text-fill: #fff;
 }
+
+.imageBorder {
+    -fx-border-width: 3px;
+    -fx-border-color: #000;
+    -fx-border-style: dashed;
+}
+.entityOptionsButton {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+.entityOptionsButton > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+.entityOptionsButton > .arrow-button > .arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.entity-container {
+    -fx-background-color: #fff;
+    -fx-border-width: 1px;
+    -fx-border-color: #000;
+}
+
+.entity-container:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.entity-label-text {
+    -fx-font-family: "Laila", Arial;
+    -fx-font-size: 16px;
+}

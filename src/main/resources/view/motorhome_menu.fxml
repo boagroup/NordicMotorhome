@@ -49,14 +49,14 @@
                <children>
                   <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="50.0" styleClass="toolbar" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="50.0" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="80.0" HBox.hgrow="ALWAYS">
                            <children>
                               <Label fx:id="entityCountLabel" styleClass="entity-label-text" text="# Items" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <HBox fx:id="nameToolFlipper" alignment="CENTER" prefHeight="50.0" styleClass="toolFlipper" HBox.hgrow="NEVER">
+                              <HBox fx:id="brandToolFlipper" alignment="CENTER" prefHeight="50.0" styleClass="toolFlipper" HBox.hgrow="NEVER">
                                  <children>
                                     <Label fx:id="nameLabel" styleClass="entity-label-text" text="A-Z" />
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -70,9 +70,9 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <HBox fx:id="roleToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
+                              <HBox fx:id="modelToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
                                  <children>
-                                    <Label fx:id="roleLabel" styleClass="entity-label-text" text="Role" />
+                                    <Label fx:id="roleLabel" styleClass="entity-label-text" text="Model" />
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../assets/up_down_arrow.png" />
@@ -84,9 +84,9 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <HBox fx:id="phoneToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
+                              <HBox fx:id="typeToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
                                  <children>
-                                    <Label fx:id="phoneLabel" styleClass="entity-label-text" text="Phone" />
+                                    <Label fx:id="phoneLabel" styleClass="entity-label-text" text="Type" />
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../assets/up_down_arrow.png" />
@@ -98,9 +98,9 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <HBox fx:id="genderToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
+                              <HBox fx:id="availabilityToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
                                  <children>
-                                    <Label fx:id="genderLabel" styleClass="entity-label-text" text="Gender" />
+                                    <Label fx:id="genderLabel" styleClass="entity-label-text" text="Rented" />
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../assets/up_down_arrow.png" />

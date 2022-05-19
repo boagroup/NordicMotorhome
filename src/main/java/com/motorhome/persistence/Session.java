@@ -1,9 +1,6 @@
 package com.motorhome.persistence;
 
-import com.motorhome.model.Brand;
-import com.motorhome.model.Model;
-import com.motorhome.model.Staff;
-import com.motorhome.model.User;
+import com.motorhome.model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -140,4 +137,5 @@ public class Session {
 
     public static ArrayList<Brand> brandEntityList = new ArrayList<>();
     public static ArrayList<Model> modelEntityList = new ArrayList<>();
+    public static ArrayList<Motorhome> motorhomeEntityList = new ArrayList<>();
 }
