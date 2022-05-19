@@ -81,7 +81,8 @@ public class StaffAddController implements Initializable {
 
     /**
      * Inserts a given Staff object into the database as a field
-     * Also adds a user associated to the staff entity if its attributes are not blank
+     * Also adds a user associated to the staff entity
+     * The user entity only grants access to the system if its fields are valid
      * @param staff Staff object to be added to the database
      * @param user User object to be added to the database (if any)
      * @return true if successful, false otherwise
@@ -93,7 +94,7 @@ public class StaffAddController implements Initializable {
             // Insert staff table entity
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "INSERT INTO staff (firstName, lastName, image, telephone, role, gender) " +
-                            "VALUES (?,?,?,?,?,?);"
+                        "VALUES (?,?,?,?,?,?);"
             );
             // Throw error only if no first name provided
             preparedStatement.setString(1, (staff.getFirstName().equals("") ? null : staff.getFirstName()));
@@ -124,6 +125,8 @@ public class StaffAddController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } finally {
+            SimpleDatabase.closeConnection(connection);
         }
     }
 

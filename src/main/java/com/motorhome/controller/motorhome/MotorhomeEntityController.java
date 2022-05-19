@@ -30,7 +30,7 @@ public class MotorhomeEntityController implements Initializable {
     @FXML private MenuItem delete;
 
     // This class is always going to insert the last entity inside the ArrayList.
-    // The same index for User since they get inserted simultaneously.
+    // The same index for brands and models since they get added simultaneously.
     public final int entityIndex = Session.motorhomeEntityList.size() - 1;
 
     @Override
@@ -39,7 +39,7 @@ public class MotorhomeEntityController implements Initializable {
         Brand brand = Session.brandEntityList.get(entityIndex);
         Model model = Session.modelEntityList.get(entityIndex);
         Image i = new Image(Objects.requireNonNullElse(getClass().getResource(motorhome.getImage()),
-                getClass().getResource("/assets/users/user_placeholder.png")).toExternalForm());
+                getClass().getResource("/assets/motorhomes/motorhome_placeholder.png")).toExternalForm());
         image.setImage(i);
         brandLabel.setText(brand.getName());
         modelLabel.setText(model.getName());

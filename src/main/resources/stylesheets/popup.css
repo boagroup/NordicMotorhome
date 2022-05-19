@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+#title {
+    -fx-font-size: 30px;
+    -fx-font-family: "Montserrat", monospace;
+    -fx-text-fill: #228bb6;
+}
+
+.currency {
+    -fx-font-size: 16px;
+    -fx-font-family: "Orbitron", Arial;
+    -fx-text-fill: #008000FF;
+}
+
+.regular-label {
+    -fx-font-size: 14px;
+    -fx-font-family: "Laila", Arial;
+}
+
+#confirmButton {
+    -fx-pref-width: 100px;
+    -fx-background-color: transparent;
+    -fx-border-width: 1px;
+    -fx-border-color: lightgray;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #000;
+    -fx-font-size: 16px;
+    -fx-font-family: Arial;
+}
+
+#confirmButton:hover {
+    -fx-background-color: #92b5be;
+    -fx-text-fill: #fff;
+}
+
+#confirmButton:pressed {
+    -fx-background-color: #228bb6;
+    -fx-text-fill: #fff;
+}

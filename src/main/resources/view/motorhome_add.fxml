@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="350.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.motorhome.MotorhomeAddController">
+   <children>
+      <ImageView fx:id="image" fitHeight="240.0" fitWidth="240.0" layoutX="41.0" layoutY="55.0" pickOnBounds="true">
+         <image>
+            <Image url="@../assets/motorhomes/motorhome_placeholder.png" />
+         </image></ImageView>
+      <Label layoutX="321.0" layoutY="88.0" styleClass="regular-label" text="Motorhome Model" />
+      <TextField fx:id="typeField" layoutX="321.0" layoutY="176.0" prefHeight="25.0" prefWidth="200.0" />
+      <Label layoutX="320.0" layoutY="151.0" styleClass="regular-label" text="Motorhome Type" />
+      <Spinner fx:id="bedsSpinner" layoutX="321.0" layoutY="233.0" prefHeight="25.0" prefWidth="200.0" />
+      <Label layoutX="321.0" layoutY="209.0" styleClass="regular-label" text="No. of Beds" />
+      <ChoiceBox fx:id="modelChoiceBox" layoutX="320.0" layoutY="113.0" prefHeight="25.0" prefWidth="200.0" />
+      <Label layoutX="551.0" layoutY="209.0" styleClass="regular-label" text="Base Price / Day" />
+      <Button fx:id="confirmButton" layoutX="580.0" layoutY="295.0" mnemonicParsing="false" text="Confirm" />
+      <HBox alignment="CENTER" layoutY="20.0" prefHeight="45.0" prefWidth="700.0">
+         <children>
+            <Label fx:id="title" text="Motorhome Brand + Model" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="551.0" layoutY="233.0" prefHeight="25.0" prefWidth="100.0">
+         <children>
+            <Label fx:id="priceLabel" styleClass="currency" text="0.00 €" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

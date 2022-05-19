@@ -45,11 +45,6 @@
     -fx-text-fill: #fff;
 }
 
-.imageBorder {
-    -fx-border-width: 3px;
-    -fx-border-color: #000;
-    -fx-border-style: dashed;
-}
 .entityOptionsButton {
     -fx-background-color: transparent;
     -fx-background-insets: 0 0 0 0;

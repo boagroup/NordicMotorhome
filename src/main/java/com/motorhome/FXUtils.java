@@ -1,14 +1,14 @@
 package com.motorhome;
 
 import com.motorhome.persistence.Session;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -266,5 +266,19 @@ public class FXUtils {
     public static String formatCurrencyValues(double value) {
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
         return decimalFormat.format(value);
+    }
+
+    /**
+     * Prepare any Spinner to have a given amount of integer options starting from 0.
+     * Will start from 0 and go up to a given number.
+     * @param cap highest value of the Spinner's options
+     */
+    public static void prepareBedsSpinner(Spinner<Integer> spinner, int cap) {
+        ObservableList<Integer> values = FXCollections.observableArrayList();
+        for (int i = 0; i <= cap; i++) {
+            values.add(i);
+        }
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<>(values);
+        spinner.setValueFactory(valueFactory);
     }
 }

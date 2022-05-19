@@ -129,6 +129,8 @@ public class MotorhomeMenuController implements Initializable {
             refresh();
         });
 
+        add.setOnMouseClicked(mouseEvent -> FXUtils.popUp("motorhome_add", "popup", "Add Motorhome"));
+
         backButton.setOnAction(actionEvent -> FXUtils.changeRoot( "main_menu", "main_menu", backButton));
     }
 }
