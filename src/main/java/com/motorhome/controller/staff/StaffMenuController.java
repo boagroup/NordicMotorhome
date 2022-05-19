@@ -139,6 +139,7 @@ public class StaffMenuController implements Initializable {
     public void refresh() {
         entityContainer.getChildren().clear();
         fetchStaff("firstName", "ASC");
+        entityCountLabel.setText(Session.staffEntityList.size() + " Items");
     }
 
     @Override

@@ -58,7 +58,7 @@
                            <children>
                               <HBox fx:id="brandToolFlipper" alignment="CENTER" prefHeight="50.0" styleClass="toolFlipper" HBox.hgrow="NEVER">
                                  <children>
-                                    <Label fx:id="nameLabel" styleClass="entity-label-text" text="A-Z" />
+                                    <Label fx:id="nameLabel" styleClass="entity-label-text" text="Brand" />
                                     <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../assets/up_down_arrow.png" />

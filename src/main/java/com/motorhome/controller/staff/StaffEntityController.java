@@ -78,10 +78,11 @@ public class StaffEntityController implements Initializable {
                 // Show success alert.
                 FXUtils.alert(Alert.AlertType.INFORMATION, "The staff and it's associated user account (if any) has been deleted",
                         "Staff Deleted", "Deletion Successful", true);
-
             } catch (SQLException e) {
                 e.printStackTrace();
                 FXUtils.alert(Alert.AlertType.ERROR, "Error", "Deletion Error", "Something went wrong! (SQL Error)", false);
+            } finally {
+                SimpleDatabase.closeConnection(connection);
             }
         }
     }

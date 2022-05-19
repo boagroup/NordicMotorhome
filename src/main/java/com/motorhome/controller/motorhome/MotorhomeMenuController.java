@@ -1,5 +1,6 @@
 package com.motorhome.controller.motorhome;
 
+import com.motorhome.Bridge;
 import com.motorhome.FXUtils;
 import com.motorhome.model.Brand;
 import com.motorhome.model.Model;
@@ -113,11 +114,23 @@ public class MotorhomeMenuController implements Initializable {
     public void refresh() {
         entityContainer.getChildren().clear();
         fetchMotorhomes("brands.name", "ASC");
+        entityCountLabel.setText(Session.motorhomeEntityList.size() + " Items");
+    }
+
+    /**
+     * Prepare add functionality on add button and refresh on addition
+     */
+    private void setAddFunctionality() {
+        add.setOnMouseClicked(mouseEvent -> {
+            FXUtils.popUp("motorhome_add", "popup", "Add Motorhome");
+            refresh();
+        });
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Bridge.setMotorhomeMenuController(this);
         FXUtils.setUserDetailsInHeader(usernameLabel, userImage);
 
         fetchMotorhomes("brands.name", "ASC");
@@ -129,7 +142,7 @@ public class MotorhomeMenuController implements Initializable {
             refresh();
         });
 
-        add.setOnMouseClicked(mouseEvent -> FXUtils.popUp("motorhome_add", "popup", "Add Motorhome"));
+        setAddFunctionality();
 
         backButton.setOnAction(actionEvent -> FXUtils.changeRoot( "main_menu", "main_menu", backButton));
     }
