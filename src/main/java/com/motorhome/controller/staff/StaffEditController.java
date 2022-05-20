@@ -97,7 +97,12 @@ public class StaffEditController implements Initializable {
         previewImage.setImage(image);
         role.setText(staff.getRole());
         telephone.setText(staff.getTelephone());
-        gender.setValue(staff.getGender());
+        switch (staff.getGender()) {
+            case "M" -> gender.setValue("Male");
+            case "F" -> gender.setValue("Female");
+            case "N" -> gender.setValue("Non-Binary");
+            case "D" -> gender.setValue("Decline to State");
+        }
         username.setText(user.getUsername());
         password.setText(user.getPassword());
         admin.setSelected(user.isAdmin());
@@ -114,7 +119,12 @@ public class StaffEditController implements Initializable {
         staff.setImage(imageName);
         staff.setRole(role.getText());
         staff.setTelephone(telephone.getText());
-        staff.setGender(gender.getValue());
+        switch (gender.getValue()) {
+            case "Male" -> staff.setGender("M");
+            case "Female" -> staff.setGender("F");
+            case "Non-Binary" -> staff.setGender("N");
+            case "Decline to State", "Gender" -> staff.setGender("D");
+        }
         user.setUsername(username.getText());
         user.setPassword(password.getText());
         user.setAdmin(admin.isSelected());

@@ -44,17 +44,17 @@ public class MotorhomeEntityController implements Initializable {
 
     private void deleteMotorhome(Motorhome motorhome) {
         // Get confirmation with an alert. No function for this since they'd have to take too many arguments anyways.
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "+ brandLabel.getText() + modelLabel.getText() + "?", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "+ brandLabel.getText() + " " + modelLabel.getText() + "?", ButtonType.YES, ButtonType.NO);
         alert.setHeaderText("Please Confirm Motorhome Deletion");
         alert.setTitle("Motorhome Deletion");
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/assets/alt_icon.png")).toExternalForm()));
-        ImageView image = new ImageView();
-        image.setImage(image.getImage());
+        ImageView tempImage = new ImageView();
+        tempImage.setImage(image.getImage());
         // Must explicitly size image, otherwise it preserves original size and makes pop-up grow
-        image.setFitHeight(64.0);
-        image.setFitWidth(64.0);
-        alert.setGraphic(image);
+        tempImage.setFitHeight(64.0);
+        tempImage.setFitWidth(64.0);
+        alert.setGraphic(tempImage);
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
