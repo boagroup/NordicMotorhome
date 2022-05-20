@@ -94,5 +94,10 @@ public class MotorhomeEntityController implements Initializable {
         availabilityLabel.setText(motorhome.isRented() ? "Rented" : "Available");
 
         delete.setOnAction(actionEvent -> deleteMotorhome(motorhome));
+        edit.setOnAction(actionEvent -> {
+            MotorhomeEditController.entityIndex = entityIndex;
+            FXUtils.popUp("motorhome_edit", "popup", "Edit Motorhome");
+            Bridge.getMotorhomeMenuController().refresh();
+        });
     }
 }

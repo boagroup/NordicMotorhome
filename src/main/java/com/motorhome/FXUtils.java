@@ -1,6 +1,8 @@
 package com.motorhome;
 
 import com.motorhome.persistence.Session;
+import com.motorhome.persistence.SimpleDatabase;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -18,9 +20,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -245,7 +252,7 @@ public class FXUtils {
     }
 
     /**
-     * Restricts the text of a certain field to be appropriate for currencies only using regex.
+     * Restricts the text of a certain field to be appropriate for currencies only, using regex.
      * There is room for improvement, but not all regex seem to work here.
      * @param field TextField node to restrict using regex
      */
@@ -266,6 +273,93 @@ public class FXUtils {
     public static String formatCurrencyValues(double value) {
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
         return decimalFormat.format(value);
+    }
+
+    /**
+     * Queries the database to retrieve the model options available in motorhome add and edit popups.
+     * Adds all options to a ChoiceBox so that the user may select the desired model.
+     * Also Stores all model IDs in a HashMap for usage during confirmation; to avoid a database query.
+     * @param choiceBox ChoiceBox where all the model options will be inserted
+     * @param modelsMap HashMap where the name will act as key and id as value
+     */
+    public static void setModelOptions(ChoiceBox<String> choiceBox, HashMap<String, Integer> modelsMap) {
+        Connection connection = SimpleDatabase.getConnection();
+        try {
+            PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
+                    "SELECT id, name FROM models;");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                choiceBox.getItems().add(name);
+                modelsMap.put(name, id);
+            }
+            choiceBox.setValue("Model");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SimpleDatabase.closeConnection(connection);
+        }
+    }
+
+    /**
+     * Set the dynamicTitle variable to the model and brand names of a given motorhome model and brand.
+     * Used in motorhome add and edit popups.
+     * The title label is bound to this StringProperty variable, thus it changes when we change it.
+     * Unidirectional data flow.
+     * @param choiceBox ChoiceBox whose current value is the name of the model to which we want to update the title to
+     * @param modelsMap HashMap that setModelOptions above fills in so that we can get the ID from the model name
+     * @param dynamicTitle StringProperty to be updated
+     */
+    public static void updateTitle(ChoiceBox<String> choiceBox, HashMap<String, Integer> modelsMap, StringProperty dynamicTitle) {
+        int modelId = modelsMap.get(choiceBox.getValue());
+        String brandName = "Something Went ";
+        String modelName = "Wrong";
+        Connection connection = SimpleDatabase.getConnection();
+        try {
+            PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
+                    "SELECT brands.name, models.name FROM models JOIN brands ON brand_id = brands.id WHERE models.id = ?;");
+            preparedStatement.setInt(1, modelId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            brandName = resultSet.getString("brands.name");
+            modelName = resultSet.getString("models.name");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SimpleDatabase.closeConnection(connection);
+        }
+        dynamicTitle.setValue(brandName + " " + modelName);
+    }
+
+    /**
+     * Set the dynamicPrice variable to the model and brand prices of a given motorhome model and brand.
+     * Used in motorhome add and edit popups.
+     * The price label is bound to this StringProperty variable, thus it changes when we change it.
+     * Unidirectional data flow.
+     * @param choiceBox ChoiceBox whose current value is the name of the model to which we want to update the title to
+     * @param modelsMap HashMap that setModelOptions fills in so that we can get the ID from the model name
+     * @param dynamicPrice StringProperty to be updated
+     */
+    public static void updatePrice(ChoiceBox<String> choiceBox, HashMap<String, Integer> modelsMap, StringProperty dynamicPrice) {
+        int modelId = modelsMap.get(choiceBox.getValue());
+        double brandPrice = 0.0;
+        double modelPrice = 0.0;
+        Connection connection = SimpleDatabase.getConnection();
+        try {
+            PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
+                    "SELECT brands.price, models.price FROM models JOIN brands ON brand_id = brands.id WHERE models.id = ?;");
+            preparedStatement.setInt(1, modelId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            brandPrice = resultSet.getDouble("brands.price");
+            modelPrice = resultSet.getDouble("models.price");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SimpleDatabase.closeConnection(connection);
+        }
+        dynamicPrice.setValue(FXUtils.formatCurrencyValues(brandPrice + modelPrice) + " €");
     }
 
     /**

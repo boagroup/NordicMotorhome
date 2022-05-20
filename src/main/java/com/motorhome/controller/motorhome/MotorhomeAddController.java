@@ -16,7 +16,6 @@ import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Objects;
@@ -46,76 +45,6 @@ public class MotorhomeAddController implements Initializable {
     private final StringProperty dynamicPrice = new SimpleStringProperty();
 
     /**
-     * Queries the database to retrieve the model options available.
-     * Stores all model IDs in a HashMap for usage during confirmation.
-     */
-    private void setModelOptions() {
-        Connection connection = SimpleDatabase.getConnection();
-        try {
-            PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
-                    "SELECT id, name FROM models;");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                modelChoiceBox.getItems().add(name);
-                modelsMap.put(name, id);
-            }
-            modelChoiceBox.setValue("Model");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SimpleDatabase.closeConnection(connection);
-        }
-    }
-
-    /**
-     * Set the dynamicTitle variable to the model and brand of motorhome selected
-     */
-    private void updateTitle() {
-        int modelId = modelsMap.get(modelChoiceBox.getValue());
-        String brandName = "Something Went ";
-        String modelName = "Wrong";
-        Connection connection = SimpleDatabase.getConnection();
-        try {
-            PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
-                    "SELECT brands.name, models.name FROM models JOIN brands ON brand_id = brands.id WHERE models.id = ?;");
-            preparedStatement.setInt(1, modelId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            brandName = resultSet.getString("brands.name");
-            modelName = resultSet.getString("models.name");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SimpleDatabase.closeConnection(connection);
-        }
-        dynamicTitle.setValue(brandName + " " + modelName);
-    }
-
-    // Set the dynamicPrice variable to the combined prices of the selected motorhome brand and model
-    private void updatePrice() {
-        int modelId = modelsMap.get(modelChoiceBox.getValue());
-        double brandPrice = 0.0;
-        double modelPrice = 0.0;
-        Connection connection = SimpleDatabase.getConnection();
-        try {
-            PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
-                    "SELECT brands.price, models.price FROM models JOIN brands ON brand_id = brands.id WHERE models.id = ?;");
-            preparedStatement.setInt(1, modelId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            brandPrice = resultSet.getDouble("brands.price");
-            modelPrice = resultSet.getDouble("models.price");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SimpleDatabase.closeConnection(connection);
-        }
-        dynamicPrice.setValue(FXUtils.formatCurrencyValues(brandPrice + modelPrice) + " €");
-    }
-
-    /**
      * Bind label nodes to StringProperties and make them update when the ChoiceBox hides
      */
     private void makePriceAndTitleDynamic() {
@@ -123,8 +52,8 @@ public class MotorhomeAddController implements Initializable {
         priceLabel.textProperty().bind(dynamicPrice);
         modelChoiceBox.setOnHidden(event -> {
             if (!modelChoiceBox.getValue().equals("Model")) {
-                updateTitle();
-                updatePrice();
+                FXUtils.updateTitle(modelChoiceBox, modelsMap, dynamicTitle);
+                FXUtils.updatePrice(modelChoiceBox, modelsMap, dynamicPrice);
             }
         });
         dynamicTitle.setValue("New Motorhome");
@@ -203,7 +132,7 @@ public class MotorhomeAddController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setModelOptions();
+        FXUtils.setModelOptions(modelChoiceBox, modelsMap);
         FXUtils.prepareBedsSpinner(bedsSpinner, 12);
         image.setOnMouseClicked(mouseEvent -> pickImage());
         makePriceAndTitleDynamic();

@@ -21,7 +21,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * Handles creation of Staff and User entities.
+ * Handles edition of Staff and User entities.
  * Author(s): Octavian Roman
  */
 public class StaffEditController implements Initializable {
@@ -92,7 +92,8 @@ public class StaffEditController implements Initializable {
     private void loadDataIntoFields(Staff staff, User user) {
         firstName.setText(staff.getFirstName());
         lastName.setText(staff.getLastName());
-        Image image = new Image(Objects.requireNonNullElse(getClass().getResource(staff.getImage()), getClass().getResource("/assets/users/user_placeholder.png")).toExternalForm());
+        Image image = new Image(Objects.requireNonNullElse(getClass().getResource(staff.getImage()),
+                getClass().getResource("/assets/users/user_placeholder.png")).toExternalForm());
         previewImage.setImage(image);
         role.setText(staff.getRole());
         telephone.setText(staff.getTelephone());
@@ -147,9 +148,9 @@ public class StaffEditController implements Initializable {
         try {
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "UPDATE staff JOIN users ON staff.id = users.staff_id " +
-                            "SET firstName = ?, lastName = ?, image = ?, telephone = ?, role = ?, gender = ?, " +
-                            "username = ?, password = AES_ENCRYPT(?,?), admin = ? " +
-                            "WHERE staff.id = ?");
+                        "SET firstName = ?, lastName = ?, image = ?, telephone = ?, role = ?, gender = ?, " +
+                        "username = ?, password = AES_ENCRYPT(?,?), admin = ? " +
+                        "WHERE staff.id = ?");
 
             preparedStatement.setString(1, staff.getFirstName().equals("") ? null : staff.getFirstName());
             preparedStatement.setString(2, staff.getLastName());
