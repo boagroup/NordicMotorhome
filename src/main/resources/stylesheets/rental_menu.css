@@ -1,3 +1,7 @@
+#containerParent > .viewport {
+    -fx-background-color: #dddddd;
+}
+
 .headerTitle {
     -fx-font-family: "Montserrat", monospace;
     -fx-font-size: 26px;
@@ -20,12 +24,53 @@
     -fx-font-family: Arial;
 }
 
-#backButton:hover {
+.toolFlipper:hover, #add:hover, #settings:hover, .entityOptionsButton:hover {
+    -fx-border-width: 1px;
+    -fx-border-color: #000;
+}
+
+.toolFlipper:pressed, #add:pressed, #settings:pressed, .entityOptionsButton:pressed {
+    -fx-border-width: 1px;
+    -fx-border-color: #000;
     -fx-background-color: #228bb6;
+}
+
+#backButton:hover {
+    -fx-background-color: #92b5be;
     -fx-text-fill: #fff;
 }
 
 #backButton:pressed {
-    -fx-background-color: #146785;
+    -fx-background-color: #228bb6;
     -fx-text-fill: #fff;
+}
+
+.entityOptionsButton {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+.entityOptionsButton > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+.entityOptionsButton > .arrow-button > .arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.entity-container {
+    -fx-background-color: #fff;
+    -fx-border-width: 1px;
+    -fx-border-color: #000;
+}
+
+.entity-container:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.entity-label-text {
+    -fx-font-family: "Laila", Arial;
+    -fx-font-size: 16px;
 }

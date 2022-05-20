@@ -138,4 +138,6 @@ public class Session {
     public static ArrayList<Brand> brandEntityList = new ArrayList<>();
     public static ArrayList<Model> modelEntityList = new ArrayList<>();
     public static ArrayList<Motorhome> motorhomeEntityList = new ArrayList<>();
+
+    public static ArrayList<Extra> extraEntityList = new ArrayList<>();
 }
