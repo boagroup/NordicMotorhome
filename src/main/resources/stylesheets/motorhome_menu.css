@@ -12,6 +12,10 @@
     -fx-font-size: 20px;
 }
 
+.toolbar {
+    -fx-background-color: #92b5be;
+}
+
 #backButton {
     -fx-pref-width: 100px;
     -fx-background-color: transparent;

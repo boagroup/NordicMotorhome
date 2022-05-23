@@ -129,7 +129,6 @@ public class Session {
             currentUser.setImage("");
             currentUser.setStaff_ID(0);
         }
-
     }
 
     public static ArrayList<Staff> staffEntityList = new ArrayList<>();
@@ -140,5 +139,7 @@ public class Session {
     public static ArrayList<Motorhome> motorhomeEntityList = new ArrayList<>();
 
     public static ArrayList<Extra> extraEntityList = new ArrayList<>();
+    public static ArrayList<Client> clientEntityList = new ArrayList<>();
     public static ArrayList<Rental> rentalEntityList = new ArrayList<>();
+    public static ArrayList<ArrayList<Extra>> rentalExtrasCollectionList = new ArrayList<>();
 }

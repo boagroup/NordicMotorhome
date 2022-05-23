@@ -7,32 +7,32 @@
 
 <!-- Author(s) Octavian Roman -->
 
-<HBox fx:id="entityContainer" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" styleClass="entity-container" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.motorhome.MotorhomeEntityController">
+<HBox fx:id="entityContainer" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" styleClass="entity-container" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.rental.RentalEntityController">
    <children>
       <ImageView fx:id="image" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
          <children>
-            <Label fx:id="brandLabel" styleClass="entity-label-text" text="Motorhome Brand + Model" wrapText="true" />
+            <Label fx:id="motorhomeLabel" styleClass="entity-label-text" text="Motorhome Brand + Model" wrapText="true" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutX="90.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
          <children>
-            <Label fx:id="modelLabel" styleClass="entity-label-text" text="Customer Name" />
+            <Label fx:id="clientLabel" styleClass="entity-label-text" text="Client Name" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutX="290.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
          <children>
-            <Label fx:id="typeLabel" styleClass="entity-label-text" text="Start Date" />
+            <Label fx:id="startDateLabel" styleClass="entity-label-text" text="Start Date" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutX="490.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label fx:id="typeLabel1" styleClass="entity-label-text" text="End Date" />
+            <Label fx:id="endDateLabel" styleClass="entity-label-text" text="End Date" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutX="490.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
          <children>
-            <Label fx:id="availabilityLabel" styleClass="entity-label-text" text="Price" />
+            <Label fx:id="priceLabel" styleClass="entity-label-text" text="Price" />
          </children>
       </HBox>
       <HBox alignment="CENTER" layoutX="690.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">

@@ -15,10 +15,11 @@ public class Rental {
     private String season;
     private Date start_date;
     private Date end_date;
+    private double final_price;
     private String notes;
 
     // Constructors
-    public Rental(int id, int motorhome_id, String state, int distance, String season, Date start_date, Date end_date, String notes) {
+    public Rental(int id, int motorhome_id, String state, int distance, String season, Date start_date, Date end_date, double final_price, String notes) {
         this.id = id;
         this.motorhome_id = motorhome_id;
         this.state = state;
@@ -26,16 +27,18 @@ public class Rental {
         this.season = season;
         this.start_date = start_date;
         this.end_date = end_date;
+        this.final_price = final_price;
         this.notes = notes;
     }
     // ID-less
-    public Rental(int motorhome_id, String state, int distance, String season, Date start_date, Date end_date, String notes) {
+    public Rental(int motorhome_id, String state, int distance, String season, Date start_date, Date end_date, double final_price, String notes) {
         this.motorhome_id = motorhome_id;
         this.state = state;
         this.distance = distance;
         this.season = season;
         this.start_date = start_date;
         this.end_date = end_date;
+        this.final_price = final_price;
         this.notes = notes;
     }
 
@@ -66,6 +69,10 @@ public class Rental {
 
     public Date getEnd_date() {
         return end_date;
+    }
+
+    public double getFinal_price() {
+        return final_price;
     }
 
     public String getNotes() {
@@ -99,6 +106,10 @@ public class Rental {
 
     public void setEnd_date(Date end_date) {
         this.end_date = end_date;
+    }
+
+    public void setFinal_price(double final_price) {
+        this.final_price = final_price;
     }
 
     public void setNotes(String notes) {

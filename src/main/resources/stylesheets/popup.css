@@ -17,7 +17,7 @@
     -fx-font-family: "Laila", Arial;
 }
 
-#confirmButton {
+#confirmButton, .regular-button {
     -fx-pref-width: 100px;
     -fx-background-color: transparent;
     -fx-border-width: 1px;
@@ -29,12 +29,34 @@
     -fx-font-family: Arial;
 }
 
-#confirmButton:hover {
+#confirmButton:hover, .regular-button:hover {
     -fx-background-color: #92b5be;
     -fx-text-fill: #fff;
 }
 
-#confirmButton:pressed {
+#confirmButton:pressed, .regular-button:pressed {
+    -fx-background-color: #228bb6;
+    -fx-text-fill: #fff;
+}
+
+.regular-button-rental {
+    -fx-pref-width: 150px;
+    -fx-background-color: transparent;
+    -fx-border-width: 1px;
+    -fx-border-color: lightgray;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #000;
+    -fx-font-size: 16px;
+    -fx-font-family: Arial;
+}
+
+.regular-button-rental:hover {
+    -fx-background-color: #92b5be;
+    -fx-text-fill: #fff;
+}
+
+.regular-button-rental:pressed {
     -fx-background-color: #228bb6;
     -fx-text-fill: #fff;
 }

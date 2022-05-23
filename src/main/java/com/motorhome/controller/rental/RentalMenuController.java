@@ -1,7 +1,7 @@
 package com.motorhome.controller.rental;
 
 import com.motorhome.FXUtils;
-import com.motorhome.model.Rental;
+import com.motorhome.model.*;
 import com.motorhome.persistence.Database;
 import com.motorhome.persistence.Session;
 import javafx.fxml.FXML;
@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -35,19 +36,23 @@ public class RentalMenuController implements Initializable {
     @FXML private HBox settings;
     @FXML private HBox add;
 
-
-    // Can be used to flip order, not using boolean for clarity.
         private String currentOrder;
 
         private void fetchRentals(String column, String order) {
             Connection connection = Database.getConnection();
             try {
-                // Clear arraylists to be safe
                 Session.rentalEntityList.clear();
-                // Select everything from both tables, long statement because we need to decrypt the password
+                Session.clientEntityList.clear();
+                Session.motorhomeEntityList.clear();
+                Session.modelEntityList.clear();
+                Session.brandEntityList.clear();
                 PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
-                        "");
-
+                "SELECT * FROM rentals " +
+                    "JOIN clients ON rentals.id = clients.rental_id " +
+                    "JOIN motorhomes ON rentals.motorhome_id = motorhomes.id " +
+                    "JOIN models ON motorhomes.model_id = models.id " +
+                    "JOIN brands ON models.brand_id = brands.id " +
+                    "ORDER BY " + column + " " + order + ";");
                 ResultSet resultSet = preparedStatement.executeQuery();
                 // Iterate over each entity in the result set, and create Rental objects with each one of them
                 while (resultSet.next()) {
@@ -59,11 +64,59 @@ public class RentalMenuController implements Initializable {
                             resultSet.getString("season"),
                             resultSet.getDate("start_date"),
                             resultSet.getDate("end_date"),
+                            resultSet.getDouble("final_price"),
                             resultSet.getString("notes")
                     );
+                    Client client = new Client(
+                            resultSet.getInt("clients.id"),
+                            resultSet.getInt("rentals.id"),
+                            resultSet.getString("firstName"),
+                            resultSet.getString("lastName"),
+                            resultSet.getString("telephone")
+                    );
+                    Motorhome motorhome = new Motorhome(
+                            resultSet.getInt("motorhomes.id"),
+                            resultSet.getInt("model_id"),
+                            resultSet.getString("image"),
+                            resultSet.getBoolean("rented"),
+                            resultSet.getString("type"),
+                            resultSet.getInt("beds")
+                    );
+                    Model model = new Model(
+                            resultSet.getInt("models.id"),
+                            resultSet.getInt("brand_id"),
+                            resultSet.getString("models.name"),
+                            resultSet.getDouble("models.price")
+                    );
+                    Brand brand = new Brand(
+                            resultSet.getInt("brands.id"),
+                            resultSet.getString("brands.name"),
+                            resultSet.getDouble("brands.price")
+                    );
 
+                    preparedStatement = Objects.requireNonNull(connection).prepareStatement(
+                            "SELECT * FROM rentalextras " +
+                                "JOIN extras ON extra_id = extras.id " +
+                                "WHERE rental_id = ?");
+
+                    preparedStatement.setInt(1, resultSet.getInt("rentals.id"));
+                    ResultSet extraResultSet = preparedStatement.executeQuery();
+                    ArrayList<Extra> extraArrayList = new ArrayList<>();
+                    while (extraResultSet.next()) {
+                        Extra extra = new Extra(
+                                extraResultSet.getInt("id"),
+                                extraResultSet.getString("name"),
+                                extraResultSet.getDouble("price")
+                        );
+                        extraArrayList.add(extra);
+                    }
                     // Add objects as soon as they are created, ensuring correct order
                     Session.rentalEntityList.add(rental);
+                    Session.clientEntityList.add(client);
+                    Session.motorhomeEntityList.add(motorhome);
+                    Session.modelEntityList.add(model);
+                    Session.brandEntityList.add(brand);
+                    Session.rentalExtrasCollectionList.add(extraArrayList);
                     // Inject what we just inserted into the ArrayLists into the scene
                     FXUtils.injectEntity("rental_entity", entityContainer);
                 }
@@ -75,7 +128,6 @@ public class RentalMenuController implements Initializable {
                 currentOrder = order;
             }
         }
-
 
         /**
          *Flips the order of the entities in the Scene.
@@ -94,11 +146,11 @@ public class RentalMenuController implements Initializable {
          */
         private void prepareStaffToolbar() {
             entityCountLabel.setText(Session.rentalEntityList.size() + " Items");
-            motorhomeToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("motorhome"));
-            clientToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("client"));
+            motorhomeToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("brands.name"));
+            clientToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("firstName"));
             startDateToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("start_date"));
             endDateToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("end_date"));
-            priceToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("price"));
+            priceToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("final_price"));
         }
 
         /**
@@ -107,7 +159,7 @@ public class RentalMenuController implements Initializable {
          */
         private void addFunctionality() {
             add.setOnMouseClicked(mouseEvent -> {
-                FXUtils.popUp("rental_add", "Add Rentals");
+                FXUtils.popUp("rental_add", "popup", "Add Rentals");
                 refresh();
             });
         }
@@ -128,11 +180,17 @@ public class RentalMenuController implements Initializable {
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
 
+            FXUtils.setUserDetailsInHeader(usernameLabel, userImage);
+
             settings.setOnMouseClicked(mouseEvent -> {
                 FXUtils.popUp("rental_settings", "motorhome_settings", "Rental Options");
             });
 
             addFunctionality();
+
+            fetchRentals("end_date", "ASC");
+
+            prepareStaffToolbar();
 
             backButton.setOnAction(actionEvent -> FXUtils.changeRoot("main_menu","main_menu", backButton));
         }
