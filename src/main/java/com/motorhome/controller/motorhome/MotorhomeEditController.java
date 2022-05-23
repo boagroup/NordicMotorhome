@@ -3,7 +3,7 @@ package com.motorhome.controller.motorhome;
 import com.motorhome.FXUtils;
 import com.motorhome.model.Motorhome;
 import com.motorhome.persistence.Session;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -114,7 +114,7 @@ public class MotorhomeEditController implements Initializable {
         // Set beds spinner value to previous bed amount
         bedsSpinner.getValueFactory().setValue(motorhome.getBeds());
         // Time to update the title, price, and model inside the box; we need brands and models here too, so we have to query the database
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             // Get brand and model names
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
@@ -135,7 +135,7 @@ public class MotorhomeEditController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
     }
 
@@ -155,7 +155,7 @@ public class MotorhomeEditController implements Initializable {
      * @return true if successful, false otherwise
      */
     private boolean editMotorhome(Motorhome motorhome) {
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "UPDATE motorhomes SET model_id = ?, image = ?, type = ?, beds = ? " +
@@ -171,7 +171,7 @@ public class MotorhomeEditController implements Initializable {
             e.printStackTrace();
             return false;
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
     }
 

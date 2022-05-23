@@ -4,7 +4,7 @@ import com.motorhome.FXUtils;
 import com.motorhome.model.Staff;
 import com.motorhome.model.User;
 import com.motorhome.persistence.Session;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -154,7 +154,7 @@ public class StaffEditController implements Initializable {
      */
     private boolean editStaff(Staff staff, User user) {
         // Establish connection
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "UPDATE staff JOIN users ON staff.id = users.staff_id " +
@@ -179,7 +179,7 @@ public class StaffEditController implements Initializable {
             e.printStackTrace();
             return false;
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
     }
 

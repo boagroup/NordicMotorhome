@@ -4,7 +4,7 @@ import com.motorhome.Bridge;
 import com.motorhome.FXUtils;
 import com.motorhome.model.Brand;
 import com.motorhome.persistence.Session;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -49,7 +49,7 @@ public class BrandEntityController implements Initializable {
 
         // If confirmation has been received
         if (alert.getResult() == ButtonType.YES) {
-            Connection connection = SimpleDatabase.getConnection();
+            Connection connection = Database.getConnection();
             try {
                 // Prepare statement
                 PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
@@ -63,7 +63,7 @@ public class BrandEntityController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
-                SimpleDatabase.closeConnection(connection);
+                Database.closeConnection(connection);
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.motorhome;
 
 import com.motorhome.persistence.Session;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -283,7 +283,7 @@ public class FXUtils {
      * @param modelsMap HashMap where the name will act as key and id as value
      */
     public static void setModelOptions(ChoiceBox<String> choiceBox, HashMap<String, Integer> modelsMap) {
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "SELECT id, name FROM models;");
@@ -298,7 +298,7 @@ public class FXUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
     }
 
@@ -315,7 +315,7 @@ public class FXUtils {
         int modelId = modelsMap.get(choiceBox.getValue());
         String brandName = "Something Went ";
         String modelName = "Wrong";
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "SELECT brands.name, models.name FROM models JOIN brands ON brand_id = brands.id WHERE models.id = ?;");
@@ -327,7 +327,7 @@ public class FXUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
         dynamicTitle.setValue(brandName + " " + modelName);
     }
@@ -345,7 +345,7 @@ public class FXUtils {
         int modelId = modelsMap.get(choiceBox.getValue());
         double brandPrice = 0.0;
         double modelPrice = 0.0;
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "SELECT brands.price, models.price FROM models JOIN brands ON brand_id = brands.id WHERE models.id = ?;");
@@ -357,7 +357,7 @@ public class FXUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
         dynamicPrice.setValue(FXUtils.formatCurrencyValues(brandPrice + modelPrice) + " €");
     }

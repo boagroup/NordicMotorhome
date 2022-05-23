@@ -92,7 +92,7 @@ public class Session {
          */
         public static void loadUserDetails(String username) {
             currentUser = CurrentUser.getCurrentUser();
-            Connection connection = SimpleDatabase.getConnection();
+            Connection connection = Database.getConnection();
             if (connection != null) {
                 try {
                     PreparedStatement preparedStatement = connection.prepareStatement("SELECT firstName, lastName, image, admin, staff_ID FROM staff INNER JOIN users ON staff.id = users.staff_id WHERE username = ?");
@@ -112,7 +112,7 @@ public class Session {
                     e.printStackTrace();
                 }
                 finally {
-                    SimpleDatabase.closeConnection(connection);
+                    Database.closeConnection(connection);
                 }
             }
         }

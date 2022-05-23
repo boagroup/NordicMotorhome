@@ -6,7 +6,7 @@ import com.motorhome.model.Brand;
 import com.motorhome.model.Model;
 import com.motorhome.model.Motorhome;
 import com.motorhome.persistence.Session;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -42,7 +42,7 @@ public class MotorhomeMenuController implements Initializable {
     private String currentOrder;
 
     private void fetchMotorhomes(String column, String order) {
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             Session.motorhomeEntityList.clear();
             Session.brandEntityList.clear();
@@ -81,7 +81,7 @@ public class MotorhomeMenuController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
             currentOrder = order;
         }
     }

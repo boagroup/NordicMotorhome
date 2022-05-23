@@ -4,7 +4,7 @@ import com.motorhome.Bridge;
 import com.motorhome.FXUtils;
 import com.motorhome.model.Staff;
 import com.motorhome.persistence.Session;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -65,7 +65,7 @@ public class StaffEntityController implements Initializable {
 
         // If confirmation has been received
         if (alert.getResult() == ButtonType.YES) {
-            Connection connection = SimpleDatabase.getConnection();
+            Connection connection = Database.getConnection();
             try {
                 // Execute SQL statement. No need to delete User since it will cascade
                 PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement("DELETE FROM staff WHERE id = ?");
@@ -82,7 +82,7 @@ public class StaffEntityController implements Initializable {
                 e.printStackTrace();
                 FXUtils.alert(Alert.AlertType.ERROR, "Error", "Deletion Error", "Something went wrong! (SQL Error)", false);
             } finally {
-                SimpleDatabase.closeConnection(connection);
+                Database.closeConnection(connection);
             }
         }
     }

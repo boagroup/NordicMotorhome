@@ -6,7 +6,7 @@ import com.motorhome.model.Brand;
 import com.motorhome.model.Model;
 import com.motorhome.model.Motorhome;
 import com.motorhome.persistence.Session;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -58,7 +58,7 @@ public class MotorhomeEntityController implements Initializable {
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
-            Connection connection = SimpleDatabase.getConnection();
+            Connection connection = Database.getConnection();
             try {
                 // Execute SQL statement.
                 PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement("DELETE FROM motorhomes WHERE id = ?");
@@ -75,7 +75,7 @@ public class MotorhomeEntityController implements Initializable {
                 e.printStackTrace();
                 FXUtils.alert(Alert.AlertType.ERROR, "Error", "Deletion Error", "Something went wrong! (SQL Error)", false);
             } finally {
-                SimpleDatabase.closeConnection(connection);
+                Database.closeConnection(connection);
             }
         }
     }

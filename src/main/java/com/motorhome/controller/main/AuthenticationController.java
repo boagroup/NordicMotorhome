@@ -2,7 +2,7 @@ package com.motorhome.controller.main;
 
 import com.motorhome.FXUtils;
 import com.motorhome.persistence.Session;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,7 +46,7 @@ public class AuthenticationController implements Initializable {
             // If both fields are not empty
             try {
                 // Connect to the database
-                connection = SimpleDatabase.getConnection();
+                connection = Database.getConnection();
                 if (connection != null) {
                     // Prepare statement which selects password associated with unique username
                     preparedStatement = connection.prepareStatement("SELECT AES_DECRYPT(password, ?) AS password FROM users WHERE username = ?");
@@ -78,7 +78,7 @@ public class AuthenticationController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
-                SimpleDatabase.closeConnection(connection);
+                Database.closeConnection(connection);
              }
         }
     }

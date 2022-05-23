@@ -2,7 +2,7 @@ package com.motorhome.controller.motorhome;
 
 import com.motorhome.FXUtils;
 import com.motorhome.model.Motorhome;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -111,7 +111,7 @@ public class MotorhomeAddController implements Initializable {
      */
     private boolean addMotorhome(Motorhome motorhome) {
         // Establish connection
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "INSERT INTO motorhomes (model_id, image, type, beds) " +
@@ -126,7 +126,7 @@ public class MotorhomeAddController implements Initializable {
             e.printStackTrace();
             return false;
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
     }
 

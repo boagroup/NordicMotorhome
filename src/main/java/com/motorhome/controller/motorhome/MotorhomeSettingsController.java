@@ -5,7 +5,7 @@ import com.motorhome.FXUtils;
 import com.motorhome.model.Brand;
 import com.motorhome.model.Model;
 import com.motorhome.persistence.Session;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -63,7 +63,7 @@ public class MotorhomeSettingsController implements Initializable {
      */
     public void fetchModels() {
         // Establish connection
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             // Prepare SQL statement
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
@@ -99,7 +99,7 @@ public class MotorhomeSettingsController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
     }
 
@@ -114,7 +114,7 @@ public class MotorhomeSettingsController implements Initializable {
      */
     private void addModel() {
         // Establish connection
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             // First, we need to get the ID of the brand to which this model belongs
             int brandId;
@@ -152,7 +152,7 @@ public class MotorhomeSettingsController implements Initializable {
                     "SQL Error",
                     true);
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
     }
 
@@ -161,7 +161,7 @@ public class MotorhomeSettingsController implements Initializable {
      */
     public void fetchBrands() {
         // Establish connection
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             // Prepare SQL statement
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
@@ -185,7 +185,7 @@ public class MotorhomeSettingsController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
     }
 
@@ -200,7 +200,7 @@ public class MotorhomeSettingsController implements Initializable {
      */
     private void addBrand() {
         // Establish connection
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             // Prepare and execute SQL statement
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
@@ -225,7 +225,7 @@ public class MotorhomeSettingsController implements Initializable {
                     "SQL Error",
                     true);
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
     }
 

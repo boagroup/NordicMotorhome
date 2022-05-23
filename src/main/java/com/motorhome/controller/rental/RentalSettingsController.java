@@ -4,7 +4,7 @@ import com.motorhome.Bridge;
 import com.motorhome.FXUtils;
 import com.motorhome.model.Extra;
 import com.motorhome.persistence.Session;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -36,7 +36,7 @@ public class RentalSettingsController implements Initializable {
      */
     private void fetchExtras() {
         // Establish connection
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             // Prepare SQL statement
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
@@ -60,7 +60,7 @@ public class RentalSettingsController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
     }
 
@@ -74,7 +74,7 @@ public class RentalSettingsController implements Initializable {
      */
     private void addExtra() {
         // Establish connection
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             // Prepare and execute SQL statement
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
@@ -98,7 +98,7 @@ public class RentalSettingsController implements Initializable {
                     "SQL Error",
                     true);
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
     }
 

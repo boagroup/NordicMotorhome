@@ -5,7 +5,7 @@ import com.motorhome.FXUtils;
 import com.motorhome.model.Staff;
 import com.motorhome.model.User;
 import com.motorhome.persistence.Session;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -52,7 +52,7 @@ public class StaffMenuController implements Initializable {
      * @param order "ASC" or "DESC", determines ascending or descending order.
      */
     private void fetchStaff(String column, String order) {
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             // Clear arraylists to be safe
             Session.staffEntityList.clear();
@@ -92,7 +92,7 @@ public class StaffMenuController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
             // Store what order we just fetched with to be able to flip it later, if needed
             currentOrder = order;
         }

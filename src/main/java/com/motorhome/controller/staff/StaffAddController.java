@@ -3,7 +3,7 @@ package com.motorhome.controller.staff;
 import com.motorhome.FXUtils;
 import com.motorhome.model.Staff;
 import com.motorhome.model.User;
-import com.motorhome.persistence.SimpleDatabase;
+import com.motorhome.persistence.Database;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -89,7 +89,7 @@ public class StaffAddController implements Initializable {
      */
     private boolean addStaff(Staff staff, User user) {
         // Establish connection
-        Connection connection = SimpleDatabase.getConnection();
+        Connection connection = Database.getConnection();
         try {
             // Insert staff table entity
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
@@ -126,7 +126,7 @@ public class StaffAddController implements Initializable {
             e.printStackTrace();
             return false;
         } finally {
-            SimpleDatabase.closeConnection(connection);
+            Database.closeConnection(connection);
         }
     }
 
