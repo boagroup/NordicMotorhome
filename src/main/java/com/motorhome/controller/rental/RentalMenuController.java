@@ -1,6 +1,5 @@
 package com.motorhome.controller.rental;
 
-import com.motorhome.Bridge;
 import com.motorhome.FXUtils;
 import com.motorhome.model.Rental;
 import com.motorhome.persistence.Database;
@@ -23,7 +22,6 @@ import java.util.ResourceBundle;
 
 public class RentalMenuController implements Initializable {
 
-
     @FXML private Label usernameLabel;
     @FXML private ImageView userImage;
     @FXML private Button backButton;
@@ -45,16 +43,10 @@ public class RentalMenuController implements Initializable {
             Connection connection = Database.getConnection();
             try {
                 // Clear arraylists to be safe
-                Session.rentalEntity.clear();
+                Session.rentalEntityList.clear();
                 // Select everything from both tables, long statement because we need to decrypt the password
                 PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
-
-                        //                    "SELECT rentals.id, motorhome_id, state, distance, season, start_date, end_date, notes " +
-                        //                            "rentalExtras.rental_id,  " +
-                        //                            "FROM rental JOIN rentalExtras ON rentals.id = rentalExtras.rental_id " +
-                        //                            "ORDER BY " + column + " " + order + ";");
-
-                        "SELECT * FROM Motorhomes");
+                        "");
 
                 ResultSet resultSet = preparedStatement.executeQuery();
                 // Iterate over each entity in the result set, and create Rental objects with each one of them
@@ -71,7 +63,7 @@ public class RentalMenuController implements Initializable {
                     );
 
                     // Add objects as soon as they are created, ensuring correct order
-                    Session.rentalEntity.add(rental);
+                    Session.rentalEntityList.add(rental);
                     // Inject what we just inserted into the ArrayLists into the scene
                     FXUtils.injectEntity("rental_entity", entityContainer);
                 }
@@ -101,7 +93,7 @@ public class RentalMenuController implements Initializable {
          * Load flipping functions into toolbar at the top of the entity container to allow order inversion
          */
         private void prepareStaffToolbar() {
-            entityCountLabel.setText(Session.rentalEntity.size() + " Items");
+            entityCountLabel.setText(Session.rentalEntityList.size() + " Items");
             motorhomeToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("motorhome"));
             clientToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("client"));
             startDateToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("start_date"));
@@ -128,7 +120,7 @@ public class RentalMenuController implements Initializable {
         public void refresh() {
             entityContainer.getChildren().clear();
             fetchRentals("firstName", "ASC");
-            entityCountLabel.setText(Session.rentalEntity.size() + " Items");
+            entityCountLabel.setText(Session.rentalEntityList.size() + " Items");
         }
 
 
@@ -136,8 +128,9 @@ public class RentalMenuController implements Initializable {
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
 
+            settings.setOnMouseClicked(mouseEvent -> {
                 FXUtils.popUp("rental_settings", "motorhome_settings", "Rental Options");
-
+            });
 
             addFunctionality();
 
