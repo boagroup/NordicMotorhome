@@ -15,27 +15,27 @@
             <Label fx:id="motorhomeLabel" styleClass="entity-label-text" text="Motorhome Brand + Model" wrapText="true" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutX="90.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+      <HBox alignment="CENTER" layoutX="90.0" layoutY="10.0" prefHeight="80.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
          <children>
             <Label fx:id="clientLabel" styleClass="entity-label-text" text="Client Name" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutX="290.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+      <HBox alignment="CENTER" layoutX="290.0" layoutY="10.0" prefHeight="80.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
          <children>
             <Label fx:id="startDateLabel" styleClass="entity-label-text" text="Start Date" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutX="490.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" layoutX="490.0" layoutY="10.0" prefHeight="80.0" prefWidth="150.0">
          <children>
             <Label fx:id="endDateLabel" styleClass="entity-label-text" text="End Date" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutX="490.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+      <HBox alignment="CENTER" layoutX="490.0" layoutY="10.0" prefHeight="80.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
          <children>
             <Label fx:id="priceLabel" styleClass="entity-label-text" text="Price" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutX="690.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+      <HBox alignment="CENTER" layoutX="690.0" layoutY="10.0" prefHeight="80.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
          <children>
             <MenuButton mnemonicParsing="false" styleClass="entityOptionsButton" textAlignment="CENTER" textFill="TRANSPARENT">
               <items>
