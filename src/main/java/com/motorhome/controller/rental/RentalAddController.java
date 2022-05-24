@@ -18,7 +18,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class RentalAddController implements Initializable {
 
@@ -106,14 +105,14 @@ public class RentalAddController implements Initializable {
         // Set dynamic title value to brand name + model name
         dynamicTitle.setValue(brand.getName() + " " + model.getName());
         // Compute daily price (brand and model needed)
-        double dailyPrice = computeDailyPrice(brand, model);
+        double dailyPrice = FXUtils.computeDailyPrice(brand, model, seasonChoiceBox);
         // Set dynamic daily price to computer price and format accordingly
         dynamicDailyPrice.setValue(FXUtils.formatCurrencyValues(dailyPrice) + " €");
         // If both date pickers have a value
         if (startDateDatePicker.getValue() != null && endDateDatePicker.getValue() != null) {
             // Set dynamic total price to computer price with overloaded function
             dynamicTotalPrice.setValue(
-                    FXUtils.formatCurrencyValues(computeFinalPrice(
+                    FXUtils.formatCurrencyValues(FXUtils.computeFinalPrice(
                     dailyPrice,
                     Date.valueOf(startDateDatePicker.getValue()),
                     Date.valueOf(endDateDatePicker.getValue()),
@@ -121,70 +120,11 @@ public class RentalAddController implements Initializable {
                     extraArrayList)) + " €");
         } else {  // Same, but if no dates have been picked
             dynamicTotalPrice.setValue(
-                    FXUtils.formatCurrencyValues(computeFinalPrice(
+                    FXUtils.formatCurrencyValues(FXUtils.computeFinalPrice(
                     dailyPrice,
                     Integer.parseInt(distanceField.getText().equals("") ? "0" : distanceField.getText()),
                     extraArrayList)) + " €");
         }
-    }
-
-    /**
-     * Formula: (Brand price + Model price) * Season modifier
-     * @param brand Brand to retrieve price
-     * @param model Model to retrieve price
-     * @return the daily price with no added extras, pick-up fees, etc.
-     */
-    private double computeDailyPrice(Brand brand, Model model) {
-        double dailyPrice = 0.00;
-        switch (seasonChoiceBox.getValue()) {
-            case "Low Season" -> dailyPrice = brand.getPrice() + model.getPrice();
-            case "Mid Season" -> dailyPrice = (brand.getPrice() + model.getPrice()) * 1.30;
-            case "High Season" -> dailyPrice = (brand.getPrice() + model.getPrice()) * 1.60;
-        }
-        return dailyPrice;
-    }
-
-    /**
-     * Overloaded function; this variant runs if no dates have been selected.
-     * Computes the final price with the data available.
-     * Won't actually be called to calculate final price for database object because dates are required fields;
-     * Therefore, this just computes for UI reactivity.
-     * @param dailyPrice Daily price double which needs to be computed before this is called
-     * @param distanceToPickUp Distance to pick up modifier which is retrieved from the distanceField
-     * @param extraArrayList ArrayList that gets modified dynamically in the "Pick Extras" pop-up window
-     * @return double representing the final price not including duration prices
-     */
-    private double computeFinalPrice(double dailyPrice, int distanceToPickUp, ArrayList<Extra> extraArrayList) {
-        double distanceSurcharge = 0.70 * distanceToPickUp;
-        for (Extra extra : extraArrayList) {
-            dailyPrice += extra.getPrice();
-        }
-        return dailyPrice + distanceSurcharge;
-    }
-
-    /**
-     * Overloaded function; this variant runs if all required fields are provided.
-     * Computes the final price with the data available.
-     * Also runs to compute actual final value that goes in the database.
-     * @param dailyPrice Daily price double which needs to be computed before this is called
-     * @param startDate SQL Date representing when the rental starts to take effect
-     * @param endDate SQL Date representing when the rental finalizes
-     * @param distanceToPickUp Distance to pick up modifier which is retrieved from the distanceField
-     * @param extraArrayList ArrayList that gets modified dynamically in the "Pick Extras" pop-up window
-     * @return double representing the final price
-     */
-    private double computeFinalPrice(double dailyPrice, Date startDate, Date endDate, int distanceToPickUp, ArrayList<Extra> extraArrayList) {
-        long difference = endDate.getTime() - startDate.getTime();
-        long amountOfRentalDays;
-        if (difference > 0) {
-            amountOfRentalDays = TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS);
-        } else amountOfRentalDays = 1;
-        double distanceSurcharge = 0.70 * distanceToPickUp;
-        double extraSurcharge = 0.00;
-        for (Extra extra : extraArrayList) {
-            extraSurcharge += extra.getPrice();
-        }
-        return dailyPrice * amountOfRentalDays + distanceSurcharge + extraSurcharge;
     }
 
     /**
@@ -244,7 +184,7 @@ public class RentalAddController implements Initializable {
         switch (seasonChoiceBox.getValue()) {
             case "Low Season" -> seasonEnum = "L";
             case "Mid Season" -> seasonEnum = "M";
-            case "High Season" -> seasonEnum = "H";
+            case "Peak Season" -> seasonEnum = "P";
         }
         Rental rental = new Rental(
                 motorhomeId,
@@ -287,8 +227,8 @@ public class RentalAddController implements Initializable {
             Object[] oldEntityArray = retrieveMotorhomeEntities();
             Model model = (Model) Objects.requireNonNull(oldEntityArray)[1];
             Brand brand = (Brand) Objects.requireNonNull(oldEntityArray)[2];
-            double dailyPrice = computeDailyPrice(brand, model);
-            double finalPrice = computeFinalPrice(
+            double dailyPrice = FXUtils.computeDailyPrice(brand, model, seasonChoiceBox);
+            double finalPrice = FXUtils.computeFinalPrice(
                     dailyPrice,
                     java.sql.Date.valueOf(startDateDatePicker.getValue()),
                     java.sql.Date.valueOf(endDateDatePicker.getValue()),
@@ -357,7 +297,7 @@ public class RentalAddController implements Initializable {
      * Prepare choiceBox, set initial values, restrict distance field to integers, disable confirm button
      */
     private void initializeValues() {
-        seasonChoiceBox.getItems().addAll("Low Season", "Mid Season", "High Season");
+        seasonChoiceBox.getItems().addAll("Low Season", "Mid Season", "Peak Season");
         seasonChoiceBox.setValue("Low Season");
         dynamicTitle.setValue("New Rental");
         dynamicDailyPrice.setValue("0.00 €");
@@ -369,6 +309,7 @@ public class RentalAddController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Bridge.setRentalAddController(this);
+        MotorhomeSelectionEntityController.controlFlipper = true;
         initializeValues();
         addReactivity();
         // Pick motorhome button and image do the same thing. You can only change motorhome image in motorhome menu.
