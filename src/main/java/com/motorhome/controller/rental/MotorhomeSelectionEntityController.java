@@ -43,9 +43,7 @@ public class MotorhomeSelectionEntityController implements Initializable {
         availabilityLabel.setText(motorhome.isRented() ? "Rented" : "Available");
         entityContainer.setOnMouseClicked(mouseEvent -> {
             // Bridge to the Rental Add or Edit Controllers and pass in the proper ID.
-            if (controlFlipper) {
-                Bridge.getRentalAddController().pickMotorhome(motorhome.getId());
-            } else Bridge.getRentalEditController().pickMotorhome(motorhome.getId());
+            Bridge.getRentalAddController().pickMotorhome(motorhome.getId());
             // Bridge to the Motorhome Selection Controller and close its window since we just selected something.
             Bridge.getRentalMotorhomeSelectionController().closeSelectionWindow();
         });
