@@ -3,10 +3,7 @@ package com.motorhome;
 import com.motorhome.controller.main.MainMenuController;
 import com.motorhome.controller.motorhome.MotorhomeMenuController;
 import com.motorhome.controller.motorhome.MotorhomeSettingsController;
-import com.motorhome.controller.rental.RentalAddController;
-import com.motorhome.controller.rental.RentalMenuController;
-import com.motorhome.controller.rental.RentalMotorhomeSelectionController;
-import com.motorhome.controller.rental.RentalSettingsController;
+import com.motorhome.controller.rental.*;
 import com.motorhome.controller.staff.StaffMenuController;
 
 /**
@@ -24,6 +21,7 @@ public final class Bridge {
     private static RentalSettingsController rentalSettingsController = null;
     private static RentalAddController rentalAddController = null;
     private static RentalMotorhomeSelectionController rentalMotorhomeSelectionController = null;
+    private static RentalEditController rentalEditController = null;
 
     private Bridge() {}
 
@@ -61,6 +59,10 @@ public final class Bridge {
         return rentalMotorhomeSelectionController;
     }
 
+    public static RentalEditController getRentalEditController() {
+        return rentalEditController;
+    }
+
     // Setters
 
     public static void setMainMenuController(MainMenuController mainMenuController) {
@@ -93,5 +95,9 @@ public final class Bridge {
 
     public static void setRentalMotorhomeSelectionController(RentalMotorhomeSelectionController rentalMotorhomeSelectionController) {
         Bridge.rentalMotorhomeSelectionController = rentalMotorhomeSelectionController;
+    }
+
+    public static void setRentalEditController(RentalEditController rentalEditController) {
+        Bridge.rentalEditController = rentalEditController;
     }
 }

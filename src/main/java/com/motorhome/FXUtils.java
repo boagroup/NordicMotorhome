@@ -1,5 +1,8 @@
 package com.motorhome;
 
+import com.motorhome.model.Brand;
+import com.motorhome.model.Extra;
+import com.motorhome.model.Model;
 import com.motorhome.persistence.Session;
 import com.motorhome.persistence.Database;
 import javafx.beans.property.StringProperty;
@@ -20,16 +23,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Contains tools that will be needed in most classes
@@ -387,4 +389,64 @@ public class FXUtils {
             }
         });
     }
+
+    /**
+     * Formula: (Brand price + Model price) * Season modifier
+     * @param brand Brand to retrieve price
+     * @param model Model to retrieve price
+     * @return the daily price with no added extras, pick-up fees, etc.
+     */
+    public static double computeDailyPrice(Brand brand, Model model, ChoiceBox<String> choiceBox) {
+        double dailyPrice = 0.00;
+        switch (choiceBox.getValue()) {
+            case "Low Season" -> dailyPrice = brand.getPrice() + model.getPrice();
+            case "Mid Season" -> dailyPrice = (brand.getPrice() + model.getPrice()) * 1.30;
+            case "High Season" -> dailyPrice = (brand.getPrice() + model.getPrice()) * 1.60;
+        }
+        return dailyPrice;
+    }
+
+    /**
+     * Overloaded function; this variant runs if no dates have been selected.
+     * Computes the final price with the data available.
+     * Won't actually be called to calculate final price for database object because dates are required fields;
+     * Therefore, this just computes for UI reactivity.
+     * @param dailyPrice Daily price double which needs to be computed before this is called
+     * @param distanceToPickUp Distance to pick up modifier which is retrieved from the distanceField
+     * @param extraArrayList ArrayList that gets modified dynamically in the "Pick Extras" pop-up window
+     * @return double representing the final price not including duration prices
+     */
+    public static double computeFinalPrice(double dailyPrice, int distanceToPickUp, ArrayList<Extra> extraArrayList) {
+        double distanceSurcharge = 0.70 * distanceToPickUp;
+        for (Extra extra : extraArrayList) {
+            dailyPrice += extra.getPrice();
+        }
+        return dailyPrice + distanceSurcharge;
+    }
+
+    /**
+     * Overloaded function; this variant runs if all required fields are provided.
+     * Computes the final price with the data available.
+     * Also runs to compute actual final value that goes in the database.
+     * @param dailyPrice Daily price double which needs to be computed before this is called
+     * @param startDate SQL Date representing when the rental starts to take effect
+     * @param endDate SQL Date representing when the rental finalizes
+     * @param distanceToPickUp Distance to pick up modifier which is retrieved from the distanceField
+     * @param extraArrayList ArrayList that gets modified dynamically in the "Pick Extras" pop-up window
+     * @return double representing the final price
+     */
+    public static double computeFinalPrice(double dailyPrice, Date startDate, Date endDate, int distanceToPickUp, ArrayList<Extra> extraArrayList) {
+        long difference = endDate.getTime() - startDate.getTime();
+        long amountOfRentalDays;
+        if (difference > 0) {
+            amountOfRentalDays = TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS);
+        } else amountOfRentalDays = 1;
+        double distanceSurcharge = 0.70 * distanceToPickUp;
+        double extraSurcharge = 0.00;
+        for (Extra extra : extraArrayList) {
+            extraSurcharge += extra.getPrice();
+        }
+        return dailyPrice * amountOfRentalDays + distanceSurcharge + extraSurcharge;
+    }
+
 }

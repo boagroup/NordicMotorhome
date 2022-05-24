@@ -84,7 +84,7 @@ public class RentalEntityController implements Initializable {
         priceLabel.setText(FXUtils.formatCurrencyValues(rental.getFinal_price()));
 
         edit.setOnAction(actionEvent -> {
-           // RentalEditController.entityIndex = entityIndex;
+            RentalEditController.entityIndex = entityIndex;
             FXUtils.popUp("rental_edit", "popup", "Edit Rental");
             Bridge.getMotorhomeMenuController().refresh();
         });
@@ -93,6 +93,5 @@ public class RentalEntityController implements Initializable {
             delete(rental, motorhome, client);
             Bridge.getRentalMenuController().refresh();
         });
-
     }
 }

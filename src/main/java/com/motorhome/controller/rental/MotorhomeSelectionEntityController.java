@@ -27,6 +27,8 @@ public class MotorhomeSelectionEntityController implements Initializable {
 
     public final int entityIndex = Session.motorhomeEntityList.size() - 1;
 
+    public static boolean controlFlipper;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Motorhome motorhome = Session.motorhomeEntityList.get(entityIndex);
@@ -40,8 +42,10 @@ public class MotorhomeSelectionEntityController implements Initializable {
         typeLabel.setText(motorhome.getType());
         availabilityLabel.setText(motorhome.isRented() ? "Rented" : "Available");
         entityContainer.setOnMouseClicked(mouseEvent -> {
-            // Bridge to the Rental Add Controller and pass in the proper ID.
-            Bridge.getRentalAddController().pickMotorhome(motorhome.getId());
+            // Bridge to the Rental Add or Edit Controllers and pass in the proper ID.
+            if (controlFlipper) {
+                Bridge.getRentalAddController().pickMotorhome(motorhome.getId());
+            } else Bridge.getRentalEditController().pickMotorhome(motorhome.getId());
             // Bridge to the Motorhome Selection Controller and close its window since we just selected something.
             Bridge.getRentalMotorhomeSelectionController().closeSelectionWindow();
         });
