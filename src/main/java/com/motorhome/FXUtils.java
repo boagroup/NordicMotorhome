@@ -375,4 +375,16 @@ public class FXUtils {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<>(values);
         spinner.setValueFactory(valueFactory);
     }
+
+    /**
+     * Restricts the text of a certain field to be appropriate for integers only, using regex.
+     * @param field TextField node to restrict using regex
+     */
+    public static void formatIntegerFields(TextField field) {
+        field.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                field.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+    }
 }

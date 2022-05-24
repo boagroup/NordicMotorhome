@@ -11,6 +11,7 @@ public class Rental {
     private int id;
     private int motorhome_id;
     private String state;
+    private String location;
     private int distance;
     private String season;
     private Date start_date;
@@ -19,11 +20,12 @@ public class Rental {
     private String notes;
 
     // Constructors
-    public Rental(int id, int motorhome_id, String state, int distance, String season, Date start_date, Date end_date, double final_price, String notes) {
+    public Rental(int id, int motorhome_id, String state, int distance, String location, String season, Date start_date, Date end_date, double final_price, String notes) {
         this.id = id;
         this.motorhome_id = motorhome_id;
         this.state = state;
         this.distance = distance;
+        this.location = location;
         this.season = season;
         this.start_date = start_date;
         this.end_date = end_date;
@@ -31,10 +33,11 @@ public class Rental {
         this.notes = notes;
     }
     // ID-less
-    public Rental(int motorhome_id, String state, int distance, String season, Date start_date, Date end_date, double final_price, String notes) {
+    public Rental(int motorhome_id, String state, int distance, String location, String season, Date start_date, Date end_date, double final_price, String notes) {
         this.motorhome_id = motorhome_id;
         this.state = state;
         this.distance = distance;
+        this.location = location;
         this.season = season;
         this.start_date = start_date;
         this.end_date = end_date;
@@ -57,6 +60,10 @@ public class Rental {
 
     public int getDistance() {
         return distance;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public String getSeason() {
@@ -94,6 +101,10 @@ public class Rental {
 
     public void setDistance(int distance) {
         this.distance = distance;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public void setSeason(String season) {

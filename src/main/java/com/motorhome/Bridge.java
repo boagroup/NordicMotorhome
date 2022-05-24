@@ -3,7 +3,9 @@ package com.motorhome;
 import com.motorhome.controller.main.MainMenuController;
 import com.motorhome.controller.motorhome.MotorhomeMenuController;
 import com.motorhome.controller.motorhome.MotorhomeSettingsController;
+import com.motorhome.controller.rental.RentalAddController;
 import com.motorhome.controller.rental.RentalMenuController;
+import com.motorhome.controller.rental.RentalMotorhomeSelectionController;
 import com.motorhome.controller.rental.RentalSettingsController;
 import com.motorhome.controller.staff.StaffMenuController;
 
@@ -20,6 +22,8 @@ public final class Bridge {
     private static MotorhomeSettingsController motorhomeSettingsController = null;
     private static RentalMenuController rentalMenuController = null;
     private static RentalSettingsController rentalSettingsController = null;
+    private static RentalAddController rentalAddController = null;
+    private static RentalMotorhomeSelectionController rentalMotorhomeSelectionController = null;
 
     private Bridge() {}
 
@@ -49,6 +53,14 @@ public final class Bridge {
         return rentalSettingsController;
     }
 
+    public static RentalAddController getRentalAddController() {
+        return rentalAddController;
+    }
+
+    public static RentalMotorhomeSelectionController getRentalMotorhomeSelectionController() {
+        return rentalMotorhomeSelectionController;
+    }
+
     // Setters
 
     public static void setMainMenuController(MainMenuController mainMenuController) {
@@ -73,5 +85,13 @@ public final class Bridge {
 
     public static void setRentalSettingsController(RentalSettingsController rentalSettingsController) {
         Bridge.rentalSettingsController = rentalSettingsController;
+    }
+
+    public static void setRentalAddController(RentalAddController rentalAddController) {
+        Bridge.rentalAddController = rentalAddController;
+    }
+
+    public static void setRentalMotorhomeSelectionController(RentalMotorhomeSelectionController rentalMotorhomeSelectionController) {
+        Bridge.rentalMotorhomeSelectionController = rentalMotorhomeSelectionController;
     }
 }

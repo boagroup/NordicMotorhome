@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- Author(s) Octavian Roman -->
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.rental.RentalMotorhomeSelectionController">
+    <center>
+        <VBox prefHeight="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" prefHeight="50.0" styleClass="toolbar">
+                    <children>
+                        <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="50.0" styleClass="toolbar" HBox.hgrow="ALWAYS">
+                            <children>
+                                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="80.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label fx:id="entityCountLabel" styleClass="entity-label-text" text="# Items" />
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <HBox fx:id="brandToolFlipper" alignment="CENTER" prefHeight="50.0" styleClass="toolFlipper" HBox.hgrow="NEVER">
+                                            <children>
+                                                <Label fx:id="nameLabel" styleClass="entity-label-text" text="Brand" />
+                                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../assets/up_down_arrow.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <HBox fx:id="modelToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
+                                            <children>
+                                                <Label fx:id="roleLabel" styleClass="entity-label-text" text="Model" />
+                                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../assets/up_down_arrow.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <HBox fx:id="typeToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
+                                            <children>
+                                                <Label fx:id="phoneLabel" styleClass="entity-label-text" text="Type" />
+                                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../assets/up_down_arrow.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <HBox fx:id="availabilityToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
+                                            <children>
+                                                <Label fx:id="genderLabel" styleClass="entity-label-text" text="Rented" />
+                                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../assets/up_down_arrow.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                            </children>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                        </HBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </HBox>
+                <ScrollPane fx:id="containerParent" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" VBox.vgrow="ALWAYS">
+                    <content>
+                        <VBox fx:id="entityContainer" alignment="CENTER" spacing="5.0" styleClass="scroll-container">
+                            <padding>
+                                <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                            </padding></VBox>
+                    </content>
+                    <styleClass>
+                        <String fx:value="edge-to-edge" />
+                        <String fx:value="scrollpane" />
+                    </styleClass>
+                </ScrollPane>
+            </children></VBox>
+    </center>
+</BorderPane>

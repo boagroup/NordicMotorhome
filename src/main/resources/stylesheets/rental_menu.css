@@ -78,3 +78,9 @@
     -fx-font-family: "Laila", Arial;
     -fx-font-size: 16px;
 }
+
+.currency {
+    -fx-font-size: 16px;
+    -fx-font-family: "Orbitron", Arial;
+    -fx-text-fill: #008000FF;
+}

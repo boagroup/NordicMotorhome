@@ -54,13 +54,13 @@ public class RentalMenuController implements Initializable {
                     "JOIN brands ON models.brand_id = brands.id " +
                     "ORDER BY " + column + " " + order + ";");
                 ResultSet resultSet = preparedStatement.executeQuery();
-                // Iterate over each entity in the result set, and create Rental objects with each one of them
                 while (resultSet.next()) {
                     Rental rental = new Rental(
                             resultSet.getInt("rentals.id"),
                             resultSet.getInt("motorhome_id"),
                             resultSet.getString("state"),
                             resultSet.getInt("distance"),
+                            resultSet.getString("location"),
                             resultSet.getString("season"),
                             resultSet.getDate("start_date"),
                             resultSet.getDate("end_date"),
@@ -130,7 +130,7 @@ public class RentalMenuController implements Initializable {
         }
 
         /**
-         *Flips the order of the entities in the Scene.
+         * Flips the order of the entities in the Scene.
          * @param field Field that is selected to flip the order (e.g. "start date")
          */
 
@@ -174,8 +174,6 @@ public class RentalMenuController implements Initializable {
             fetchRentals("firstName", "ASC");
             entityCountLabel.setText(Session.rentalEntityList.size() + " Items");
         }
-
-
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {

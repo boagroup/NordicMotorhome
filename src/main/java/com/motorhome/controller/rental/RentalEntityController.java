@@ -1,6 +1,8 @@
 package com.motorhome.controller.rental;
 
+import com.motorhome.Bridge;
 import com.motorhome.FXUtils;
+import com.motorhome.controller.motorhome.MotorhomeEditController;
 import com.motorhome.model.*;
 import com.motorhome.persistence.Session;
 import javafx.fxml.FXML;
@@ -30,21 +32,6 @@ public class RentalEntityController implements Initializable {
     @FXML private MenuItem edit;
     @FXML private MenuItem delete;
 
-/*    private double calculatePrice(Rental rental, Brand brand, Model model, ArrayList<Extra> extraArrayList) {
-        double conjointPriceOfExtras = 0.00;
-        for (Extra extra : extraArrayList) {
-            conjointPriceOfExtras += extra.getPrice();
-        }
-        double dailyPrice = 0.00;
-        switch (rental.getSeason()) {
-            case "L" -> dailyPrice = brand.getPrice() + model.getPrice() + conjointPriceOfExtras;
-            case "M" -> dailyPrice = (brand.getPrice() + model.getPrice() + conjointPriceOfExtras) * 1.30;
-            case "H" -> dailyPrice = (brand.getPrice() + model.getPrice() + conjointPriceOfExtras) * 1.60;
-        }
-        return dailyPrice;
-    }
- */
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Rental rental = Session.rentalEntityList.get(entityIndex);
@@ -57,12 +44,17 @@ public class RentalEntityController implements Initializable {
         Image i = new Image(Objects.requireNonNullElse(getClass().getResource(motorhome.getImage()),
                 getClass().getResource("/assets/motorhomes/motorhome_placeholder.png")).toExternalForm());
         image.setImage(i);
-
         motorhomeLabel.setText(brand.getName() + " " + model.getName());
         clientLabel.setText(client.getFirstName() + " " + client.getLastName());
         startDateLabel.setText(String.valueOf(rental.getStart_date()));
         endDateLabel.setText(String.valueOf(rental.getEnd_date()));
         priceLabel.setText(FXUtils.formatCurrencyValues(rental.getFinal_price()));
+
+        edit.setOnAction(actionEvent -> {
+           // RentalEditController.entityIndex = entityIndex;
+            FXUtils.popUp("rental_edit", "popup", "Edit Rental");
+            Bridge.getMotorhomeMenuController().refresh();
+        });
 
     }
 }

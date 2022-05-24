@@ -69,7 +69,8 @@ CREATE TABLE IF NOT EXISTS rentals (
     M = Ongoing
     P = Completed
     */
-    distance INT,
+    distance INT DEFAULT 0,
+    location VARCHAR(35) DEFAULT '',
     season ENUM('L','M','P') NOT NULL DEFAULT 'L',
     /*
     L = Low Season
@@ -101,7 +102,7 @@ CREATE TABLE IF NOT EXISTS rentalExtras (
 CREATE TABLE IF NOT EXISTS clients (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
     rental_id INT(10),
-    firstName VARCHAR(20) NOT NULL DEFAULT '',
+    firstName VARCHAR(20) NOT NULL,
     lastName VARCHAR(20) DEFAULT '',
     telephone VARCHAR(16) DEFAULT '',
     FOREIGN KEY (rental_id) REFERENCES rentals(id) ON DELETE CASCADE
