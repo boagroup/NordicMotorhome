@@ -1,5 +1,6 @@
 package com.motorhome.controller.rental;
 
+import com.motorhome.Bridge;
 import com.motorhome.FXUtils;
 import com.motorhome.model.*;
 import com.motorhome.persistence.Database;
@@ -177,6 +178,7 @@ public class RentalMenuController implements Initializable {
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
+            Bridge.setRentalMenuController(this);
 
             FXUtils.setUserDetailsInHeader(usernameLabel, userImage);
 
