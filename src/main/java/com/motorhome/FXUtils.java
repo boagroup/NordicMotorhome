@@ -401,7 +401,7 @@ public class FXUtils {
         switch (choiceBox.getValue()) {
             case "Low Season" -> dailyPrice = brand.getPrice() + model.getPrice();
             case "Mid Season" -> dailyPrice = (brand.getPrice() + model.getPrice()) * 1.30;
-            case "High Season" -> dailyPrice = (brand.getPrice() + model.getPrice()) * 1.60;
+            case "Peak Season" -> dailyPrice = (brand.getPrice() + model.getPrice()) * 1.60;
         }
         return dailyPrice;
     }
