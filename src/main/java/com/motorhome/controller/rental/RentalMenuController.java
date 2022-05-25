@@ -47,6 +47,7 @@ public class RentalMenuController implements Initializable {
                 Session.motorhomeEntityList.clear();
                 Session.modelEntityList.clear();
                 Session.brandEntityList.clear();
+                Session.rentalExtrasCollectionList.clear();
                 PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                 "SELECT * FROM rentals " +
                     "JOIN clients ON rentals.id = clients.rental_id " +
@@ -182,9 +183,7 @@ public class RentalMenuController implements Initializable {
 
             FXUtils.setUserDetailsInHeader(usernameLabel, userImage);
 
-            settings.setOnMouseClicked(mouseEvent -> {
-                FXUtils.popUp("rental_settings", "motorhome_settings", "Rental Options");
-            });
+            settings.setOnMouseClicked(mouseEvent -> FXUtils.popUp("rental_settings", "motorhome_settings", "Rental Options"));
 
             addFunctionality();
 

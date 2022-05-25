@@ -29,11 +29,11 @@ public class ExtraSelectionEntityController implements Initializable {
         if (adding) {
             Bridge.getRentalAddController().reflectFieldChanges();
         } else Bridge.getRentalEditController().reflectFieldChanges();
-
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Bridge.setExtraSelectionEntityController(this);
         Extra extra = Session.extraEntityList.get(entityIndex);
         nameLabel.setText(extra.getName());
         priceLabel.setText(FXUtils.formatCurrencyValues(extra.getPrice()) + " €");

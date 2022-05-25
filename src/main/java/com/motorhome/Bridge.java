@@ -22,6 +22,7 @@ public final class Bridge {
     private static RentalAddController rentalAddController = null;
     private static RentalMotorhomeSelectionController rentalMotorhomeSelectionController = null;
     private static RentalEditController rentalEditController = null;
+    private static ExtraSelectionEntityController extraSelectionEntityController = null;
 
     private Bridge() {}
 
@@ -63,6 +64,10 @@ public final class Bridge {
         return rentalEditController;
     }
 
+    public static ExtraSelectionEntityController getExtraSelectionEntityController() {
+        return extraSelectionEntityController;
+    }
+
     // Setters
 
     public static void setMainMenuController(MainMenuController mainMenuController) {
@@ -99,5 +104,9 @@ public final class Bridge {
 
     public static void setRentalEditController(RentalEditController rentalEditController) {
         Bridge.rentalEditController = rentalEditController;
+    }
+
+    public static void setExtraSelectionEntityController(ExtraSelectionEntityController extraSelectionEntityController) {
+        Bridge.extraSelectionEntityController = extraSelectionEntityController;
     }
 }

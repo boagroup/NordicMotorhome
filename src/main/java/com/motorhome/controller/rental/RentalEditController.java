@@ -73,7 +73,8 @@ public class RentalEditController implements Initializable {
         // Put node into ImageView
         this.image.setImage(image);
         notes.setText(rental.getNotes());
-        Session.extraSelectionList = extraArrayList;
+        Session.extraSelectionList.clear();
+        Session.extraSelectionList.addAll(extraArrayList);
         motorhomeId = motorhome.getId();
         updateDynamicFields(model, brand);
     }
@@ -294,9 +295,10 @@ public class RentalEditController implements Initializable {
             if (!editRental(rental, client)) {
                 FXUtils.alert(Alert.AlertType.ERROR, "Something went wrong! Check for errors in the fields.",
                         "Rental Edit", "Edit failed!", true);
+            } else {
+                Stage stage = (Stage) confirmButton.getScene().getWindow();
+                stage.close();
             }
-            Stage stage = (Stage) confirmButton.getScene().getWindow();
-            stage.close();
         });
     }
 }

@@ -47,6 +47,19 @@ public class RentalAddController implements Initializable {
     private final StringProperty dynamicTotalPrice = new SimpleStringProperty();
 
     /**
+     * Prepare choiceBox, set initial values, restrict distance field to integers, disable confirm button
+     */
+    private void initializeValues() {
+        seasonChoiceBox.getItems().addAll("Low Season", "Mid Season", "Peak Season");
+        seasonChoiceBox.setValue("Low Season");
+        dynamicTitle.setValue("New Rental");
+        dynamicDailyPrice.setValue("0.00 €");
+        dynamicTotalPrice.setValue("0.00 €");
+        FXUtils.formatIntegerFields(distanceField);
+        confirmButton.setDisable(true);
+    }
+
+    /**
      * Retrieves Motorhome, Model and Brand entities from database in accordance to selected motorhome.
      * Use aforementioned entities to generate objects for calculations
      * @return array with Motorhome at index 0 Model at index 1 and Brand at index 2
@@ -291,19 +304,6 @@ public class RentalAddController implements Initializable {
         }
     }
 
-    /**
-     * Prepare choiceBox, set initial values, restrict distance field to integers, disable confirm button
-     */
-    private void initializeValues() {
-        seasonChoiceBox.getItems().addAll("Low Season", "Mid Season", "Peak Season");
-        seasonChoiceBox.setValue("Low Season");
-        dynamicTitle.setValue("New Rental");
-        dynamicDailyPrice.setValue("0.00 €");
-        dynamicTotalPrice.setValue("0.00 €");
-        FXUtils.formatIntegerFields(distanceField);
-        confirmButton.setDisable(true);
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Bridge.setRentalAddController(this);
@@ -315,8 +315,9 @@ public class RentalAddController implements Initializable {
         image.setOnMouseClicked(mouseEvent -> FXUtils.popUp("rental_motorhome_selection", "motorhome_menu", "Select Motorhome"));
         // Reset previous extras (if any) before showing pop-up
         addExtrasButton.setOnAction(actionEvent -> {
-            FXUtils.popUp("rental_extra_selection", "popup", "Select Extras");
             ExtraSelectionEntityController.adding = true;
+            Session.extraSelectionList.clear();
+            FXUtils.popUp("rental_extra_selection", "popup", "Select Extras");
         });
         confirmButton.setOnAction(actionEvent -> {
             boolean success = addRental();
@@ -329,7 +330,6 @@ public class RentalAddController implements Initializable {
                 Stage stage = (Stage) confirmButton.getScene().getWindow();
                 stage.close();
             }
-
         });
     }
 }
