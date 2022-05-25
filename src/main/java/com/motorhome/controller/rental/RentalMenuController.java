@@ -188,7 +188,7 @@ public class RentalMenuController implements Initializable {
 
             addFunctionality();
 
-            fetchRentals("end_date", "ASC");
+            fetchRentals("firstName", "ASC");
 
             prepareStaffToolbar();
 

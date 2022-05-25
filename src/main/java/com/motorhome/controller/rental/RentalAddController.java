@@ -4,6 +4,7 @@ import com.motorhome.Bridge;
 import com.motorhome.FXUtils;
 import com.motorhome.model.*;
 import com.motorhome.persistence.Database;
+import com.motorhome.persistence.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -15,7 +16,6 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -40,8 +40,6 @@ public class RentalAddController implements Initializable {
 
     // integer gets changed via Bridge as the user picks different motorhomes in their pop-up
     public int motorhomeId = 0;
-    // ArrayList is modified as the user checks or unchecks boxes for each available extra
-    public ArrayList<Extra> extraArrayList = new ArrayList<>();
 
     // FX String properties that can be modified dynamically as the user modifies the rental characteristics
     private final StringProperty dynamicTitle = new SimpleStringProperty();
@@ -117,13 +115,13 @@ public class RentalAddController implements Initializable {
                     Date.valueOf(startDateDatePicker.getValue()),
                     Date.valueOf(endDateDatePicker.getValue()),
                     Integer.parseInt(distanceField.getText().equals("") ? "0" : distanceField.getText()),
-                    extraArrayList)) + " €");
+                    Session.extraSelectionList)) + " €");
         } else {  // Same, but if no dates have been picked
             dynamicTotalPrice.setValue(
                     FXUtils.formatCurrencyValues(FXUtils.computeFinalPrice(
                     dailyPrice,
                     Integer.parseInt(distanceField.getText().equals("") ? "0" : distanceField.getText()),
-                    extraArrayList)) + " €");
+                    Session.extraSelectionList)) + " €");
         }
     }
 
@@ -233,7 +231,7 @@ public class RentalAddController implements Initializable {
                     java.sql.Date.valueOf(startDateDatePicker.getValue()),
                     java.sql.Date.valueOf(endDateDatePicker.getValue()),
                     Integer.parseInt(distanceField.getText().equals("") ? "0" : distanceField.getText()),
-                    extraArrayList);
+                    Session.extraSelectionList);
 
             // Generate entities with field data and computed price.
             Object[] newEntityArray = generateEntities(finalPrice);
@@ -271,7 +269,7 @@ public class RentalAddController implements Initializable {
             preparedStatement.execute();
 
             // Iterate over extraArrayList and associate database entry for each extra present in the collection.
-            for (Extra extra : extraArrayList) {
+            for (Extra extra : Session.extraSelectionList) {
                 preparedStatement = connection.prepareStatement(
                         "INSERT INTO rentalextras (rental_id, extra_id) VALUES (?,?);");
                 preparedStatement.setInt(1, id);
@@ -317,9 +315,8 @@ public class RentalAddController implements Initializable {
         image.setOnMouseClicked(mouseEvent -> FXUtils.popUp("rental_motorhome_selection", "motorhome_menu", "Select Motorhome"));
         // Reset previous extras (if any) before showing pop-up
         addExtrasButton.setOnAction(actionEvent -> {
-            extraArrayList.clear();
-            reflectFieldChanges();
             FXUtils.popUp("rental_extra_selection", "popup", "Select Extras");
+            ExtraSelectionEntityController.adding = true;
         });
         confirmButton.setOnAction(actionEvent -> {
             boolean success = addRental();
@@ -332,6 +329,7 @@ public class RentalAddController implements Initializable {
                 Stage stage = (Stage) confirmButton.getScene().getWindow();
                 stage.close();
             }
+
         });
     }
 }

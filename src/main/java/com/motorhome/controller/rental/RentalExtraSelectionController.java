@@ -27,7 +27,6 @@ public class RentalExtraSelectionController implements Initializable {
         // Establish connection
         Connection connection = Database.getConnection();
         try {
-            Session.extraEntityList.clear();
             // Prepare SQL statement
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "SELECT * FROM extras ORDER BY name;");

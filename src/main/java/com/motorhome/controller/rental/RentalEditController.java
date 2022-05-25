@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.*;
@@ -40,8 +41,6 @@ public class RentalEditController implements Initializable {
     public static int entityIndex = -1;
     // integer gets changed via Bridge as the user picks different motorhomes in their pop-up
     public int motorhomeId = 0;
-    // ArrayList is modified as the user checks or unchecks boxes for each available extra
-    public ArrayList<Extra> extraArrayList = new ArrayList<>();
 
     // FX String properties that can be modified dynamically as the user modifies the rental characteristics
     private final StringProperty dynamicTitle = new SimpleStringProperty();
@@ -53,7 +52,7 @@ public class RentalEditController implements Initializable {
      * Dynamic labels (title + price) also need to be set initially, hence the SQL statements
      * @param motorhome Motorhome object representing the entity whose data is to be loaded into the fields
      */
-    private void loadDataIntoFields(Rental rental, Client client, Motorhome motorhome, Model model, Brand brand) {
+    private void loadDataIntoFields(Rental rental, Client client, Motorhome motorhome, Model model, Brand brand, ArrayList<Extra> extraArrayList) {
         clientFirstNameField.setText(client.getFirstName());
         clientLastNameField.setText(client.getLastName());
         clientTelephoneField.setText(client.getTelephone());
@@ -61,7 +60,7 @@ public class RentalEditController implements Initializable {
         switch (rental.getSeason()) {
             case "L" -> season = "Low Season";
             case "M" -> season = "Mid Season";
-            case "H" -> season = "High Season";
+            case "P" -> season = "Peak Season";
         }
         seasonChoiceBox.setValue(season);
         pickUpLocationField.setText(rental.getLocation());
@@ -74,6 +73,7 @@ public class RentalEditController implements Initializable {
         // Put node into ImageView
         this.image.setImage(image);
         notes.setText(rental.getNotes());
+        Session.extraSelectionList = extraArrayList;
         motorhomeId = motorhome.getId();
         updateDynamicFields(model, brand);
     }
@@ -147,13 +147,13 @@ public class RentalEditController implements Initializable {
                             Date.valueOf(startDateDatePicker.getValue()),
                             Date.valueOf(endDateDatePicker.getValue()),
                             Integer.parseInt(distanceField.getText().equals("") ? "0" : distanceField.getText()),
-                            extraArrayList)) + " €");
+                            Session.extraSelectionList)) + " €");
         } else {  // Same, but if no dates have been picked
             dynamicTotalPrice.setValue(
                     FXUtils.formatCurrencyValues(FXUtils.computeFinalPrice(
                             dailyPrice,
                             Integer.parseInt(distanceField.getText().equals("") ? "0" : distanceField.getText()),
-                            extraArrayList)) + " €");
+                            Session.extraSelectionList)) + " €");
         }
     }
 
@@ -169,18 +169,6 @@ public class RentalEditController implements Initializable {
             updateDynamicFields(model, brand);
         }
     }
-
-    private void initializeValues(int entityIndex) {
-        Rental rental = Session.rentalEntityList.get(entityIndex);
-        Client client = Session.clientEntityList.get(entityIndex);
-        Motorhome motorhome = Session.motorhomeEntityList.get(entityIndex);
-        Model model = Session.modelEntityList.get(entityIndex);
-        Brand brand = Session.brandEntityList.get(entityIndex);
-        loadDataIntoFields(rental, client, motorhome, model, brand);
-        seasonChoiceBox.getItems().addAll("Low Season", "Mid Season", "High Season");
-        FXUtils.formatIntegerFields(distanceField);
-    }
-
 
     /**
      * Bind label nodes to StringProperties and make them update reactively.
@@ -198,16 +186,117 @@ public class RentalEditController implements Initializable {
         endDateDatePicker.setOnAction(actionEvent -> reflectFieldChanges());
     }
 
+    private Object[] updateEntities(Rental rental, Client client) {
+        String seasonEnum =  "";
+        switch (seasonChoiceBox.getValue()) {
+            case "Low Season" -> seasonEnum = "L";
+            case "Mid Season" -> seasonEnum = "M";
+            case "Peak Season" -> seasonEnum = "P";
+        }
+        Object[] entityArray = retrieveMotorhomeEntities();
+        Model model = (Model) Objects.requireNonNull(entityArray)[1];
+        Brand brand = (Brand) Objects.requireNonNull(entityArray)[2];
+        double dailyPrice = FXUtils.computeDailyPrice(brand, model, seasonChoiceBox);
+        double finalPrice = FXUtils.computeFinalPrice(
+                dailyPrice,
+                java.sql.Date.valueOf(startDateDatePicker.getValue()),
+                java.sql.Date.valueOf(endDateDatePicker.getValue()),
+                Integer.parseInt(distanceField.getText().equals("") ? "0" : distanceField.getText()),
+                Session.extraSelectionList);
+
+        rental.setDistance(Integer.parseInt(distanceField.getText().equals("") ? "0" : distanceField.getText()));
+        rental.setLocation(pickUpLocationField.getText());
+        rental.setSeason(seasonEnum);
+        rental.setStart_date(java.sql.Date.valueOf(startDateDatePicker.getValue()));
+        rental.setEnd_date(java.sql.Date.valueOf(endDateDatePicker.getValue()));
+        rental.setFinal_price(finalPrice);
+        rental.setNotes(notes.getText());
+
+        client.setFirstName(clientFirstNameField.getText().equals("") ? null : clientFirstNameField.getText());
+        client.setLastName(clientLastNameField.getText());
+        client.setTelephone(clientTelephoneField.getText());
+
+        Object[] result = new Object[2];
+        result[0] = rental;
+        result[1] = client;
+        return result;
+    }
+
+    private boolean editRental(Rental r, Client c) {
+        Object[] entityArray = updateEntities(r, c);
+        Rental rental = (Rental) entityArray[0];
+        Client client = (Client) entityArray[1];
+        Connection connection = Database.getConnection();
+        try {
+            PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
+                    "UPDATE rentals SET distance = ?, location = ?, season = ?, start_date = ?, end_date = ?, final_price = ?, notes = ? " +
+                        "WHERE id = ?");
+            preparedStatement.setInt(1, rental.getDistance());
+            preparedStatement.setString(2, rental.getLocation());
+            preparedStatement.setString(3, rental.getSeason());
+            preparedStatement.setDate(4, rental.getStart_date());
+            preparedStatement.setDate(5, rental.getEnd_date());
+            preparedStatement.setDouble(6, rental.getFinal_price());
+            preparedStatement.setString(7, rental.getNotes());
+            preparedStatement.setInt(8, rental.getId());
+            preparedStatement.execute();
+
+            preparedStatement = connection.prepareStatement(
+                    "UPDATE clients SET firstName = ?, lastName = ?, telephone = ? " +
+                        "WHERE id = ?");
+            preparedStatement.setString(1, client.getFirstName());
+            preparedStatement.setString(2, client.getLastName());
+            preparedStatement.setString(3, client.getTelephone());
+            preparedStatement.setInt(4, client.getId());
+            preparedStatement.execute();
+
+            preparedStatement = connection.prepareStatement("DELETE FROM rentalextras WHERE rental_id = ?");
+            preparedStatement.setInt(1, rental.getId());
+            preparedStatement.execute();
+
+            // Iterate over extraArrayList and associate database entry for each extra present in the collection.
+            for (Extra extra : Session.extraSelectionList) {
+                preparedStatement = connection.prepareStatement(
+                        "INSERT INTO rentalextras (rental_id, extra_id) VALUES (?,?);");
+                preparedStatement.setInt(1, rental.getId());
+                preparedStatement.setInt(2, extra.getId());
+                preparedStatement.execute();
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            Database.closeConnection(connection);
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Bridge.setRentalEditController(this);
         MotorhomeSelectionEntityController.controlFlipper = false;
         addReactivity();
-        initializeValues(entityIndex);
+        Rental rental = Session.rentalEntityList.get(entityIndex);
+        Client client = Session.clientEntityList.get(entityIndex);
+        Motorhome motorhome = Session.motorhomeEntityList.get(entityIndex);
+        Model model = Session.modelEntityList.get(entityIndex);
+        Brand brand = Session.brandEntityList.get(entityIndex);
+        ArrayList<Extra> extraArrayList = Session.rentalExtrasCollectionList.get(entityIndex);
+        loadDataIntoFields(rental, client, motorhome, model, brand, extraArrayList);
+        seasonChoiceBox.getItems().addAll("Low Season", "Mid Season", "Peak Season");
+        FXUtils.formatIntegerFields(distanceField);
         addExtrasButton.setOnAction(actionEvent -> {
-            extraArrayList.clear();
-            reflectFieldChanges();
+            ExtraSelectionEntityController.adding = false;
             FXUtils.popUp("rental_extra_selection", "popup", "Select Extras");
+        });
+        confirmButton.setOnAction(actionEvent -> {
+            updateEntities(rental, client);
+            if (!editRental(rental, client)) {
+                FXUtils.alert(Alert.AlertType.ERROR, "Something went wrong! Check for errors in the fields.",
+                        "Rental Edit", "Edit failed!", true);
+            }
+            Stage stage = (Stage) confirmButton.getScene().getWindow();
+            stage.close();
         });
     }
 }

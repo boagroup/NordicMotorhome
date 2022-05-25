@@ -142,4 +142,6 @@ public class Session {
     public static ArrayList<Client> clientEntityList = new ArrayList<>();
     public static ArrayList<Rental> rentalEntityList = new ArrayList<>();
     public static ArrayList<ArrayList<Extra>> rentalExtrasCollectionList = new ArrayList<>();
+
+    public static ArrayList<Extra> extraSelectionList = new ArrayList<>();
 }
