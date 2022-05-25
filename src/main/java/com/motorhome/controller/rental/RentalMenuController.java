@@ -1,7 +1,7 @@
 package com.motorhome.controller.rental;
 
-import com.motorhome.Bridge;
-import com.motorhome.FXUtils;
+import com.motorhome.utilities.Bridge;
+import com.motorhome.utilities.FXUtils;
 import com.motorhome.model.*;
 import com.motorhome.persistence.Database;
 import com.motorhome.persistence.Session;

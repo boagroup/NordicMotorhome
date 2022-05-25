@@ -7,7 +7,7 @@
 
 <!-- Author(s) Octavian Roman -->
 
-<HBox fx:id="entityContainer" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" styleClass="entity-container" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.staff.StaffEntityController">
+<HBox fx:id="entityContainer" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" styleClass="entity-container" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.staff.entity.StaffEntityController">
    <children>
       <ImageView fx:id="image" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">

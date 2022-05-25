@@ -1,6 +1,6 @@
-package com.motorhome.controller.rental;
+package com.motorhome.controller.rental.popup;
 
-import com.motorhome.FXUtils;
+import com.motorhome.utilities.FXUtils;
 import com.motorhome.model.Extra;
 import com.motorhome.persistence.Database;
 import com.motorhome.persistence.Session;

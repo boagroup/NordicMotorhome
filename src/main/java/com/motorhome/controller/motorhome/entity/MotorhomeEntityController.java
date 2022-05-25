@@ -1,7 +1,8 @@
-package com.motorhome.controller.motorhome;
+package com.motorhome.controller.motorhome.entity;
 
-import com.motorhome.Bridge;
-import com.motorhome.FXUtils;
+import com.motorhome.utilities.Bridge;
+import com.motorhome.utilities.FXUtils;
+import com.motorhome.controller.motorhome.popup.MotorhomeEditController;
 import com.motorhome.model.Brand;
 import com.motorhome.model.Model;
 import com.motorhome.model.Motorhome;

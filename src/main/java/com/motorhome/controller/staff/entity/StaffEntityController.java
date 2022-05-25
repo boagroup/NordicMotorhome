@@ -1,7 +1,8 @@
-package com.motorhome.controller.staff;
+package com.motorhome.controller.staff.entity;
 
-import com.motorhome.Bridge;
-import com.motorhome.FXUtils;
+import com.motorhome.utilities.Bridge;
+import com.motorhome.utilities.FXUtils;
+import com.motorhome.controller.staff.popup.StaffEditController;
 import com.motorhome.model.Staff;
 import com.motorhome.persistence.Session;
 import com.motorhome.persistence.Database;

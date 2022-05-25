@@ -1,6 +1,6 @@
-package com.motorhome.controller.rental;
+package com.motorhome.controller.rental.entity;
 
-import com.motorhome.Bridge;
+import com.motorhome.utilities.Bridge;
 import com.motorhome.model.Brand;
 import com.motorhome.model.Model;
 import com.motorhome.model.Motorhome;

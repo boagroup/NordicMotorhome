@@ -1,6 +1,6 @@
 package com.motorhome.controller.main;
 
-import com.motorhome.FXUtils;
+import com.motorhome.utilities.FXUtils;
 import com.motorhome.persistence.Session;
 import com.motorhome.persistence.Database;
 import javafx.event.Event;

@@ -1,8 +1,9 @@
-package com.motorhome.controller.motorhome;
+package com.motorhome.controller.motorhome.entity;
 
-import com.motorhome.Bridge;
-import com.motorhome.FXUtils;
+import com.motorhome.utilities.Bridge;
+import com.motorhome.utilities.FXUtils;
 import com.motorhome.model.Brand;
+import com.motorhome.model.Model;
 import com.motorhome.persistence.Session;
 import com.motorhome.persistence.Database;
 import javafx.fxml.FXML;
@@ -22,11 +23,12 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * Controller that handles the logic behind each brand entity in the Motorhome Settings Pop-Up
+ * Controller that handles the logic behind each model entity in the Motorhome Settings Pop-Up
  * Author(s): Octavian Roman
  */
-public class BrandEntityController implements Initializable {
+public class ModelEntityController implements Initializable {
 
+    @FXML private Label brandLabel;
     @FXML private Label nameLabel;
     @FXML private Label priceLabel;
     @FXML private VBox remove;
@@ -35,14 +37,14 @@ public class BrandEntityController implements Initializable {
     public final int entityIndex = Session.brandEntityList.size() - 1;
 
     /**
-     * Function that removes a given brand entity from the database
-     * @param brand object representing the entity to be deleted
+     * Function that removes a given model entity from the database
+     * @param model object representing the entity to be deleted
      */
-    private void remove(Brand brand) {
+    private void remove(Model model) {
         // Get confirmation with an alert
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "+ nameLabel.getText() + "?", ButtonType.YES, ButtonType.NO);
-        alert.setHeaderText("Please Confirm Brand Deletion");
-        alert.setTitle("Brand Deletion");
+        alert.setHeaderText("Please Confirm Model Deletion");
+        alert.setTitle("Model Deletion");
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/assets/alt_icon.png")).toExternalForm()));
         alert.showAndWait();
@@ -53,12 +55,11 @@ public class BrandEntityController implements Initializable {
             try {
                 // Prepare statement
                 PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
-                        "DELETE FROM brands WHERE id = ?"
+                        "DELETE FROM models WHERE id = ?"
                 );
-                preparedStatement.setInt(1, brand.getId());
+                preparedStatement.setInt(1, model.getId());
                 preparedStatement.execute();
-                // If removal is successful, use the Bridge to clear and re-fetch the brands and models to reflect changes
-                Bridge.getMotorhomeSettingsController().refreshBrands();
+                // If removal is successful, use the Bridge to clear and re-fetch the models to reflect changes
                 Bridge.getMotorhomeSettingsController().refreshModels();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -70,12 +71,11 @@ public class BrandEntityController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Retrieve brand object representing the entity from ORM
+        Model model = Session.modelEntityList.get(entityIndex);
         Brand brand = Session.brandEntityList.get(entityIndex);
-        // Set labels to values of entity
-        nameLabel.setText(brand.getName());
-        priceLabel.setText(FXUtils.formatCurrencyValues(brand.getPrice()) + " €");
-        // Prepare remove button functionality
-        remove.setOnMouseClicked(mouseEvent -> remove(brand));
+        nameLabel.setText(model.getName());
+        priceLabel.setText(FXUtils.formatCurrencyValues(model.getPrice()) + " €");
+        brandLabel.setText(brand.getName());
+        remove.setOnMouseClicked(mouseEvent -> remove(model));
     }
 }

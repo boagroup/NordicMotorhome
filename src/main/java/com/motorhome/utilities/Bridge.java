@@ -1,9 +1,14 @@
-package com.motorhome;
+package com.motorhome.utilities;
 
 import com.motorhome.controller.main.MainMenuController;
 import com.motorhome.controller.motorhome.MotorhomeMenuController;
-import com.motorhome.controller.motorhome.MotorhomeSettingsController;
+import com.motorhome.controller.motorhome.popup.MotorhomeSettingsController;
 import com.motorhome.controller.rental.*;
+import com.motorhome.controller.rental.entity.ExtraSelectionEntityController;
+import com.motorhome.controller.rental.popup.RentalAddController;
+import com.motorhome.controller.rental.popup.RentalEditController;
+import com.motorhome.controller.rental.popup.RentalMotorhomeSelectionController;
+import com.motorhome.controller.rental.popup.RentalSettingsController;
 import com.motorhome.controller.staff.StaffMenuController;
 
 /**

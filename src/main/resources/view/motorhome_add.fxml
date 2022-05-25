@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="350.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.motorhome.MotorhomeAddController">
+<AnchorPane prefHeight="350.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.motorhome.controller.motorhome.popup.MotorhomeAddController">
    <children>
       <ImageView fx:id="image" fitHeight="240.0" fitWidth="240.0" layoutX="40.0" layoutY="80.0" pickOnBounds="true">
          <image>

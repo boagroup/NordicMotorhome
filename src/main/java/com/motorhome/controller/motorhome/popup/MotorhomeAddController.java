@@ -1,6 +1,6 @@
-package com.motorhome.controller.motorhome;
+package com.motorhome.controller.motorhome.popup;
 
-import com.motorhome.FXUtils;
+import com.motorhome.utilities.FXUtils;
 import com.motorhome.model.Motorhome;
 import com.motorhome.persistence.Database;
 import javafx.beans.property.SimpleStringProperty;

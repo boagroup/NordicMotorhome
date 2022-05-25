@@ -1,4 +1,4 @@
-package com.motorhome;
+package com.motorhome.utilities;
 
 import com.motorhome.model.Brand;
 import com.motorhome.model.Extra;
