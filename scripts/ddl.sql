@@ -63,7 +63,6 @@ CREATE TABLE IF NOT EXISTS motorhomes (
 CREATE TABLE IF NOT EXISTS rentals (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
     motorhome_id INT(10),
-    state ENUM('N','O','C') NOT NULL DEFAULT 'N',
     /*
     N = New
     M = Ongoing

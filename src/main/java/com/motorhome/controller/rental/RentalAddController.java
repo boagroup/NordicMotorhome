@@ -199,7 +199,6 @@ public class RentalAddController implements Initializable {
         }
         Rental rental = new Rental(
                 motorhomeId,
-                "N",
                 Integer.parseInt(distanceField.getText().equals("") ? "0" : distanceField.getText()),
                 pickUpLocationField.getText(),
                 seasonEnum,
@@ -253,16 +252,15 @@ public class RentalAddController implements Initializable {
 
             // Insert rental entity into database.
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
-                    "INSERT INTO rentals (motorhome_id, state, distance, season, start_date, end_date, final_price, notes) " +
-                        "VALUES (?,?,?,?,?,?,?,?);");
+                    "INSERT INTO rentals (motorhome_id, distance, season, start_date, end_date, final_price, notes) " +
+                        "VALUES (?,?,?,?,?,?,?);");
             preparedStatement.setInt(1, rental.getMotorhome_id());
-            preparedStatement.setString(2, rental.getState());
-            preparedStatement.setInt(3, rental.getDistance());
-            preparedStatement.setString(4, rental.getSeason());
-            preparedStatement.setDate(5, rental.getStart_date());
-            preparedStatement.setDate(6, rental.getEnd_date());
-            preparedStatement.setDouble(7, rental.getFinal_price());
-            preparedStatement.setString(8, rental.getNotes());
+            preparedStatement.setInt(2, rental.getDistance());
+            preparedStatement.setString(3, rental.getSeason());
+            preparedStatement.setDate(4, rental.getStart_date());
+            preparedStatement.setDate(5, rental.getEnd_date());
+            preparedStatement.setDouble(6, rental.getFinal_price());
+            preparedStatement.setString(7, rental.getNotes());
             preparedStatement.execute();
 
             // Save newly inserted rental entity ID into local variable.

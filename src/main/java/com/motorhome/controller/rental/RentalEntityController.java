@@ -19,7 +19,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -72,7 +71,6 @@ public class RentalEntityController implements Initializable {
         Motorhome motorhome = Session.motorhomeEntityList.get(entityIndex);
         Brand brand = Session.brandEntityList.get(entityIndex);
         Model model = Session.modelEntityList.get(entityIndex);
-        ArrayList<Extra> extraArrayList = Session.rentalExtrasCollectionList.get(entityIndex);
 
         Image i = new Image(Objects.requireNonNullElse(getClass().getResource(motorhome.getImage()),
                 getClass().getResource("/assets/motorhomes/motorhome_placeholder.png")).toExternalForm());

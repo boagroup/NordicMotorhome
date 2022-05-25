@@ -10,7 +10,6 @@ public class Rental {
     // Attributes
     private int id;
     private int motorhome_id;
-    private String state;
     private String location;
     private int distance;
     private String season;
@@ -20,10 +19,9 @@ public class Rental {
     private String notes;
 
     // Constructors
-    public Rental(int id, int motorhome_id, String state, int distance, String location, String season, Date start_date, Date end_date, double final_price, String notes) {
+    public Rental(int id, int motorhome_id, int distance, String location, String season, Date start_date, Date end_date, double final_price, String notes) {
         this.id = id;
         this.motorhome_id = motorhome_id;
-        this.state = state;
         this.distance = distance;
         this.location = location;
         this.season = season;
@@ -33,9 +31,8 @@ public class Rental {
         this.notes = notes;
     }
     // ID-less
-    public Rental(int motorhome_id, String state, int distance, String location, String season, Date start_date, Date end_date, double final_price, String notes) {
+    public Rental(int motorhome_id, int distance, String location, String season, Date start_date, Date end_date, double final_price, String notes) {
         this.motorhome_id = motorhome_id;
-        this.state = state;
         this.distance = distance;
         this.location = location;
         this.season = season;
@@ -52,10 +49,6 @@ public class Rental {
 
     public int getMotorhome_id() {
         return motorhome_id;
-    }
-
-    public String getState() {
-        return state;
     }
 
     public int getDistance() {
@@ -93,10 +86,6 @@ public class Rental {
 
     public void setMotorhome_id(int motorhome_id) {
         this.motorhome_id = motorhome_id;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 
     public void setDistance(int distance) {

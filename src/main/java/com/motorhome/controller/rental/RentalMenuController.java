@@ -60,7 +60,6 @@ public class RentalMenuController implements Initializable {
                     Rental rental = new Rental(
                             resultSet.getInt("rentals.id"),
                             resultSet.getInt("motorhome_id"),
-                            resultSet.getString("state"),
                             resultSet.getInt("distance"),
                             resultSet.getString("location"),
                             resultSet.getString("season"),
