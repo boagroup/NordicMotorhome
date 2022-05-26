@@ -57,7 +57,7 @@ public class ExtraEntityController implements Initializable {
                 );
                 preparedStatement.setInt(1, extra.getId());
                 preparedStatement.execute();
-                // If removal is successful, use the Bridge to clear and re-fetch the brands and models to reflect changes
+                // If removal is successful, use the Bridge to clear and re-fetch the extras to reflect changes
                 Bridge.getRentalSettingsController().refreshExtras();
             } catch (SQLException e) {
                 e.printStackTrace();

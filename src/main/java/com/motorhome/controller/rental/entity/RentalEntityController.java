@@ -85,12 +85,12 @@ public class RentalEntityController implements Initializable {
         edit.setOnAction(actionEvent -> {
             RentalEditController.entityIndex = entityIndex;
             FXUtils.popUp("rental_edit", "popup", "Edit Rental");
-            Bridge.getRentalMenuController().refresh();
+            Bridge.getRentalMenuController().fetchEntities("firstName", "ASC");;
         });
 
         delete.setOnAction(actionEvent -> {
             delete(rental, motorhome, client);
-            Bridge.getRentalMenuController().refresh();
+            Bridge.getRentalMenuController().fetchEntities("firstName", "ASC");;
         });
     }
 }

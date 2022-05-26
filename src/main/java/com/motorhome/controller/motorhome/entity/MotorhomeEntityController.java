@@ -67,7 +67,7 @@ public class MotorhomeEntityController implements Initializable {
                 preparedStatement.execute();
 
                 // Refresh the menu
-                Bridge.getMotorhomeMenuController().refresh();
+                Bridge.getMotorhomeMenuController().fetchEntities("brands.name", "ASC");;
 
                 // Show success alert.
                 FXUtils.alert(Alert.AlertType.INFORMATION, "The motorhome has been deleted",
@@ -98,7 +98,7 @@ public class MotorhomeEntityController implements Initializable {
         edit.setOnAction(actionEvent -> {
             MotorhomeEditController.entityIndex = entityIndex;
             FXUtils.popUp("motorhome_edit", "popup", "Edit Motorhome");
-            Bridge.getMotorhomeMenuController().refresh();
+            Bridge.getMotorhomeMenuController().fetchEntities("brands.name", "ASC");;
         });
     }
 }

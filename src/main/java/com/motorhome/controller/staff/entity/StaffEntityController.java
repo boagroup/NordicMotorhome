@@ -74,7 +74,7 @@ public class StaffEntityController implements Initializable {
                 preparedStatement.execute();
 
                 // Refresh the menu
-                Bridge.getStaffMenuController().refresh();
+                Bridge.getStaffMenuController().fetchEntities("firstName", "ASC");;
 
                 // Show success alert.
                 FXUtils.alert(Alert.AlertType.INFORMATION, "The staff and it's associated user account (if any) has been deleted",
@@ -109,7 +109,7 @@ public class StaffEntityController implements Initializable {
         edit.setOnAction(actionEvent -> {
             StaffEditController.entityIndex = entityIndex;
             FXUtils.popUp("staff_edit", "Edit Staff");
-            Bridge.getStaffMenuController().refresh();
+            Bridge.getStaffMenuController().fetchEntities("firstName", "ASC");
         });
         delete.setOnAction(actionEvent -> deleteStaff(staff));
     }

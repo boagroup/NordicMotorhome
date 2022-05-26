@@ -23,12 +23,16 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Handles the logic behind the Motorhome Menu
+ * Author(s): Octavian Roman
+ */
 public class MotorhomeMenuController implements Initializable {
-
+    // FX nodes
+    @FXML private VBox entityContainer;
     @FXML private Label usernameLabel;
     @FXML private ImageView userImage;
     @FXML private Button backButton;
-    @FXML private VBox entityContainer;
     @FXML private Label entityCountLabel;
     @FXML private HBox brandToolFlipper;
     @FXML private HBox modelToolFlipper;
@@ -41,19 +45,39 @@ public class MotorhomeMenuController implements Initializable {
     // Can be used to flip order, not using boolean for clarity.
     private String currentOrder;
 
-    private void fetchMotorhomes(String column, String order) {
+    /**
+     * Fetch the existing Motorhome Entities from the database and display them in the Menu.
+     * 1. Clear container where fetching injection occurs to avoid duplication for multiple fetches.
+     * 2. Clear relevant ORM ArrayLists to preserve data integrity over multiple fetches.
+     * 3. Retrieve Motorhome, Brand and Model entities from database and store them in ResultSet. Password needs to be decrypted.
+     * 4. Iterate over ResultSet, per iteration:
+     *    a) Create objects for each entry of aforementioned entities.
+     *    b) Add all objects to their ORM ArrayLists in persistence.Session.
+     *    f) Immediately inject a new RentalEntity into the menu. This will trigger the RentalEntityController, which will handle the logic.
+     * 5. Set the label displaying the entity count to the amount of Rental objects in ORM to ensure it stays updated over multiple fetches.
+     * 6. Finally, store the order that was used to fetch in order to be able to flip it on demand later.
+     * @param column Schema column which will be used to order the entities.
+     * @param order String which will determine whether the order is ascending or descending: "ASC" or "DESC".
+     */
+    public void fetchEntities(String column, String order) {
         Connection connection = Database.getConnection();
         try {
+            // 1. Clear container where fetching injection occurs to avoid duplication for multiple fetches.
+            entityContainer.getChildren().clear();
+            // 2. Clear relevant ORM ArrayLists to preserve data integrity over multiple fetches.
             Session.motorhomeEntityList.clear();
             Session.brandEntityList.clear();
             Session.modelEntityList.clear();
+            // 3. Retrieve Motorhome, Brand and Model entities from database and store them in ResultSet.
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "SELECT * FROM motorhomes " +
                         "JOIN models ON motorhomes.model_id = models.id " +
                         "JOIN brands ON models.brand_id = brands.id " +
                         "ORDER BY " + column + " " + order + ";");
             ResultSet resultSet = preparedStatement.executeQuery();
+            // 4. Iterate over ResultSet, per iteration:
             while (resultSet.next()) {
+                // a) Create objects for each entry of aforementioned entities.
                 Motorhome motorhome = new Motorhome(
                         resultSet.getInt("motorhomes.id"),
                         resultSet.getInt("model_id"),
@@ -73,15 +97,20 @@ public class MotorhomeMenuController implements Initializable {
                         resultSet.getString("models.name"),
                         resultSet.getDouble("models.price")
                 );
+                // b) Add all objects to their ORM ArrayLists in persistence.Session.
                 Session.motorhomeEntityList.add(motorhome);
                 Session.brandEntityList.add(brand);
                 Session.modelEntityList.add(model);
+                // f) Immediately inject a new RentalEntity into the menu. This will trigger the MotorhomeEntityController, which will handle the logic.
                 FXUtils.injectEntity("motorhome_entity", entityContainer);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             Database.closeConnection(connection);
+            // 5. Set the label displaying the entity count to the amount of Rental objects in ORM to ensure it stays updated over multiple fetches.
+            entityCountLabel.setText(Session.motorhomeEntityList.size() + " Items");
+            // 6. Finally, store the order that was used to fetch in order to be able to flip it on demand later.
             currentOrder = order;
         }
     }
@@ -93,8 +122,8 @@ public class MotorhomeMenuController implements Initializable {
     private void flipOrder(String field) {
         entityContainer.getChildren().clear();
         if (currentOrder.equals("ASC")) {
-            fetchMotorhomes(field, "DESC");
-        } else fetchMotorhomes(field, "ASC");
+            fetchEntities(field, "DESC");
+        } else fetchEntities(field, "ASC");
     }
 
     /**
@@ -108,42 +137,22 @@ public class MotorhomeMenuController implements Initializable {
         availabilityToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("rented"));
     }
 
-    /**
-     * Unload and load the entities to refresh them
-     */
-    public void refresh() {
-        entityContainer.getChildren().clear();
-        fetchMotorhomes("brands.name", "ASC");
-        entityCountLabel.setText(Session.motorhomeEntityList.size() + " Items");
-    }
-
-    /**
-     * Prepare add functionality on add button and refresh on addition
-     */
-    private void setAddFunctionality() {
-        add.setOnMouseClicked(mouseEvent -> {
-            FXUtils.popUp("motorhome_add", "popup", "Add Motorhome");
-            refresh();
-        });
-    }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Bridge.setMotorhomeMenuController(this);
         FXUtils.setUserDetailsInHeader(usernameLabel, userImage);
-
-        fetchMotorhomes("brands.name", "ASC");
-
         prepareToolbar();
 
+        fetchEntities("brands.name", "ASC");
+
+        add.setOnMouseClicked(mouseEvent -> {
+            FXUtils.popUp("motorhome_add", "popup", "Add Motorhome");
+            fetchEntities("brands.name", "ASC");
+        });
         settings.setOnMouseClicked(mouseEvent -> {
             FXUtils.popUp("motorhome_settings", "motorhome_settings", "Motorhome Options");
-            refresh();
+            fetchEntities("brands.name", "ASC");
         });
-
-        setAddFunctionality();
-
         backButton.setOnAction(actionEvent -> FXUtils.changeRoot( "main_menu", "main_menu", backButton));
     }
 }

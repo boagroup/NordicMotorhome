@@ -1,9 +1,11 @@
 /*
   Script responsible for generating the SQL tables required for the back-end of the application
+  Should not be necessary, since we are using a remote Heroku ClearDB database
   Author(s): Octavian Roman, Bartosz Birylo
  */
 USE heroku_e8f7f82549e360a;
 -- USE motorhome;
+-- Switch to the line above for localhost "motorhome" schema in case of remote database failure (happened once to us)
 
 /* staff and users */
 
@@ -63,11 +65,6 @@ CREATE TABLE IF NOT EXISTS motorhomes (
 CREATE TABLE IF NOT EXISTS rentals (
     id INT(10) AUTO_INCREMENT PRIMARY KEY,
     motorhome_id INT(10),
-    /*
-    N = New
-    M = Ongoing
-    P = Completed
-    */
     distance INT DEFAULT 0,
     location VARCHAR(35) DEFAULT '',
     season ENUM('L','M','P') NOT NULL DEFAULT 'L',

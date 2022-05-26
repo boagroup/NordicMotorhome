@@ -24,11 +24,11 @@ import java.util.ResourceBundle;
  * Author(s): Octavian Roman
  */
 public class StaffMenuController implements Initializable {
-
+    // FX nodes
+    @FXML private VBox entityContainer;
     @FXML private Label usernameLabel;
     @FXML private ImageView userImage;
     @FXML private Button backButton;
-    @FXML private VBox entityContainer;
     @FXML private Label entityCountLabel;
     @FXML private HBox nameToolFlipper;
     @FXML private HBox roleToolFlipper;
@@ -41,23 +41,28 @@ public class StaffMenuController implements Initializable {
     private String currentOrder;
 
     /**
-     * Fetch all Staff and User entities and inject them into the entity container.
-     * The container is hosted by a ScrollPane, which sets no hard limit on how many entities can be injected.
-     * Can flip order of entities with parameters.
-     * Loads entities into ArrayLists in the Session class for further manipulation down the line.
-     * There is no need for more complex Session storage methods since fetching is iterative, meaning that the order
-     * of the ArrayList will always be correct, considering all Staff entities must have a User entity associated,
-     * even though said user entity does not necessarily grant access to the system.
-     * @param column Column which will determine the order of injection.
-     * @param order "ASC" or "DESC", determines ascending or descending order.
+     * Fetch the existing Staff Entities from the database and display them in the Menu.
+     * 1. Clear container where fetching injection occurs to avoid duplication for multiple fetches.
+     * 2. Clear relevant ORM ArrayLists to preserve data integrity over multiple fetches.
+     * 3. Retrieve Staff and User entities from database and store them in ResultSet. Password needs to be decrypted.
+     * 4. Iterate over ResultSet, per iteration:
+     *    a) Create objects for each entry of aforementioned entities.
+     *    b) Add all objects to their ORM ArrayLists in persistence.Session.
+     *    f) Immediately inject a new RentalEntity into the menu. This will trigger the StaffEntityController, which will handle the logic.
+     * 5. Set the label displaying the entity count to the amount of Rental objects in ORM to ensure it stays updated over multiple fetches.
+     * 6. Finally, store the order that was used to fetch in order to be able to flip it on demand later.
+     * @param column Schema column which will be used to order the entities.
+     * @param order String which will determine whether the order is ascending or descending: "ASC" or "DESC".
      */
-    private void fetchStaff(String column, String order) {
+    public void fetchEntities(String column, String order) {
         Connection connection = Database.getConnection();
         try {
-            // Clear arraylists to be safe
+            // 1. Clear container where fetching injection occurs to avoid duplication for multiple fetches.
+            entityContainer.getChildren().clear();
+            // 2. Clear relevant ORM ArrayLists to preserve data integrity over multiple fetches.
             Session.staffEntityList.clear();
             Session.userEntityList.clear();
-            // Select everything from both tables, long statement because we need to decrypt the password
+            // 3. Retrieve Staff and User entities from database and store them in ResultSet. Password needs to be decrypted.
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
             "SELECT staff.id, firstName, lastName, image, telephone, role, gender, " +
                 "users.id, staff_id, username, AES_DECRYPT(password, ?) AS decrypted_password, admin " +
@@ -65,8 +70,9 @@ public class StaffMenuController implements Initializable {
                 "ORDER BY " + column + " " + order + ";");
             preparedStatement.setString(1, System.getProperty("key"));
             ResultSet resultSet = preparedStatement.executeQuery();
-            // Iterate over each entity in the result set, and create Staff and User objects with each one of them
+            // 4. Iterate over ResultSet, per iteration:
             while (resultSet.next()) {
+                //  a) Create objects for each entry of aforementioned entities.
                 Staff staff = new Staff(
                         resultSet.getInt("staff.id"),
                         resultSet.getString("firstName"),
@@ -83,17 +89,19 @@ public class StaffMenuController implements Initializable {
                         resultSet.getString("decrypted_password"),
                         resultSet.getBoolean("admin")
                 );
-                // Add objects as soon as they are created, ensuring correct order
+                // b) Add all objects to their ORM ArrayLists in persistence.Session.
                 Session.staffEntityList.add(staff);
                 Session.userEntityList.add(user);
-                // Inject what we just inserted into the ArrayLists into the scene
+                // f) Immediately inject a new RentalEntity into the menu. This will trigger the StaffEntityController, which will handle the logic.
                 FXUtils.injectEntity("staff_entity", entityContainer);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             Database.closeConnection(connection);
-            // Store what order we just fetched with to be able to flip it later, if needed
+            // 5. Set the label displaying the entity count to the amount of Rental objects in ORM to ensure it stays updated over multiple fetches.
+            entityCountLabel.setText(Session.staffEntityList.size() + " Items");
+            // 6. Finally, store the order that was used to fetch in order to be able to flip it on demand later.
             currentOrder = order;
         }
     }
@@ -105,8 +113,8 @@ public class StaffMenuController implements Initializable {
     private void flipOrder(String field) {
         entityContainer.getChildren().clear();
             if (currentOrder.equals("ASC")) {
-                fetchStaff(field, "DESC");
-            } else fetchStaff(field, "ASC");
+                fetchEntities(field, "DESC");
+            } else fetchEntities(field, "ASC");
     }
 
     /**
@@ -120,40 +128,18 @@ public class StaffMenuController implements Initializable {
         genderToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("gender"));
     }
 
-    /**
-     * Inserts add functionality onto the "add" button.
-     * Logic is handled by an external view.
-     */
-    private void addFunctionality() {
-        add.setOnMouseClicked(mouseEvent -> {
-            FXUtils.popUp("staff_add", "Add New Staff");
-            refresh();
-        });
-    }
-
-    /**
-     * Method that clears the entity container and fills it again.
-     * Used to refresh the entities.
-     * Public to use it from other controllers with Bridge.
-     */
-    public void refresh() {
-        entityContainer.getChildren().clear();
-        fetchStaff("firstName", "ASC");
-        entityCountLabel.setText(Session.staffEntityList.size() + " Items");
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Bridge.setStaffMenuController(this);
-
         FXUtils.setUserDetailsInHeader(usernameLabel, userImage);
-
-        fetchStaff("firstName", "ASC");
-
         prepareStaffToolbar();
 
-        addFunctionality();
+        fetchEntities("firstName", "ASC");
 
+        add.setOnMouseClicked(mouseEvent -> {
+            FXUtils.popUp("staff_add", "Add New Staff");
+            fetchEntities("firstName", "ASC");
+        });
         backButton.setOnAction(actionEvent -> FXUtils.changeRoot("main_menu", "main_menu", backButton));
     }
 }
