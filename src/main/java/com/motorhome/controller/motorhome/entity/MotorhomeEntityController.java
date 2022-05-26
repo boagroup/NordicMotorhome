@@ -16,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -43,33 +42,25 @@ public class MotorhomeEntityController implements Initializable {
     // The same index for brands and models since they get added simultaneously.
     public final int entityIndex = Session.motorhomeEntityList.size() - 1;
 
-    private void deleteMotorhome(Motorhome motorhome) {
-        // Get confirmation with an alert. No function for this since they'd have to take too many arguments anyways.
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "+ brandLabel.getText() + " " + modelLabel.getText() + "?", ButtonType.YES, ButtonType.NO);
-        alert.setHeaderText("Please Confirm Motorhome Deletion");
-        alert.setTitle("Motorhome Deletion");
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/assets/alt_icon.png")).toExternalForm()));
-        ImageView tempImage = new ImageView();
-        tempImage.setImage(image.getImage());
-        // Must explicitly size image, otherwise it preserves original size and makes pop-up grow
-        tempImage.setFitHeight(64.0);
-        tempImage.setFitWidth(64.0);
-        alert.setGraphic(tempImage);
-        alert.showAndWait();
-
+    /**
+     * Use an object to remove a motorhome entity from the database.
+     * @param motorhome Motorhome object representing the motorhome entity in the database.
+     */
+    private void remove(Motorhome motorhome) {
+        Alert alert = FXUtils.confirmDeletion("Motorhome", brandLabel.getText(), modelLabel.getText(), image);
+        // If alert is confirmed
         if (alert.getResult() == ButtonType.YES) {
             Connection connection = Database.getConnection();
             try {
-                // Execute SQL statement.
+                // Execute SQL statement
                 PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement("DELETE FROM motorhomes WHERE id = ?");
                 preparedStatement.setInt(1, motorhome.getId());
                 preparedStatement.execute();
 
                 // Refresh the menu
-                Bridge.getMotorhomeMenuController().fetchEntities("brands.name", "ASC");;
+                Bridge.getMotorhomeMenuController().fetchEntities("brands.name", "ASC");
 
-                // Show success alert.
+                // Show success alert
                 FXUtils.alert(Alert.AlertType.INFORMATION, "The motorhome has been deleted",
                         "Motorhome Deleted", "Deletion Successful", true);
             } catch (SQLException e) {
@@ -94,11 +85,11 @@ public class MotorhomeEntityController implements Initializable {
         typeLabel.setText(motorhome.getType());
         availabilityLabel.setText(motorhome.isRented() ? "Rented" : "Available");
 
-        delete.setOnAction(actionEvent -> deleteMotorhome(motorhome));
+        delete.setOnAction(actionEvent -> remove(motorhome));
         edit.setOnAction(actionEvent -> {
             MotorhomeEditController.entityIndex = entityIndex;
             FXUtils.popUp("motorhome_edit", "popup", "Edit Motorhome");
-            Bridge.getMotorhomeMenuController().fetchEntities("brands.name", "ASC");;
+            Bridge.getMotorhomeMenuController().fetchEntities("brands.name", "ASC");
         });
     }
 }

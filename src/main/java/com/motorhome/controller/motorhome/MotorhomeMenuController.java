@@ -130,7 +130,6 @@ public class MotorhomeMenuController implements Initializable {
      * Load flipping functions into toolbar at the top of the entity container to allow order inversion
      */
     private void prepareToolbar() {
-        entityCountLabel.setText(Session.motorhomeEntityList.size() + " Items");
         brandToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("brands.name"));
         modelToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("models.name"));
         typeToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("type"));

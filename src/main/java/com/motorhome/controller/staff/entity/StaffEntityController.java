@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
  * Author(s): Octavian Roman
  */
 public class StaffEntityController implements Initializable {
+    // FX Nodes
     @FXML private ImageView image;
     @FXML private Label nameLabel;
     @FXML private Label roleLabel;
@@ -48,22 +49,7 @@ public class StaffEntityController implements Initializable {
             FXUtils.alert(Alert.AlertType.ERROR, "Error", "Deletion Error", "You cannot delete yourself!",false);
             return;
         }
-        // Get confirmation with an alert. No function for this since they'd have to take too many arguments anyways.
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "+ nameLabel.getText() + "?", ButtonType.YES, ButtonType.NO);
-        alert.setHeaderText("Please Confirm Staff Deletion");
-        alert.setTitle("Staff Deletion");
-        // Has to be done like this
-        // Plain alert.setGraphic(image) removes the image from the child instance node
-        ImageView tempImage = new ImageView();
-        tempImage.setImage(image.getImage());
-        // Must explicitly size image, otherwise it preserves original size and makes pop-up grow
-        tempImage.setFitHeight(64.0);
-        tempImage.setFitWidth(64.0);
-        alert.setGraphic(tempImage);
-        Stage popStage = (Stage) alert.getDialogPane().getScene().getWindow();
-        popStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/assets/alt_icon.png")).toExternalForm()));
-        alert.showAndWait();
-
+        Alert alert = FXUtils.confirmDeletion("Staff", staff.getFirstName(), staff.getLastName(), image);
         // If confirmation has been received
         if (alert.getResult() == ButtonType.YES) {
             Connection connection = Database.getConnection();

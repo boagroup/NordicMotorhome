@@ -3,6 +3,7 @@ package com.motorhome.utilities;
 import com.motorhome.model.Brand;
 import com.motorhome.model.Extra;
 import com.motorhome.model.Model;
+import com.motorhome.model.Motorhome;
 import com.motorhome.persistence.Session;
 import com.motorhome.persistence.Database;
 import javafx.beans.property.StringProperty;
@@ -162,6 +163,45 @@ public class FXUtils {
         if (show) {
             alert.show();
         } else alert.showAndWait();
+    }
+
+    /**
+     * Used to get deletion confirmation from user.
+     * @param entity String representing the type of entity we are deleting.
+     * @param nameOne String that will be concatenated into the messages appearing on the alert.
+     * @param nameTwo String that will be concatenated into the messages appearing on the alert.
+     * @param imageForGraphic ImageView node whose image will be taken and set as the graphic for the confirmation.
+     * @return the alert to confirm by checking the button type.
+     */
+    public static Alert confirmDeletion(String entity, String nameOne, String nameTwo, ImageView imageForGraphic) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "+ nameOne + " " + nameTwo + "?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Please Confirm " + entity +  " Deletion");
+        alert.setTitle(entity + " Deletion");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(Objects.requireNonNull(FXUtils.class.getResource("/assets/alt_icon.png")).toExternalForm()));
+        ImageView tempImage = new ImageView();
+        tempImage.setImage(imageForGraphic.getImage());
+        tempImage.setFitHeight(64.0);
+        tempImage.setFitWidth(64.0);
+        alert.setGraphic(tempImage);
+        alert.showAndWait();
+        return alert;
+    }
+
+    /**
+     * Used to get deletion confirmation from user. Overloaded for those who have no image and only one label to display.
+     * @param entity String representing the type of entity we are deleting.
+     * @param name String that will be concatenated into the messages appearing on the alert.
+     * @return the alert to confirm by checking the button type.
+     */
+    public static Alert confirmDeletion(String entity, String name) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete " + name + "?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Please Confirm " + entity +  " Deletion");
+        alert.setTitle(entity + " Deletion");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(Objects.requireNonNull(FXUtils.class.getResource("/assets/alt_icon.png")).toExternalForm()));
+        alert.showAndWait();
+        return alert;
     }
 
     /**
@@ -449,4 +489,52 @@ public class FXUtils {
         return dailyPrice * amountOfRentalDays + distanceSurcharge + extraSurcharge;
     }
 
+    /**
+     * Used in Rental Menu for price calculations.
+     * Retrieves Motorhome, Model and Brand entities from database in accordance to selected motorhome.
+     * Use aforementioned entities to generate objects for calculations
+     * @return array with Motorhome at index 0 Model at index 1 and Brand at index 2
+     */
+    public static Object[] retrieveMotorhomeEntities(int motorhomeId) {
+        Object[] result = new Object[3];
+        Connection connection = Database.getConnection();
+        try {
+            PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
+                    "SELECT * FROM motorhomes " +
+                            "JOIN models ON motorhomes.model_id = models.id " +
+                            "JOIN brands ON models.brand_id = brands.id " +
+                            "WHERE motorhomes.id = ?;");
+            preparedStatement.setInt(1, motorhomeId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            Motorhome motorhome = new Motorhome(
+                    resultSet.getInt("motorhomes.id"),
+                    resultSet.getInt("models.id"),
+                    resultSet.getString("image"),
+                    resultSet.getBoolean("rented"),
+                    resultSet.getString("type"),
+                    resultSet.getInt("beds")
+            );
+            result[0] = motorhome;
+            Model model = new Model(
+                    resultSet.getInt("models.id"),
+                    resultSet.getInt("brand_id"),
+                    resultSet.getString("models.name"),
+                    resultSet.getDouble("models.price")
+            );
+            result[1] = model;
+            Brand brand = new Brand(
+                    resultSet.getInt("brands.id"),
+                    resultSet.getString("brands.name"),
+                    resultSet.getDouble("brands.price")
+            );
+            result[2] = brand;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            Database.closeConnection(connection);
+        }
+        return result;
+    }
 }

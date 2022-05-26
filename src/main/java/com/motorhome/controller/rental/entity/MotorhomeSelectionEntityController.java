@@ -16,31 +16,31 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Handles the logic behind the pop-up that facilitates motorhome selection.
+ * Author(s): Octavian Roman
+ */
 public class MotorhomeSelectionEntityController implements Initializable {
-
+    // FX Nodes
     @FXML private ImageView image;
     @FXML private Label brandLabel;
     @FXML private Label modelLabel;
     @FXML private Label typeLabel;
-    @FXML private Label availabilityLabel;
     @FXML private HBox entityContainer;
-
+    // This class is always going to insert the last entity inside the ArrayList.
     public final int entityIndex = Session.motorhomeEntityList.size() - 1;
-
-    public static boolean controlFlipper;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Motorhome motorhome = Session.motorhomeEntityList.get(entityIndex);
         Brand brand = Session.brandEntityList.get(entityIndex);
         Model model = Session.modelEntityList.get(entityIndex);
-        Image i = new Image(Objects.requireNonNullElse(getClass().getResource(motorhome.getImage()),
-                getClass().getResource("/assets/motorhomes/motorhome_placeholder.png")).toExternalForm());
-        image.setImage(i);
         brandLabel.setText(brand.getName());
         modelLabel.setText(model.getName());
         typeLabel.setText(motorhome.getType());
-        availabilityLabel.setText(motorhome.isRented() ? "Rented" : "Available");
+        Image i = new Image(Objects.requireNonNullElse(getClass().getResource(motorhome.getImage()),
+                getClass().getResource("/assets/motorhomes/motorhome_placeholder.png")).toExternalForm());
+        image.setImage(i);
         entityContainer.setOnMouseClicked(mouseEvent -> {
             // Bridge to the Rental Add or Edit Controllers and pass in the proper ID.
             Bridge.getRentalAddController().pickMotorhome(motorhome.getId());

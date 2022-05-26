@@ -14,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -23,12 +22,12 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Handles the logic behind the pop-up that facilitates motorhome selection.
+ * Author(s): Octavian Roman
+ */
 public class RentalEntityController implements Initializable {
-
-    // This class is always going to insert the last entity inside the ArrayList.
-    // The same index for brands and models since they get added simultaneously.
-    public final int entityIndex = Session.rentalEntityList.size() - 1;
-
+    // FX Nodes
     @FXML private ImageView image;
     @FXML private Label motorhomeLabel;
     @FXML private Label clientLabel;
@@ -38,13 +37,19 @@ public class RentalEntityController implements Initializable {
     @FXML private MenuItem edit;
     @FXML private MenuItem delete;
 
-    private void delete(Rental rental, Motorhome motorhome, Client client) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "+ client.getFirstName() + " " + client.getLastName() + "'s rental?", ButtonType.YES, ButtonType.NO);
-        alert.setHeaderText("Please Confirm Rental Deletion");
-        alert.setTitle("Rental Deletion");
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/assets/alt_icon.png")).toExternalForm()));
-        alert.showAndWait();
+    // This class is always going to insert the last entity inside the ArrayList.
+    // The same index for brands and models since they get added simultaneously.
+    public final int entityIndex = Session.rentalEntityList.size() - 1;
+
+    /**
+     * Remove a Rental entity from the Database.
+     * Also sets the status of a Motorhome to "available"
+     * @param rental Rental object representing the entity to be removed.
+     * @param motorhome Motorhome object associated with the rental
+     * @param client Client object associated with the rental. Deletion will cascade to it.
+     */
+    private void remove(Rental rental, Motorhome motorhome, Client client) {
+        Alert alert = FXUtils.confirmDeletion("Rental", client.getFirstName(), client.getLastName(), image);
         if (alert.getResult() == ButtonType.YES) {
             Connection connection = Database.getConnection();
             try {
@@ -89,7 +94,7 @@ public class RentalEntityController implements Initializable {
         });
 
         delete.setOnAction(actionEvent -> {
-            delete(rental, motorhome, client);
+            remove(rental, motorhome, client);
             Bridge.getRentalMenuController().fetchEntities("firstName", "ASC");;
         });
     }

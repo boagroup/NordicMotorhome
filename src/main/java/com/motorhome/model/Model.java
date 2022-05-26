@@ -1,7 +1,7 @@
 package com.motorhome.model;
 
 /**
- * Model class of model entity
+ * Model class of Model entity
  * Author(s): Octavian Roman
  */
 public class Model {

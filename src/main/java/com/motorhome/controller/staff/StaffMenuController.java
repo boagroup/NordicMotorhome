@@ -121,7 +121,6 @@ public class StaffMenuController implements Initializable {
      * Load flipping functions into toolbar at the top of the entity container to allow order inversion
      */
     private void prepareStaffToolbar() {
-        entityCountLabel.setText(Session.staffEntityList.size() + " Items");
         nameToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("firstName"));
         roleToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("role"));
         phoneToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("telephone"));

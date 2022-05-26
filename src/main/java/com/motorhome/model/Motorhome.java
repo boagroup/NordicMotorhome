@@ -30,6 +30,14 @@ public class Motorhome {
         this.type = type;
         this.beds = beds;
     }
+    // Constructors
+    public Motorhome(int id, int model_id, String image, String type, int beds) {
+        this.id = id;
+        this.model_id = model_id;
+        this.image = image;
+        this.type = type;
+        this.beds = beds;
+    }
 
     // Getters
     public int getId() {

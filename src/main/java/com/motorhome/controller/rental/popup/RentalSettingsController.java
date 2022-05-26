@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Author(s): Octavian Roman
  */
 public class RentalSettingsController implements Initializable {
-
+    // FX Nodes
     @FXML private TextField extraNameField;
     @FXML private TextField extraPriceField;
     @FXML private HBox addExtraButton;
@@ -34,10 +34,12 @@ public class RentalSettingsController implements Initializable {
     /**
      * Retrieves extras from the database iteratively and injects them into the container where they belong
      */
-    private void fetchExtras() {
+    public void fetchExtras() {
         // Establish connection
         Connection connection = Database.getConnection();
         try {
+            // Clear container
+            extrasContainer.getChildren().clear();
             // Prepare SQL statement
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "SELECT * FROM extras ORDER BY name;");
@@ -64,11 +66,6 @@ public class RentalSettingsController implements Initializable {
         }
     }
 
-    public void refreshExtras() {
-        extrasContainer.getChildren().clear();
-        fetchExtras();
-    }
-
     /**
      * Adds a new extra to the database in accordance to the values inserted in the fields at the top of the tab
      */
@@ -83,8 +80,8 @@ public class RentalSettingsController implements Initializable {
             preparedStatement.setString(1, extraNameField.getText().equals("") ? null : extraNameField.getText());
             preparedStatement.setDouble(2, Double.parseDouble(extraPriceField.getText()));
             preparedStatement.execute();
-            // Clear and re-fetch the brands to reflect changes
-            refreshExtras();
+            // Re-fetch the brands to reflect changes
+            fetchExtras();
             // Clear fields from inserted values
             extraNameField.setText("");
             extraPriceField.setText("");

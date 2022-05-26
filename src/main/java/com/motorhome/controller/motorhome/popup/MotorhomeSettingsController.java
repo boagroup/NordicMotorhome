@@ -27,12 +27,13 @@ import java.util.ResourceBundle;
  * Author(s): Octavian Roman
  */
 public class MotorhomeSettingsController implements Initializable {
-
+    // FX Nodes
+    // Brands Tab
     @FXML private TextField brandNameField;
     @FXML private TextField brandPriceField;
     @FXML private HBox addBrandButton;
     @FXML private VBox brandsContainer;
-
+    // Models Tab
     @FXML private TextField modelNameField;
     @FXML private TextField modelPriceField;
     @FXML private ChoiceBox<String> brandChoiceBox;

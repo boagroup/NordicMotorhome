@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Author(s): Octavian Roman
  */
 public class MainMenuController implements Initializable {
-
+    // FX Nodes
     @FXML private Label usernameLabel;
     @FXML private ImageView userImage;
     @FXML private Button logoutButton;
@@ -30,7 +30,6 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Bridge.setMainMenuController(this);
         FXUtils.setUserDetailsInHeader(usernameLabel, userImage);
 
         rentalsMenu.setOnMouseClicked(mouseEvent ->

@@ -26,10 +26,7 @@ import java.util.ResourceBundle;
  * Author(s): Octavian Roman
  */
 public class StaffAddController implements Initializable {
-
-    // Variable gets changed if the user selects an image, defaults to placeholder.
-    String imageName = "user_placeholder.png";
-
+    // FX Nodes
     @FXML private ImageView previewImage;
     @FXML private TextField firstName;
     @FXML private TextField lastName;
@@ -40,6 +37,9 @@ public class StaffAddController implements Initializable {
     @FXML private PasswordField password;
     @FXML private CheckBox admin;
     @FXML private Button submit;
+
+    // Variable gets changed if the user selects an image, defaults to placeholder.
+    String imageName = "user_placeholder.png";
 
     /**
      * Adds options to Gender ChoiceBox.
@@ -60,7 +60,7 @@ public class StaffAddController implements Initializable {
     private void pickImage() {
         File selectedFile = FXUtils.imagePicker(previewImage);
         // Stop execution if no file is selected
-        if (!selectedFile.exists()) {
+        if (selectedFile == null) {
             return;
         }
         // Generate random file name with date-timestamp + file extension and assign it to imageName

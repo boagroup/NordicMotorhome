@@ -18,7 +18,6 @@ import com.motorhome.controller.staff.StaffMenuController;
  * Author(s): Octavian Roman
  */
 public final class Bridge {
-    private static MainMenuController mainMenuController = null;
     private static StaffMenuController staffMenuController = null;
     private static MotorhomeMenuController motorhomeMenuController = null;
     private static MotorhomeSettingsController motorhomeSettingsController = null;
@@ -27,16 +26,10 @@ public final class Bridge {
     private static RentalAddController rentalAddController = null;
     private static RentalMotorhomeSelectionController rentalMotorhomeSelectionController = null;
     private static RentalEditController rentalEditController = null;
-    private static ExtraSelectionEntityController extraSelectionEntityController = null;
 
     private Bridge() {}
 
     // Getters
-
-    public static MainMenuController getMainMenuController() {
-        return mainMenuController;
-    }
-
     public static StaffMenuController getStaffMenuController() {
         return staffMenuController;
     }
@@ -69,16 +62,7 @@ public final class Bridge {
         return rentalEditController;
     }
 
-    public static ExtraSelectionEntityController getExtraSelectionEntityController() {
-        return extraSelectionEntityController;
-    }
-
     // Setters
-
-    public static void setMainMenuController(MainMenuController mainMenuController) {
-        Bridge.mainMenuController = mainMenuController;
-    }
-
     public static void setStaffMenuController(StaffMenuController staffMenuController) {
         Bridge.staffMenuController = staffMenuController;
     }
@@ -109,9 +93,5 @@ public final class Bridge {
 
     public static void setRentalEditController(RentalEditController rentalEditController) {
         Bridge.rentalEditController = rentalEditController;
-    }
-
-    public static void setExtraSelectionEntityController(ExtraSelectionEntityController extraSelectionEntityController) {
-        Bridge.extraSelectionEntityController = extraSelectionEntityController;
     }
 }

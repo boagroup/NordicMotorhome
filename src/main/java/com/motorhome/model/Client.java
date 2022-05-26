@@ -1,7 +1,7 @@
 package com.motorhome.model;
 
 /**
- * Model class of Extra entity
+ * Model class of Client entity
  * Author(s): Octavian Roman
  */
 public class Client {

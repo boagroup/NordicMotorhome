@@ -16,8 +16,12 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class that takes care of the logic behind the Extra selection window pop-up
+ * Author(s): Octavian Roman
+ */
 public class RentalExtraSelectionController implements Initializable {
-
+    // FX Node
     @FXML private VBox extrasContainer;
 
     /**

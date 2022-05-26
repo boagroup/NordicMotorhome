@@ -22,17 +22,27 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Handle the logic behind the Motorhome selection window pop-up.
+ * Author(s): Octavian Roman
+ */
 public class RentalMotorhomeSelectionController implements Initializable {
-
+    // FX Nodes
     @FXML private VBox entityContainer;
     @FXML private Label entityCountLabel;
     @FXML private HBox brandToolFlipper;
     @FXML private HBox modelToolFlipper;
     @FXML private HBox typeToolFlipper;
-    @FXML private HBox availabilityToolFlipper;
-
+    // String gets changed depending on what order was last used.
+    // Can be used to flip order, not using boolean for clarity.
     private String currentOrder;
 
+    /**
+     * Scaled down version of MotorhomeMenu's "fetchEntities()".
+     * Retrieves Motorhomes from the database and injects them into the pop-up container.
+     * @param column Schema column which will be used to order the entities.
+     * @param order String which will determine whether the order is ascending or descending: "ASC" or "DESC".
+     */
     private void fetchMotorhomes(String column, String order) {
         Connection connection = Database.getConnection();
         try {
@@ -51,7 +61,6 @@ public class RentalMotorhomeSelectionController implements Initializable {
                         resultSet.getInt("motorhomes.id"),
                         resultSet.getInt("model_id"),
                         resultSet.getString("image"),
-                        resultSet.getBoolean("rented"),
                         resultSet.getString("type"),
                         resultSet.getInt("beds")
                 );
@@ -98,9 +107,11 @@ public class RentalMotorhomeSelectionController implements Initializable {
         brandToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("brands.name"));
         modelToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("models.name"));
         typeToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("type"));
-        availabilityToolFlipper.setOnMouseClicked(mouseEvent -> flipOrder("rented"));
     }
 
+    /**
+     * Used to close the window from the Bridge once the user clicks on a motorhome.
+     */
     public void closeSelectionWindow() {
         Stage stage = (Stage) entityContainer.getScene().getWindow();
         stage.close();

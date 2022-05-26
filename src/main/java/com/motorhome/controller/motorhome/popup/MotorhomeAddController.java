@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Author(s): Octavian Roman
  */
 public class MotorhomeAddController implements Initializable {
-
+    // FX Nodes
     @FXML private Label title;
     @FXML private ImageView image;
     @FXML private TextField typeField;
@@ -70,7 +70,7 @@ public class MotorhomeAddController implements Initializable {
     private void pickImage() {
         File selectedFile = FXUtils.imagePicker(image);
         // Stop execution if no file is selected
-        if (!selectedFile.exists()) {
+        if (selectedFile == null) {
             return;
         }
         // Generate random file name with date-timestamp + file extension and assign it to imageName

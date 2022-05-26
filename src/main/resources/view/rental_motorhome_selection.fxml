@@ -63,20 +63,6 @@
                                         </HBox>
                                     </children>
                                 </HBox>
-                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <HBox fx:id="availabilityToolFlipper" alignment="CENTER" styleClass="toolFlipper" HBox.hgrow="NEVER">
-                                            <children>
-                                                <Label fx:id="genderLabel" styleClass="entity-label-text" text="Rented" />
-                                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                                    <image>
-                                                        <Image url="@../assets/up_down_arrow.png" />
-                                                    </image>
-                                                </ImageView>
-                                            </children>
-                                        </HBox>
-                                    </children>
-                                </HBox>
                             </children>
                             <opaqueInsets>
                                 <Insets />

@@ -10,9 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -26,7 +24,7 @@ import java.util.ResourceBundle;
  * Author(s): Octavian Roman
  */
 public class BrandEntityController implements Initializable {
-
+    // FX Nodes
     @FXML private Label nameLabel;
     @FXML private Label priceLabel;
     @FXML private VBox remove;
@@ -40,13 +38,7 @@ public class BrandEntityController implements Initializable {
      */
     private void remove(Brand brand) {
         // Get confirmation with an alert
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete "+ nameLabel.getText() + "?", ButtonType.YES, ButtonType.NO);
-        alert.setHeaderText("Please Confirm Brand Deletion");
-        alert.setTitle("Brand Deletion");
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/assets/alt_icon.png")).toExternalForm()));
-        alert.showAndWait();
-
+        Alert alert = FXUtils.confirmDeletion("Brand", nameLabel.getText());
         // If confirmation has been received
         if (alert.getResult() == ButtonType.YES) {
             Connection connection = Database.getConnection();

@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * Class that can take care of session data.
+ * Class that can take care of session data (ORM).
  * Here, the currently logged-in user is stored.
  * Likewise, entity data can be stored here to reflect changes to data during the session.
  * Author(s): Octavian Roman
@@ -131,17 +131,19 @@ public class Session {
         }
     }
 
+    /* ArrayLists that get loaded/unloaded on demand to make data dynamic */
+    // Staff Menu
     public static ArrayList<Staff> staffEntityList = new ArrayList<>();
     public static ArrayList<User> userEntityList = new ArrayList<>();
-
+    // Motorhome Menu
     public static ArrayList<Brand> brandEntityList = new ArrayList<>();
     public static ArrayList<Model> modelEntityList = new ArrayList<>();
     public static ArrayList<Motorhome> motorhomeEntityList = new ArrayList<>();
-
+    // Rental Menu
     public static ArrayList<Extra> extraEntityList = new ArrayList<>();
     public static ArrayList<Client> clientEntityList = new ArrayList<>();
     public static ArrayList<Rental> rentalEntityList = new ArrayList<>();
     public static ArrayList<ArrayList<Extra>> rentalExtrasCollectionList = new ArrayList<>();
-
+    // Extra Selection Pop-Up (inside Rental Add or Edit)
     public static ArrayList<Extra> extraSelectionList = new ArrayList<>();
 }

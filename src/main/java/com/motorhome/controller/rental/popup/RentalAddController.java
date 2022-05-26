@@ -3,7 +3,6 @@ package com.motorhome.controller.rental.popup;
 import com.motorhome.utilities.Bridge;
 import com.motorhome.utilities.FXUtils;
 import com.motorhome.controller.rental.entity.ExtraSelectionEntityController;
-import com.motorhome.controller.rental.entity.MotorhomeSelectionEntityController;
 import com.motorhome.model.*;
 import com.motorhome.persistence.Database;
 import com.motorhome.persistence.Session;
@@ -21,8 +20,12 @@ import java.sql.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Handles the logic behind the Rental Add Pop-Up
+ * Author(s): Octavian Roman
+ */
 public class RentalAddController implements Initializable {
-
+    // FX Nodes
     @FXML private Label title;
     @FXML private TextField clientFirstNameField;
     @FXML private TextField clientLastNameField;
@@ -62,54 +65,6 @@ public class RentalAddController implements Initializable {
     }
 
     /**
-     * Retrieves Motorhome, Model and Brand entities from database in accordance to selected motorhome.
-     * Use aforementioned entities to generate objects for calculations
-     * @return array with Motorhome at index 0 Model at index 1 and Brand at index 2
-     */
-    private Object[] retrieveMotorhomeEntities() {
-        Object[] result = new Object[3];
-        Connection connection = Database.getConnection();
-        try {
-            PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
-            "SELECT * FROM motorhomes " +
-                "JOIN models ON motorhomes.model_id = models.id " +
-                "JOIN brands ON models.brand_id = brands.id " +
-                "WHERE motorhomes.id = ?;");
-            preparedStatement.setInt(1, motorhomeId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            Motorhome motorhome = new Motorhome(
-                resultSet.getInt("motorhomes.id"),
-                resultSet.getInt("models.id"),
-                resultSet.getString("image"),
-                resultSet.getBoolean("rented"),
-                resultSet.getString("type"),
-                resultSet.getInt("beds")
-            );
-            result[0] = motorhome;
-            Model model = new Model(
-                resultSet.getInt("models.id"),
-                resultSet.getInt("brand_id"),
-                resultSet.getString("models.name"),
-                resultSet.getDouble("models.price")
-            );
-            result[1] = model;
-            Brand brand = new Brand(
-                    resultSet.getInt("brands.id"),
-                    resultSet.getString("brands.name"),
-                    resultSet.getDouble("brands.price")
-            );
-            result[2] = brand;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            Database.closeConnection(connection);
-        }
-        return result;
-    }
-
-    /**
      * Performs the appropriate calculations to update dynamic fields (title, prices) when called.
      * @param model Model object to compute price and update title (if new motorhome is picked)
      * @param brand Brand entity to compute price and update title (if new motorhome is picked)
@@ -146,7 +101,7 @@ public class RentalAddController implements Initializable {
      */
     public void reflectFieldChanges() {
         if (motorhomeId != 0) {
-            Object[] entityArray = retrieveMotorhomeEntities();
+            Object[] entityArray = FXUtils.retrieveMotorhomeEntities(motorhomeId);
             Model model = (Model) Objects.requireNonNull(entityArray)[1];
             Brand brand = (Brand) Objects.requireNonNull(entityArray)[2];
             updateDynamicFields(model, brand);
@@ -161,7 +116,7 @@ public class RentalAddController implements Initializable {
      */
     public void pickMotorhome(int motorhomeId) {
         this.motorhomeId = motorhomeId;
-        Object[] entityArray = retrieveMotorhomeEntities();
+        Object[] entityArray = FXUtils.retrieveMotorhomeEntities(motorhomeId);
         Motorhome motorhome = (Motorhome) Objects.requireNonNull(entityArray)[0];
         Model model = (Model) Objects.requireNonNull(entityArray)[1];
         Brand brand = (Brand) Objects.requireNonNull(entityArray)[2];
@@ -236,7 +191,7 @@ public class RentalAddController implements Initializable {
         Connection connection = Database.getConnection();
         try {
             // Compute final price.
-            Object[] oldEntityArray = retrieveMotorhomeEntities();
+            Object[] oldEntityArray = FXUtils.retrieveMotorhomeEntities(motorhomeId);
             Model model = (Model) Objects.requireNonNull(oldEntityArray)[1];
             Brand brand = (Brand) Objects.requireNonNull(oldEntityArray)[2];
             double dailyPrice = FXUtils.computeDailyPrice(brand, model, seasonChoiceBox);
@@ -307,7 +262,6 @@ public class RentalAddController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Bridge.setRentalAddController(this);
-        MotorhomeSelectionEntityController.controlFlipper = true;
         initializeValues();
         addReactivity();
         // Pick motorhome button and image do the same thing. You can only change motorhome image in motorhome menu.
