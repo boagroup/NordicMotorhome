@@ -49,7 +49,7 @@ public class MotorhomeMenuController implements Initializable {
      * Fetch the existing Motorhome Entities from the database and display them in the Menu.
      * 1. Clear container where fetching injection occurs to avoid duplication for multiple fetches.
      * 2. Clear relevant ORM ArrayLists to preserve data integrity over multiple fetches.
-     * 3. Retrieve Motorhome, Brand and Model entities from database and store them in ResultSet. Password needs to be decrypted.
+     * 3. Retrieve Motorhome, Brand and Model entities from database and store them in ResultSet.
      * 4. Iterate over ResultSet, per iteration:
      *    a) Create objects for each entry of aforementioned entities.
      *    b) Add all objects to their ORM ArrayLists in persistence.Session.
