@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller that handles the logic behind each model entity in the Motorhome Settings Pop-Up
- * Author(s): Octavian Roman
+ * Author(s): Jakub Patelski
  */
 public class ModelEntityController implements Initializable {
     // FX Nodes

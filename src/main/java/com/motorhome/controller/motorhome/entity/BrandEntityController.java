@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller that handles the logic behind each brand entity in the Motorhome Settings Pop-Up
- * Author(s): Octavian Roman
+ * Author(s): Jakub Patelski
  */
 public class BrandEntityController implements Initializable {
     // FX Nodes

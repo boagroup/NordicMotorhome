@@ -2,7 +2,7 @@ package com.motorhome.model;
 
 /**
  * Model class of Model entity
- * Author(s): Octavian Roman
+ * Author(s): Jakub Patelski
  */
 public class Model {
     // Attributes

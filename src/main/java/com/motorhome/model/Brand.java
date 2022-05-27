@@ -2,7 +2,7 @@ package com.motorhome.model;
 
 /**
  * Model class of Brand entity
- * Author(s): Octavian Roman
+ * Author(s): Jakub Patelski
  */
 public class Brand {
     // Attributes
