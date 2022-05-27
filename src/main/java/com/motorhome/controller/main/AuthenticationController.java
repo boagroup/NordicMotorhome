@@ -1,8 +1,9 @@
 package com.motorhome.controller.main;
 
-import com.motorhome.utilities.FXUtils;
-import com.motorhome.persistence.Session;
+import com.motorhome.persistence.DataResult;
 import com.motorhome.persistence.Database;
+import com.motorhome.persistence.Session;
+import com.motorhome.utilities.FXUtils;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,10 +15,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
@@ -33,53 +30,56 @@ public class AuthenticationController implements Initializable {
     @FXML private Button signInButton;
     @FXML private Label errorLabel;
 
-    private static PreparedStatement preparedStatement = null;
-    private static Connection connection = null;
+    private static final Database db = Database.getInstance();
+
+    private enum Results {
+        NOT_ENOUGH_FIELDS,
+        USER_NOT_FOUND,
+        SUCCESS,
+        WRONG_PASSWORD,
+        FAILURE
+    }
+
+    private Results fetch(String username, String password) {
+        if (username.equals("") || password.equals("")) { return Results.NOT_ENOUGH_FIELDS; }
+
+        // get passwords of users with same username
+        //language=SQL
+        String query = "SELECT AES_DECRYPT(password, ?) AS password FROM users WHERE username = ?";
+        DataResult results = db.executeQuery(query, System.getProperty("key"), username);
+
+        if (results == null) { return Results.FAILURE; }
+        if (results.isEmpty()) { return Results.USER_NOT_FOUND; }
+
+        // convert password from bytes to string
+        String pass = new String((byte[]) results.getData(0,0));
+        // check if password is correct
+        if (pass.equals(password)) { return Results.SUCCESS; }
+        return Results.WRONG_PASSWORD;
+    }
 
     private void login(Event event, String username, String password) {
-        // If either of the two fields, or both, are empty
-        if (username.equals("") || password.equals("")) {
-            // Display fields empty error
-            errorLabel.setText("All fields are mandatory");
-            errorLabel.setVisible(true);
-        } else {
-            // If both fields are not empty
-            try {
-                // Connect to the database
-                connection = Database.getConnection();
-                if (connection != null) {
-                    // Prepare statement which selects password associated with unique username
-                    preparedStatement = connection.prepareStatement("SELECT AES_DECRYPT(password, ?) AS password FROM users WHERE username = ?");
-                }
-                // Execute statement with entry from field
-                preparedStatement.setString(1, System.getProperty("key"));
-                preparedStatement.setString(2, username);
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                // If the result of the execution is empty
-                if (!resultSet.isBeforeFirst()) {
-                    // Display user not found error
-                    errorLabel.setText("Specified user not found");
-                    errorLabel.setVisible(true);
-                } else {
-                        // If the result is not empty, move the cursor to the result
-                        resultSet.next();
-                        // Check if passwords match
-                        if (resultSet.getString("password").equals(password)) {
-                            // Success scenario, log user in
-                            Session.CurrentUser.loadUserDetails(username);
-                            FXUtils.changeScene(event, "main_menu", "Nordic Motorhomes", true, true, "main_menu",  -1, -1);
-                        } else {
-                            // Display password incorrect error
-                            errorLabel.setText("Password does not match");
-                            errorLabel.setVisible(true);
-                        }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                Database.closeConnection(connection);
-             }
+        switch (fetch(username, password)){
+            case NOT_ENOUGH_FIELDS -> {
+                errorLabel.setText("All fields are mandatory");
+                errorLabel.setVisible(true);
+            }
+            case USER_NOT_FOUND -> {
+                errorLabel.setText("Specified user not found");
+                errorLabel.setVisible(true);
+            }
+            case SUCCESS -> {
+                Session.CurrentUser.loadUserDetails(username);
+                FXUtils.changeScene(event, "main_menu", "Nordic Motorhomes", true, true, "main_menu",  -1, -1);
+            }
+            case WRONG_PASSWORD -> {
+                errorLabel.setText("Password does not match");
+                errorLabel.setVisible(true);
+            }
+            case FAILURE -> {
+                errorLabel.setText("ERROR: can't connect to the database!");
+                errorLabel.setVisible(true);
+            }
         }
     }
 
