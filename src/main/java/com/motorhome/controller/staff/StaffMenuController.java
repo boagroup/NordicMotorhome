@@ -65,7 +65,10 @@ public class StaffMenuController extends MenuController {
         while (rslt.next()) {
             // decrypted password is actually an array of bytes (we hold it as blob in DB),
             // so we need to cast it to String
-            String password = new String((byte[]) rslt.getCurrentRow().get("decrypted_password"));
+            String password = "";
+            if (rslt.getCurrentRow().get("decrypted_password") != null) {
+                password = new String((byte[]) rslt.getCurrentRow().get("decrypted_password"));
+            }
             //  a) Create objects for each entry of aforementioned entities.
             Staff staff = new Staff(
                     rslt.get(Integer.class, "staff.id"),
