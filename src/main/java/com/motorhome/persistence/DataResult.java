@@ -183,6 +183,8 @@ public class DataResult {
         return row;
     }
 
+    // Iter functions
+
     public boolean next() { return ++iterCount < getNumberOfRows(); }
 
     public Map<String, Object> getCurrentRow() {
@@ -191,5 +193,32 @@ public class DataResult {
 
     public void resetIter() {
         iterCount = -1;
+    }
+
+    public Object get(String nameOfColumn) {
+        return getCurrentRow().get(nameOfColumn);
+    }
+
+    // tClass acts as a marker basically, without it if you provided null orElse it would return Object
+    public <T> T get(Class<T> tClass, String nameOfCol,  T orElse) {
+        return Optional.ofNullable((T) getCurrentRow().get(nameOfCol)).orElse(orElse);
+    }
+
+    public <T> T get(Class<T> tClass, String nameOfCol) {
+//        final String defaultString = "";
+        final String defaultString = null;
+
+        Object orElse;
+        if (tClass == Integer.class) {
+            orElse = 0;
+        } else if (tClass == String.class) {
+            orElse = defaultString;
+        } else if (tClass == Double.class) {
+            orElse = 0.0;
+        } else if (tClass == Boolean.class) {
+            orElse = false;
+        } else { orElse = null; } // this will throw error, but idc you shouldnt use this function with other classes anyway
+
+        return Optional.ofNullable((T) getCurrentRow().get(nameOfCol)).orElse((T) orElse);
     }
 }
