@@ -59,16 +59,34 @@ public final class Database {
         this.password = password;
         this.url = url;
     }
-
+    /**
+     * Establish a connection to our Heroku ClearDB remote database
+     * @return the connection
+     */
     public static Connection getConnection() {
-        var db = Database.getInstance();
-        db.connect();
-        return connection;
+        String user = System.getProperty("user");
+        String password = System.getProperty("password");
+        String url = "jdbc:mysql://eu-cdbr-west-02.cleardb.net:3306/heroku_e8f7f82549e360a?reconnect=true";
+        try {
+            return DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public static boolean closeConnection(Connection connection) {
-        var db = Database.getInstance();
-        return db.close();
+    /**
+     * Closes the connection the remote database
+     * @param connection the connection to be closed
+     */
+    public static void closeConnection(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
