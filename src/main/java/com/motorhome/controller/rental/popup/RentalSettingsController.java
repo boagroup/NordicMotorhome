@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller that handles the logic behind the Rental Settings Pop-Up
- * Author(s): Octavian Roman
+ * Author(s): Jakub Patelski
  */
 public class RentalSettingsController implements Initializable {
     // FX Nodes

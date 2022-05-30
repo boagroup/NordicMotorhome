@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controller that handles the logic behind each extra entity in the Motorhome Settings Pop-Up
- * Author(s): Octavian Roman
+ * Author(s): Jakub Patelski
  */
 public class ExtraEntityController implements Initializable {
     // FX Nodes

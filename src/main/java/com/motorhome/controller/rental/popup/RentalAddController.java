@@ -121,7 +121,8 @@ public class RentalAddController implements Initializable {
         Model model = (Model) Objects.requireNonNull(entityArray)[1];
         Brand brand = (Brand) Objects.requireNonNull(entityArray)[2];
         updateDynamicFields(model, brand);
-        Image newImage = new Image(Objects.requireNonNull(getClass().getResource(motorhome.getImage())).toExternalForm());
+        Image newImage = new Image(Objects.requireNonNullElse(getClass().getResource(motorhome.getImage()),
+                getClass().getResource("/assets/motorhomes/motorhome_placeholder.png")).toExternalForm());
         image.setImage(newImage);
         confirmButton.setDisable(false);
     }

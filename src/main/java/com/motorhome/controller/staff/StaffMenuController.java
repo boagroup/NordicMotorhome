@@ -1,9 +1,9 @@
 package com.motorhome.controller.staff;
 
-import com.motorhome.controller.MenuController;
+import com.motorhome.controller.main.MenuController;
 import com.motorhome.model.Staff;
 import com.motorhome.model.User;
-import com.motorhome.persistence.DataResult;
+import com.motorhome.persistence.Database;
 import com.motorhome.persistence.Session;
 import com.motorhome.utilities.Bridge;
 import com.motorhome.utilities.FXUtils;
@@ -11,6 +11,11 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -47,55 +52,55 @@ public class StaffMenuController extends MenuController {
      * 5. Set the label displaying the entity count to the amount of Rental objects in ORM to ensure it stays updated over multiple fetches.
      * 6. Finally, store the order that was used to fetch in order to be able to flip it on demand later.
      */
-
-        // 1. Clear container where fetching injection occurs to avoid duplication for multiple fetches.
-        entityContainer.getChildren().clear();
-        // 2. Clear relevant ORM ArrayLists to preserve data integrity over multiple fetches.
-        Session.staffEntityList.clear();
-        Session.userEntityList.clear();
-        //language=SQL
-        String query =
-               "SELECT staff.id, firstName, lastName, image, telephone, role, gender, " +
-               "users.id, staff_id, username, AES_DECRYPT(password, ?) AS decrypted_password, admin " +
-               "FROM staff JOIN users ON staff.id = users.staff_id " +
-               "ORDER BY " + column + " " + order + ";";
-        // 3. Retrieve Staff and User entities from database and store them in DataResult. Password needs to be decrypted.
-        DataResult rslt = db.executeQuery(query, System.getProperty("key"));
-        if (rslt == null) { return; }
-        while (rslt.next()) {
-            // decrypted password is actually an array of bytes (we hold it as blob in DB),
-            // so we need to cast it to String
-            String password = "";
-            if (rslt.getCurrentRow().get("decrypted_password") != null) {
-                password = new String((byte[]) rslt.getCurrentRow().get("decrypted_password"));
+        Connection connection = Database.getConnection();
+        try {
+            // 1. Clear container where fetching injection occurs to avoid duplication for multiple fetches.
+            entityContainer.getChildren().clear();
+            // 2. Clear relevant ORM ArrayLists to preserve data integrity over multiple fetches.
+            Session.staffEntityList.clear();
+            Session.userEntityList.clear();
+            // 3. Retrieve Staff and User entities from database and store them in ResultSet. Password needs to be decrypted.
+            PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
+                    "SELECT staff.id, firstName, lastName, image, telephone, role, gender, " +
+                            "users.id, staff_id, username, AES_DECRYPT(password, ?) AS decrypted_password, admin " +
+                            "FROM staff JOIN users ON staff.id = users.staff_id " +
+                            "ORDER BY " + column + " " + order + ";");
+            preparedStatement.setString(1, System.getProperty("key"));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            // 4. Iterate over ResultSet, per iteration:
+            while (resultSet.next()) {
+                //  a) Create objects for each entry of aforementioned entities.
+                Staff staff = new Staff(
+                        resultSet.getInt("staff.id"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("image"),
+                        resultSet.getString("telephone"),
+                        resultSet.getString("role"),
+                        resultSet.getString("gender")
+                );
+                User user = new User(
+                        resultSet.getInt("users.id"),
+                        resultSet.getInt("staff_id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("decrypted_password"),
+                        resultSet.getBoolean("admin")
+                );
+                // b) Add all objects to their ORM ArrayLists in persistence.Session.
+                Session.staffEntityList.add(staff);
+                Session.userEntityList.add(user);
+                // f) Immediately inject a new RentalEntity into the menu. This will trigger the StaffEntityController, which will handle the logic.
+                FXUtils.injectEntity("staff_entity", entityContainer);
             }
-            //  a) Create objects for each entry of aforementioned entities.
-            Staff staff = new Staff(
-                    rslt.get(Integer.class, "staff.id"),
-                    rslt.get(String.class, "firstName"),
-                    rslt.get(String.class, "lastName"),
-                    rslt.get(String.class, "image"),
-                    rslt.get(String.class, "telephone"),
-                    rslt.get(String.class, "role"),
-                    rslt.get(String.class, "gender")
-            );
-            User user = new User(
-                    rslt.get(Integer.class, "users.id"),
-                    rslt.get(Integer.class, "staff_id"),
-                    rslt.get(String.class, "username"),
-                    password,
-                    rslt.get(Boolean.class, "admin")
-            );
-            // b) Add all objects to their ORM ArrayLists in persistence.Session.
-            Session.staffEntityList.add(staff);
-            Session.userEntityList.add(user);
-            // f) Immediately inject a new RentalEntity into the menu. This will trigger the StaffEntityController, which will handle the logic.
-            FXUtils.injectEntity("staff_entity", entityContainer);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Database.closeConnection(connection);
+            // 5. Set the label displaying the entity count to the amount of Rental objects in ORM to ensure it stays updated over multiple fetches.
+            entityCountLabel.setText(Session.staffEntityList.size() + " Items");
+            // 6. Finally, store the order that was used to fetch in order to be able to flip it on demand later.
+            currentOrder = order;
         }
-        // 5. Set the label displaying the entity count to the amount of Rental objects in ORM to ensure it stays updated over multiple fetches.
-        entityCountLabel.setText(Session.staffEntityList.size() + " Items");
-        // 6. Finally, store the order that was used to fetch in order to be able to flip it on demand later.
-        currentOrder = order;
     }
 
     /**

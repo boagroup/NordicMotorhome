@@ -1,6 +1,5 @@
 package com.motorhome.controller.main;
 
-import com.motorhome.utilities.Bridge;
 import com.motorhome.utilities.FXUtils;
 import com.motorhome.persistence.Session;
 import javafx.fxml.FXML;

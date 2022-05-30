@@ -1,6 +1,5 @@
-package com.motorhome.controller;
+package com.motorhome.controller.main;
 
-import com.motorhome.persistence.Database;
 import com.motorhome.utilities.FXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +12,10 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Abstract class to take advantage of the fact that all menus except main are very similar.
+ * Author(s): Bartosz Birylo
+ */
 public abstract class MenuController implements Initializable {
 	@FXML protected Label usernameLabel;
 	@FXML protected ImageView userImage;
@@ -20,8 +23,6 @@ public abstract class MenuController implements Initializable {
 	@FXML protected VBox entityContainer;
 	@FXML protected Label entityCountLabel;
 	@FXML protected HBox add;
-
-	protected static Database db = Database.getInstance();
 
 	// String gets changed depending on what order was last used.
 	// Can be used to flip order, not using boolean for clarity.
