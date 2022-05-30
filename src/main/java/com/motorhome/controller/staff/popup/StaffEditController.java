@@ -67,7 +67,7 @@ public class StaffEditController implements Initializable {
             return;
         }
         // Generate random file name with date-timestamp + file extension and assign it to imageName
-        imageName = FXUtils.generateRandomImageName(selectedFile);
+        imageName = FXUtils.generateUniqueImageName(selectedFile);
         String imagePath = "/assets/users/" + imageName;
 
         // Prepare paths for both destinations. DOES NOT WORK IN JAR

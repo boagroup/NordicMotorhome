@@ -267,7 +267,7 @@ public class FXUtils {
      * @param image file for which the random name will be generated
      * @return the random name + appropriate extension
      */
-    public static String generateRandomImageName(File image) {
+    public static String generateUniqueImageName(File image) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
         if (getExtension(image.getName()).isPresent()) {
             return formatter.format(LocalDateTime.now()) + "." + getExtension(image.getName()).get();
