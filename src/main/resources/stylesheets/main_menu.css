@@ -49,6 +49,10 @@
     -fx-background-color: #92b5be;
 }
 
+#rentalsMenu:pressed, #motorhomesMenu:pressed, #staffMenu:pressed {
+    -fx-background-color: #228bb6;
+}
+
 .menuItemLabel {
     -fx-font-family: "Montserrat", Arial;
     -fx-font-size: 30px;

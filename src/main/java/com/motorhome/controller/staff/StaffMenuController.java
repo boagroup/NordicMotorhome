@@ -62,9 +62,9 @@ public class StaffMenuController extends MenuController {
             // 3. Retrieve Staff and User entities from database and store them in ResultSet. Password needs to be decrypted.
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "SELECT staff.id, firstName, lastName, image, telephone, role, gender, " +
-                            "users.id, staff_id, username, AES_DECRYPT(password, ?) AS decrypted_password, admin " +
-                            "FROM staff JOIN users ON staff.id = users.staff_id " +
-                            "ORDER BY " + column + " " + order + ";");
+                        "users.id, staff_id, username, AES_DECRYPT(password, ?) AS decrypted_password, admin " +
+                        "FROM staff JOIN users ON staff.id = users.staff_id " +
+                        "ORDER BY " + column + " " + order + ";");
             preparedStatement.setString(1, System.getProperty("key"));
             ResultSet resultSet = preparedStatement.executeQuery();
             // 4. Iterate over ResultSet, per iteration:
@@ -120,7 +120,7 @@ public class StaffMenuController extends MenuController {
         prepare();
 
         add.setOnMouseClicked(mouseEvent -> {
-            FXUtils.popUp("staff_add", "Add New Staff");
+            FXUtils.popUp("staff_add", "popup", "Add New Staff");
             fetchEntities();
         });
     }

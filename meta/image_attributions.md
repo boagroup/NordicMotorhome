@@ -4,6 +4,7 @@ Some images used in this project have been retrieved from:
 ### https://www.iconfinder.com/ 
 ### https://unsplash.com/
 ### https://www.pngwing.com/
+### https://this-person-does-not-exist.com/
 
 ## Individual images:
 1. "[user_placeholder.png](/src/main/resources/assets/user_placeholder.png)" by "[Becris .](https://www.iconfinder.com/becris)" from [iconfinder](https://www.iconfinder.com/icons/3209201/account_ciecle_placeholder_round_user_icon)

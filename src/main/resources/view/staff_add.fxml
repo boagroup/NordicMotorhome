@@ -17,7 +17,7 @@
       <Label layoutX="239.0" layoutY="83.0" text="First Name" />
       <TextField fx:id="lastName" layoutX="302.0" layoutY="123.0" prefHeight="25.0" prefWidth="105.0" />
       <Label layoutX="240.0" layoutY="127.0" text="Last Name" />
-      <Label layoutX="48.0" layoutY="20.0" text="New Staff" textFill="#228bb6">
+      <Label fx:id="title" layoutX="48.0" layoutY="20.0" text="New Staff" textFill="#228bb6">
          <font>
             <Font name="Calibri Light" size="36.0" />
          </font>

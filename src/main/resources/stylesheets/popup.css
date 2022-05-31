@@ -17,7 +17,7 @@
     -fx-font-family: "Laila", Arial;
 }
 
-#confirmButton, .regular-button {
+#confirmButton, .regular-button, #submit {
     -fx-pref-width: 100px;
     -fx-background-color: transparent;
     -fx-border-width: 1px;
@@ -29,12 +29,12 @@
     -fx-font-family: Arial;
 }
 
-#confirmButton:hover, .regular-button:hover {
+#confirmButton:hover, .regular-button:hover, #submit:hover {
     -fx-background-color: #92b5be;
     -fx-text-fill: #fff;
 }
 
-#confirmButton:pressed, .regular-button:pressed {
+#confirmButton:pressed, .regular-button:pressed, #submit:pressed {
     -fx-background-color: #228bb6;
     -fx-text-fill: #fff;
 }

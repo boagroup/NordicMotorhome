@@ -85,17 +85,17 @@ public class RentalEntityController implements Initializable {
         clientLabel.setText(client.getFirstName() + " " + client.getLastName());
         startDateLabel.setText(String.valueOf(rental.getStart_date()));
         endDateLabel.setText(String.valueOf(rental.getEnd_date()));
-        priceLabel.setText(FXUtils.formatCurrencyValues(rental.getFinal_price()));
+        priceLabel.setText(FXUtils.formatCurrencyValues(rental.getFinal_price()) + " €");
 
         edit.setOnAction(actionEvent -> {
             RentalEditController.entityIndex = entityIndex;
             FXUtils.popUp("rental_edit", "popup", "Edit Rental");
-            Bridge.getRentalMenuController().fetchEntities("firstName", "ASC");;
+            Bridge.getRentalMenuController().fetchEntities("firstName", "ASC");
         });
 
         delete.setOnAction(actionEvent -> {
             remove(rental, motorhome, client);
-            Bridge.getRentalMenuController().fetchEntities("firstName", "ASC");;
+            Bridge.getRentalMenuController().fetchEntities("firstName", "ASC");
         });
     }
 }
