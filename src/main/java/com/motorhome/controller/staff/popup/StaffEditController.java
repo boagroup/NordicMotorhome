@@ -38,7 +38,7 @@ public class StaffEditController implements Initializable {
     @FXML private Button submit;
 
     // Variable gets changed if the user selects an image, defaults to placeholder.
-    String imageName = "/assets/users/user_placeholder.png";
+    private String imageName = "/assets/users/user_placeholder.png";
 
     // Integer that gets changed to the appropriate value every time the user clicks on the "Edit" option of an entity
     // -1 to get exception if something goes wrong instead of unwanted entity

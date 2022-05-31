@@ -36,9 +36,9 @@ public class MotorhomeAddController implements Initializable {
     @FXML private Button confirmButton;
 
     // HashMap to store model ids because we want to display model names not ids in the ChoiceBox
-    HashMap<String, Integer> modelsMap = new HashMap<>();
+    private final HashMap<String, Integer> modelsMap = new HashMap<>();
     // Variable gets changed if the user selects an image, defaults to placeholder.
-    String imageName = "motorhome_placeholder.png";
+    private String imageName = "motorhome_placeholder.png";
 
     // FX String properties that can be modified dynamically as the user picks different models
     private final StringProperty dynamicTitle = new SimpleStringProperty();

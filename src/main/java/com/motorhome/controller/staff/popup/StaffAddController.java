@@ -39,7 +39,7 @@ public class StaffAddController implements Initializable {
     @FXML private Button submit;
 
     // Variable gets changed if the user selects an image, defaults to placeholder.
-    String imageName = "user_placeholder.png";
+    private String imageName = "user_placeholder.png";
 
     /**
      * Adds options to Gender ChoiceBox.
