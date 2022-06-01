@@ -1,11 +1,6 @@
 # NORDIC MOTORHOME
 ![Board Status](https://dev.azure.com/boagroup/aff5accd-4877-4b99-a7e2-1940bb1d4ec2/4b1e5ff9-78ea-480d-9743-2fa05bf5de30/_apis/work/boardbadge/1e9121a2-0a2d-4069-8fae-37068db39609?columnOptions=1)
 
-## Working Artifact:
-<a href="https://github.com/boagroup/NordicMotorhome/blob/main/bin/motorhome.jar?raw=true">Motorhome Direct Download</a>
-
-`java -jar motorhome.jar`
-
 ## DevOps:
 
 [Azure DevOps](https://dev.azure.com/boagroup)
