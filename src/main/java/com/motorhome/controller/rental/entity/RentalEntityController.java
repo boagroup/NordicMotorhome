@@ -70,14 +70,17 @@ public class RentalEntityController implements Initializable {
         }
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Generate objects with retrieved data
         Rental rental = Session.rentalEntityList.get(entityIndex);
         Client client = Session.clientEntityList.get(entityIndex);
         Motorhome motorhome = Session.motorhomeEntityList.get(entityIndex);
         Brand brand = Session.brandEntityList.get(entityIndex);
         Model model = Session.modelEntityList.get(entityIndex);
 
+        // Put data in FX nodes
         Image i = new Image(Objects.requireNonNullElse(getClass().getResource(motorhome.getImage()),
                 getClass().getResource("/assets/motorhomes/motorhome_placeholder.png")).toExternalForm());
         image.setImage(i);
@@ -87,6 +90,7 @@ public class RentalEntityController implements Initializable {
         endDateLabel.setText(String.valueOf(rental.getEnd_date()));
         priceLabel.setText(FXUtils.formatCurrencyValues(rental.getFinal_price()) + " €");
 
+        // Prepare additional views and functions to handle Update or Deletion of the given entity
         edit.setOnAction(actionEvent -> {
             RentalEditController.entityIndex = entityIndex;
             FXUtils.popUp("rental_edit", "popup", "Edit Rental");

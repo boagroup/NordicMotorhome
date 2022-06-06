@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS rentals (
     end_date DATE NOT NULL,
     final_price DOUBLE(10,2) DEFAULT 0.00,
     notes TEXT,
-    FOREIGN KEY (motorhome_id) REFERENCES motorhomes(id) ON DELETE SET NULL
+    FOREIGN KEY (motorhome_id) REFERENCES motorhomes(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS extras (
