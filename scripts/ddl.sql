@@ -86,8 +86,6 @@ CREATE TABLE IF NOT EXISTS extras (
     price DOUBLE(10,2) DEFAULT 0.00
 );
 
-ALTER TABLE extras MODIFY COLUMN name VARCHAR(25) NOT NULL;
-
 CREATE TABLE IF NOT EXISTS rentalExtras (
     rental_id INT(10),
     extra_id INT(10),
