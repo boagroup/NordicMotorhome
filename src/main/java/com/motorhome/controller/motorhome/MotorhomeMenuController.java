@@ -9,6 +9,7 @@ import com.motorhome.persistence.Session;
 import com.motorhome.utilities.Bridge;
 import com.motorhome.utilities.FXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
@@ -124,9 +125,17 @@ public class MotorhomeMenuController extends MenuController {
         Bridge.setMotorhomeMenuController(this);
         prepare();
         settings.setOnMouseClicked(mouseEvent -> {
-            FXUtils.popUp("motorhome_settings", "motorhome_settings", "Motorhome Options");
-            fetchEntities();
-        });
+
+
+                if (Session.CurrentUser.getCurrentUser().getAdmin()) {
+                    FXUtils.popUp("motorhome_settings", "motorhome_settings", "Motorhome Options");
+                    fetchEntities();
+                } else {
+                    FXUtils.alert(Alert.AlertType.ERROR, "You do not have permission to access this menu.", "Motorhomes Settings", "Unauthorized Access", true);
+                }
+            });
+
+
         add.setOnMouseClicked(mouseEvent -> {
             FXUtils.popUp("motorhome_add", "popup", "Add Motorhome");
             fetchEntities();

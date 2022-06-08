@@ -50,7 +50,6 @@ public class MotorhomeSettingsController implements Initializable {
             PreparedStatement preparedStatement = Objects.requireNonNull(connection).prepareStatement(
                     "SELECT name FROM brands;");
             ResultSet resultSet = preparedStatement.executeQuery();
-            brandChoiceBox.getItems().clear();
             while (resultSet.next()) {
                 brandChoiceBox.getItems().add(resultSet.getString("name"));
             }
