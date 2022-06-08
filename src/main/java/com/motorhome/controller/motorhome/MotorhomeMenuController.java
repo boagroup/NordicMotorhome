@@ -125,16 +125,13 @@ public class MotorhomeMenuController extends MenuController {
         Bridge.setMotorhomeMenuController(this);
         prepare();
         settings.setOnMouseClicked(mouseEvent -> {
-
-
-                if (Session.CurrentUser.getCurrentUser().getAdmin()) {
-                    FXUtils.popUp("motorhome_settings", "motorhome_settings", "Motorhome Options");
-                    fetchEntities();
-                } else {
-                    FXUtils.alert(Alert.AlertType.ERROR, "You do not have permission to access this menu.", "Motorhomes Settings", "Unauthorized Access", true);
-                }
-            });
-
+            if (Session.CurrentUser.getCurrentUser().getAdmin()) {
+                FXUtils.popUp("motorhome_settings", "motorhome_settings", "Motorhome Options");
+                fetchEntities();
+            } else {
+                FXUtils.alert(Alert.AlertType.ERROR, "You do not have permission to access this menu.", "Motorhome Settings", "Unauthorized Access", true);
+            }
+        });
 
         add.setOnMouseClicked(mouseEvent -> {
             FXUtils.popUp("motorhome_add", "popup", "Add Motorhome");

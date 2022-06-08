@@ -174,12 +174,11 @@ public class RentalMenuController extends MenuController {
 
 
         settings.setOnMouseClicked(mouseEvent -> {
-
             if (Session.CurrentUser.getCurrentUser().getAdmin()) {
-                FXUtils.popUp("rental_settings", "motorhome_settings", "Rental Options");
+                FXUtils.popUp("rental_settings", "motorhome_settings", "Rental Settings");
                 fetchEntities();
             } else {
-                FXUtils.alert(Alert.AlertType.ERROR, "You do not have permission to access this menu.", "Motorhomes Settings", "Unauthorized Access", true);
+                FXUtils.alert(Alert.AlertType.ERROR, "You do not have permission to access this menu.", "Rental Settings", "Unauthorized Access", true);
             }
         });
         add.setOnMouseClicked(mouseEvent -> {
